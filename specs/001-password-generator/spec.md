@@ -5,6 +5,16 @@
 **Status**: Draft
 **Input**: User description: "Password generator web application with features including: Main content centered on page; Options to generate password, PIN, or passphrase with tabs; Password: default lowercase (a-z), toggles for digits, symbols, uppercase (A-Z), length 8-50; PIN: default length 3, range 3-12; Passphrase: default 4 words with hyphen separator, range 4-10 words, separator options (space, hyphen, underscore, period); Password/PIN/passphrase strength check; Breach/leak checker using Have I Been Pwned API with manual button; Refresh generation button with icon and toast notification; Copy to clipboard button with icon and toast notification; Light/dark mode toggle (default light, upper right); Responsive design (desktop, tablet, mobile)"
 
+## Clarifications
+
+### Session 2026-02-22
+
+- Q: What level of accessibility compliance should the application meet? → A: No formal accessibility requirements
+- Q: What symbols should be included in password generation? → A: Standard keyboard symbols (!@#$%^&*()_+-=[]{}|;:,.<>?)
+- Q: What word list should be used for passphrase generation? → A: EFF Long Wordlist (7776 words)
+- Q: Should the application remember the user's theme preference between visits? → A: Yes, persist theme preference in browser storage
+- Q: Should the password/PIN/passphrase generation use cryptographically secure random number generation? → A: Yes, use cryptographically secure random
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Basic Password Generation (Priority: P1) 🎯 MVP
@@ -124,6 +134,7 @@ A user wants a comfortable viewing experience and needs to use the application o
 - How does the system handle very long passphrases on small mobile screens?
 - What happens when the Have I Been Pwned API rate limits are exceeded?
 - How does the system display strength indicators for credentials at boundary values (e.g., 8-character password, 3-digit PIN, 4-word passphrase)?
+- Note: No formal accessibility requirements are specified for this application
 
 ## Requirements *(mandatory)*
 
@@ -131,7 +142,7 @@ A user wants a comfortable viewing experience and needs to use the application o
 
 - **FR-001**: System MUST generate passwords containing lowercase letters (a-z) by default when the password tab loads
 - **FR-002**: System MUST allow users to toggle inclusion of digits (0-9) in password generation
-- **FR-003**: System MUST allow users to toggle inclusion of symbols in password generation
+- **FR-003**: System MUST allow users to toggle inclusion of symbols in password generation using standard keyboard symbols (!@#$%^&*()_+-=[]{}|;:,.<>?)
 - **FR-004**: System MUST allow users to toggle inclusion of uppercase letters (A-Z) in password generation
 - **FR-005**: System MUST enforce minimum password length of 8 characters
 - **FR-006**: System MUST enforce maximum password length of 50 characters
@@ -139,12 +150,13 @@ A user wants a comfortable viewing experience and needs to use the application o
 - **FR-008**: System MUST generate PINs with default length of 3 digits when the PIN tab loads
 - **FR-009**: System MUST enforce minimum PIN length of 3 digits
 - **FR-010**: System MUST enforce maximum PIN length of 12 digits
-- **FR-011**: System MUST generate passphrases using words from a predefined word list
+- **FR-011**: System MUST generate passphrases using words from the EFF Long Wordlist (7776 words)
 - **FR-012**: System MUST generate passphrases with default length of 4 words when the passphrase tab loads
 - **FR-013**: System MUST enforce minimum passphrase length of 4 words
 - **FR-014**: System MUST enforce maximum passphrase length of 10 words
 - **FR-015**: System MUST allow users to select from four separator options for passphrases: space, hyphen, underscore, period
 - **FR-016**: System MUST use hyphen as the default separator for passphrases when the passphrase tab loads
+- **FR-035**: System MUST use cryptographically secure random number generation for all passwords, PINs, and passphrases
 - **FR-017**: System MUST display a strength indicator for passwords, PINs, and passphrases
 - **FR-018**: System MUST classify credential strength as weak, medium, or strong based on complexity and length
 - **FR-019**: System MUST provide a button to manually trigger breach checks using the Have I Been Pwned API
@@ -157,6 +169,7 @@ A user wants a comfortable viewing experience and needs to use the application o
 - **FR-026**: System MUST provide a theme toggle button located in the upper right corner of the page
 - **FR-027**: System MUST load in light mode by default
 - **FR-028**: System MUST allow users to switch between light mode and dark mode
+- **FR-034**: System MUST persist the user's theme preference in browser storage between visits
 - **FR-029**: System MUST display the main content centered on the page
 - **FR-030**: System MUST provide tab navigation to switch between password, PIN, and passphrase generation modes
 - **FR-031**: System MUST be responsive and display correctly on desktop screens
@@ -165,12 +178,12 @@ A user wants a comfortable viewing experience and needs to use the application o
 
 ### Key Entities
 
-- **Password**: A random string of characters containing lowercase letters, optionally digits, symbols, and uppercase letters, with length between 8-50 characters
-- **PIN**: A random numeric string containing only digits, with length between 3-12 digits
-- **Passphrase**: A random sequence of words from a predefined list, with word count between 4-10 words, separated by a user-selected delimiter
+- **Password**: A random string of characters containing lowercase letters (a-z), optionally digits (0-9), standard keyboard symbols (!@#$%^&*()_+-=[]{}|;:,.<>?), and uppercase letters (A-Z), with length between 8-50 characters, generated using cryptographically secure random number generation
+- **PIN**: A random numeric string containing only digits (0-9), with length between 3-12 digits, generated using cryptographically secure random number generation
+- **Passphrase**: A random sequence of words from the EFF Long Wordlist (7776 words), with word count between 4-10 words, separated by a user-selected delimiter (space, hyphen, underscore, or period), generated using cryptographically secure random number generation
 - **Strength Indicator**: A visual representation of credential security level (weak, medium, strong) based on complexity and length
 - **Breach Check Result**: Information indicating whether a credential has been found in known data breaches via the Have I Been Pwned API
-- **Theme Mode**: The visual appearance setting of the application (light or dark)
+- **Theme Mode**: The visual appearance setting of the application (light or dark), persisted in browser storage between visits
 - **Toast Notification**: A temporary message displayed in the upper center of the page to confirm user actions (refresh, copy)
 
 ## Success Criteria *(mandatory)*
