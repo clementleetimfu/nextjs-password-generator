@@ -24,12 +24,12 @@ export function PassphraseControls({
   onSeparatorChange,
 }: PassphraseControlsProps) {
   return (
-    <div className="flex flex-col gap-6 w-full max-w-2xl">
+    <div className="flex flex-col gap-6 w-full max-w-2xl" data-testid="controls">
       {/* Word Count Slider */}
       <div className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-            Word Count: {wordCount}
+            Word Count: <span data-testid="word-count-value">{wordCount}</span>
           </label>
         </div>
         <Slider
@@ -39,6 +39,8 @@ export function PassphraseControls({
           max={PASSPHRASE_CONSTRAINTS.MAX_WORDS}
           step={1}
           className="w-full"
+          data-testid="separator-selector"
+          data-testid="word-count-slider"
         />
         <div className="flex justify-between text-xs text-zinc-500 dark:text-zinc-400">
           <span>{PASSPHRASE_CONSTRAINTS.MIN_WORDS}</span>

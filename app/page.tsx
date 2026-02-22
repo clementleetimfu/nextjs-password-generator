@@ -44,23 +44,24 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-black font-sans">
-      <ThemeToggle mode={mode} onToggle={toggle} />
+      <ThemeToggle mode={mode} onToggle={toggle} /> 
 
-      <main className="flex min-h-screen flex-col items-center justify-center px-4 py-16">
+      <main className="flex min-h-screen flex-col items-center justify-center px-4 py-16" data-testid="main-content">
         <div className="w-full max-w-4xl">
           <h1 className="text-4xl font-bold text-center mb-8 text-zinc-900 dark:text-zinc-50">
             Password Generator
-          </h1>
+          </h1> 
 
           <Tabs
             value={activeTab}
             onValueChange={(value) => setActiveTab(value as CredentialType)}
             className="w-full"
+            data-testid="tabs"
           >
             <TabsList className="grid w-full grid-cols-1 md:grid-cols-3">
-              <TabsTrigger value="password">Password</TabsTrigger>
-              <TabsTrigger value="pin">PIN</TabsTrigger>
-              <TabsTrigger value="passphrase">Passphrase</TabsTrigger>
+              <TabsTrigger value="password" data-testid="tab-password">Password</TabsTrigger>
+              <TabsTrigger value="pin" data-testid="tab-pin">PIN</TabsTrigger>
+              <TabsTrigger value="passphrase" data-testid="tab-passphrase">Passphrase</TabsTrigger>
             </TabsList>
 
             <TabsContent value="password" className="mt-6">

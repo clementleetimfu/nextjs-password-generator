@@ -49,7 +49,7 @@ export function PasswordDisplay({
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full max-w-2xl">
+    <div className="flex flex-col items-center gap-4 w-full max-w-2xl" data-testid="password-display">
       {/* Credential Display */}
       <div className="relative w-full">
         <div className="bg-white dark:bg-zinc-900 border-2 border-zinc-200 dark:border-zinc-700 rounded-lg p-6 text-center">
@@ -60,7 +60,7 @@ export function PasswordDisplay({
       </div>
 
       {/* Strength Indicator */}
-      <div className="flex items-center gap-3 w-full">
+      <div className="flex items-center gap-3 w-full" data-testid="strength-indicator">
         <div className="flex-1 h-2 bg-zinc-200 dark:bg-zinc-700 rounded-full overflow-hidden">
           <div
             className={`h-full transition-all duration-300 ${strengthColors[strength]}`}
@@ -72,7 +72,7 @@ export function PasswordDisplay({
             }}
           />
         </div>
-        <span className="text-sm font-medium text-zinc-600 dark:text-zinc-400 min-w-[80px]">
+        <span className="text-sm font-medium text-zinc-600 dark:text-zinc-400 min-w-[80px]" data-testid="strength-level">
           {strength.replace('_', ' ')}
         </span>
       </div>
@@ -83,6 +83,7 @@ export function PasswordDisplay({
           onClick={onRefresh}
           className="flex-1"
           variant="outline"
+          data-testid="refresh-button"
         >
           Refresh
         </Button>
@@ -91,6 +92,7 @@ export function PasswordDisplay({
           className="flex-1"
           variant="outline"
           disabled={!value}
+          data-testid="copy-button"
         >
           Copy
         </Button>
@@ -99,6 +101,7 @@ export function PasswordDisplay({
           className="flex-1"
           variant="outline"
           disabled={!value || breachCheck === 'checking'}
+          data-testid="breach-check-button"
         >
           Check Breach
         </Button>
@@ -113,6 +116,7 @@ export function PasswordDisplay({
             breachCheck === 'error' ? 'text-red-600 dark:text-red-400' :
             'text-zinc-600 dark:text-zinc-400'
           }`}
+          data-testid="breach-result"
         >
           {getBreachStatusText()}
         </div>

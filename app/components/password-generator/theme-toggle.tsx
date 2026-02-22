@@ -14,6 +14,7 @@ export function ThemeToggle({ mode, onToggle }: ThemeToggleProps) {
       size="icon"
       className="fixed top-4 right-4 z-50"
       aria-label={`Toggle ${mode === 'light' ? 'dark' : 'light'} mode`}
+      data-testid="theme-toggle"
     >
       {mode === 'light' ? (
         // Moon icon for dark mode
