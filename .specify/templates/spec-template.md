@@ -80,6 +80,14 @@
 <!--
   ACTION REQUIRED: The content in this section represents placeholders.
   Fill them out with the right functional requirements.
+  
+  NOTE: All requirements MUST align with the constitution principles:
+  - SOLID: Design for single responsibility, open/closed, Liskov substitution, interface segregation, dependency inversion
+  - DRY: Eliminate duplication through reusable components and utilities
+  - KISS: Keep solutions simple and straightforward
+  - YAGNI: Implement only what's currently needed
+  - TypeScript strict mode: All types must be explicitly defined
+  - Testing: Unit tests and E2E tests (Playwright) are mandatory for all features
 -->
 
 ### Functional Requirements

@@ -17,21 +17,31 @@
   the iteration process.
 -->
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
+**Language/Version**: TypeScript (strict mode) with Next.js (App Router)
+**Primary Dependencies**: Next.js, React, Tailwind CSS, Shadcn UI (Radix UI)
+**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
+**Testing**: Jest/Vitest for unit tests, Playwright for E2E tests
+**Target Platform**: Web (browser) - can be deployed to Vercel or any Node.js hosting
+**Project Type**: web (Next.js App Router structure)
+**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]
+**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]
 **Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+Per the project constitution, the following gates MUST be satisfied:
+
+- [ ] **SOLID Compliance**: Design demonstrates adherence to Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion principles
+- [ ] **DRY Verification**: No code duplication identified; reusable components, utilities, and functions are properly extracted
+- [ ] **KISS Validation**: Solution is as simple as possible; no over-engineering or unnecessary complexity
+- [ ] **YAGNI Compliance**: Only features currently needed are implemented; no speculative functionality
+- [ ] **TypeScript Strict Mode**: All type errors resolved; explicit type annotations used for functions, components, and state
+- [ ] **Testing Strategy**: Unit tests and E2E tests (Playwright) planned for all features
+- [ ] **Code Quality**: ESLint and Prettier configured; pre-commit hooks established
+- [ ] **UI Standards**: Shadcn UI components used where applicable; Tailwind CSS for styling
+- [ ] **Font Usage**: Space Mono font configured via next/font for appropriate elements
 
 ## Project Structure
 
@@ -68,22 +78,28 @@ tests/
 ├── integration/
 └── unit/
 
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
+# [REMOVE IF UNUSED] Option 2: Web application - Next.js App Router (DEFAULT for this project)
+app/
+├── components/          # Reusable UI components (Shadcn UI components go here)
+├── hooks/              # Custom React hooks
+├── lib/                # Utility functions and configurations
+├── types/              # TypeScript type definitions
+└── [feature]/          # Feature-specific pages and components
+    ├── page.tsx
+    └── components/
 
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
+tests/
+├── unit/               # Unit tests for utilities, hooks, business logic
+├── e2e/                # Playwright E2E tests for user flows
+└── __mocks__/          # Mock data and fixtures
 
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
+# [REMOVE IF UNUSED] Option 3: Web application - Next.js Pages Router (legacy)
+pages/
+├── api/
+├── _app.tsx
+└── index.tsx
+
+# [REMOVE IF UNUSED] Option 4: Mobile + API (when "iOS/Android" detected)
 api/
 └── [same as backend above]
 
