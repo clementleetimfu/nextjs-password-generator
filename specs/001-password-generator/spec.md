@@ -126,14 +126,14 @@ A user wants a comfortable viewing experience and needs to use the application o
 
 ### Edge Cases
 
-- What happens when the user toggles all character type options off in password generation?
-- How does the system handle network errors when checking for breaches via the Have I Been Pwned API?
-- What happens when the user tries to copy an empty credential?
-- How does the system behave when the browser's clipboard API is not available or permission is denied?
-- What happens when the user rapidly clicks the refresh button multiple times?
-- How does the system handle very long passphrases on small mobile screens?
-- What happens when the Have I Been Pwned API rate limits are exceeded?
-- How does the system display strength indicators for credentials at boundary values (e.g., 8-character password, 3-digit PIN, 4-word passphrase)?
+- **EC-001**: System MUST prevent password generation when all character type options are toggled off
+- **EC-002**: System MUST handle network errors when checking for breaches via the Have I Been Pwned API and display user-friendly error messages
+- **EC-003**: System MUST prevent copying empty credentials and display error message
+- **EC-004**: System MUST handle browser clipboard API unavailability or permission denial gracefully with user-friendly error message
+- **EC-005**: System MUST debounce rapid refresh button clicks (minimum 500ms interval) to prevent excessive regeneration
+- **EC-006**: System MUST handle very long passphrases on small mobile screens with appropriate wrapping or truncation
+- **EC-007**: System MUST handle Have I Been Pwned API rate limit exceeded errors gracefully with user-friendly message
+- **EC-008**: System MUST display strength indicators correctly for credentials at boundary values (8-character password, 3-digit PIN, 4-word passphrase)
 - Note: No formal accessibility requirements are specified for this application
 
 ## Requirements *(mandatory)*

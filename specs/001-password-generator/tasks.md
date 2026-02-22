@@ -225,16 +225,28 @@
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T091 [P] Documentation updates in README.md
-- [ ] T092 [P] Code cleanup and refactoring
-- [ ] T093 [P] Performance optimization across all stories
-- [ ] T094 [P] Accessibility improvements (keyboard navigation, ARIA labels)
-- [ ] T095 [P] Security hardening (input validation, XSS prevention)
-- [ ] T096 [P] Run full test suite (unit + E2E) and ensure all tests pass
-- [ ] T097 [P] Run ESLint and fix all issues
-- [ ] T098 [P] Run Prettier and format all files
-- [ ] T099 [P] Verify TypeScript compilation with no errors
-- [ ] T100 [P] Test application on actual devices (desktop, tablet, mobile)
+- [ ] T091 [P] Implement edge case handling for all-toggles-off in password generation (EC-001)
+- [ ] T092 [P] Implement edge case handling for network errors in breach check (EC-002)
+- [ ] T093 [P] Implement edge case handling for empty credential copy (EC-003)
+- [ ] T094 [P] Implement edge case handling for clipboard API unavailability (EC-004)
+- [ ] T095 [P] Implement edge case handling for rapid refresh clicks with debouncing (EC-005)
+- [ ] T096 [P] Implement edge case handling for long passphrases on mobile screens (EC-006)
+- [ ] T097 [P] Implement edge case handling for API rate limit exceeded (EC-007)
+- [ ] T098 [P] Implement edge case handling for strength indicators at boundary values (EC-008)
+- [ ] T099 [P] Documentation updates in README.md
+- [ ] T100 [P] Code cleanup and refactoring
+- [ ] T101 [P] Performance optimization across all stories
+- [ ] T102 [P] Accessibility improvements (keyboard navigation, ARIA labels)
+- [ ] T103 [P] Security hardening (input validation, XSS prevention)
+- [ ] T104 [P] Run full test suite (unit + E2E) and ensure all tests pass
+- [ ] T105 [P] Run ESLint and fix all issues
+- [ ] T106 [P] Run Prettier and format all files
+- [ ] T107 [P] Verify TypeScript compilation with no errors
+- [ ] T108 [P] Add performance test for password generation time (SC-001) in tests/unit/crypto.test.ts
+- [ ] T109 [P] Add performance test for mode switch time (SC-002) in tests/e2e/ui-ux.spec.ts
+- [ ] T110 [P] Add performance test for breach check time (SC-005) in tests/unit/breach-check.test.ts
+- [ ] T111 [P] Add performance test for theme toggle time (SC-008) in tests/e2e/ui-ux.spec.ts
+- [ ] T112 [P] Test application on actual devices (desktop, tablet, mobile)
 
 ---
 

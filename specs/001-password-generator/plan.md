@@ -12,7 +12,7 @@ Build a secure password generator web application with three generation modes (p
 ## Technical Context
 
 **Language/Version**: TypeScript (strict mode) with Next.js (App Router, latest stable version)
-**Primary Dependencies**: Next.js, React, Tailwind CSS, Shadcn UI (Radix UI primitives), crypto-js or Web Crypto API for secure random generation
+**Primary Dependencies**: Next.js, React, Tailwind CSS, Shadcn UI (Radix UI primitives), Web Crypto API for secure random generation
 **Storage**: Browser localStorage for theme persistence; EFF Long Wordlist (7776 words) bundled with application
 **Testing**: Jest/Vitest for unit tests, Playwright for E2E tests
 **Target Platform**: Web (browser) - can be deployed to Vercel or any Node.js hosting
