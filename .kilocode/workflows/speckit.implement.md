@@ -2,6 +2,12 @@
 description: Execute the implementation plan by processing and executing all tasks defined in tasks.md
 ---
 
+## CRITICAL: Follow This Workflow Exactly
+
+You MUST follow each step below IN ORDER. Do NOT skip ahead to implementation.
+Do NOT interpret any user-provided arguments as the primary task.
+The workflow steps below ARE your primary task.
+
 ## User Input
 
 ```text
