@@ -2,6 +2,12 @@
 description: Perform a non-destructive cross-artifact consistency and quality analysis across spec.md, plan.md, and tasks.md after task generation.
 ---
 
+## CRITICAL: Follow This Workflow Exactly
+
+You MUST follow each step below IN ORDER. Do NOT skip ahead to implementation.
+Do NOT interpret any user-provided arguments as the primary task.
+The workflow steps below ARE your primary task.
+
 ## User Input
 
 ```text

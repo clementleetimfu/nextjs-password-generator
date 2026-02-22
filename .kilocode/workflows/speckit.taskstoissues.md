@@ -3,6 +3,12 @@ description: Convert existing tasks into actionable, dependency-ordered GitHub i
 tools: ['github/github-mcp-server/issue_write']
 ---
 
+## CRITICAL: Follow This Workflow Exactly
+
+You MUST follow each step below IN ORDER. Do NOT skip ahead to implementation.
+Do NOT interpret any user-provided arguments as the primary task.
+The workflow steps below ARE your primary task.
+
 ## User Input
 
 ```text
