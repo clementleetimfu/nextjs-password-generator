@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { generatePassword } from '@/lib/crypto';
 import { calculatePasswordStrength } from '@/lib/strength';
 import type { PasswordState } from '@/types/generator';
@@ -63,10 +63,10 @@ export function usePasswordGenerator() {
     }));
   }, []);
 
-  // Generate initial password on mount
-  useState(() => {
+  // Generate initial password on mount (client-side only to avoid hydration mismatch)
+  useEffect(() => {
     generate();
-  });
+  }, []);
 
   return {
     state,

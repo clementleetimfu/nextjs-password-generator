@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { generatePin } from '@/lib/crypto';
 import { calculatePinStrength } from '@/lib/strength';
 import type { PinState } from '@/types/generator';
@@ -38,10 +38,10 @@ export function usePinGenerator() {
     }));
   }, []);
 
-  // Generate initial PIN on mount
-  useState(() => {
+  // Generate initial PIN on mount (client-side only to avoid hydration mismatch)
+  useEffect(() => {
     generate();
-  });
+  }, []);
 
   return {
     state,
