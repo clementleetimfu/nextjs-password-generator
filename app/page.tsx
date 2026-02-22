@@ -1,63 +1,133 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { toast } from 'sonner';
+import { PasswordDisplay } from '@/components/password-generator/password-display';
+import { PasswordControls } from '@/components/password-generator/password-controls';
+import { PinControls } from '@/components/password-generator/pin-controls';
+import { PassphraseControls } from '@/components/password-generator/passphrase-controls';
+import { ThemeToggle } from '@/components/password-generator/theme-toggle';
+import { usePasswordGenerator } from '@/hooks/use-password-generator';
+import { usePinGenerator } from '@/hooks/use-pin-generator';
+import { usePassphraseGenerator } from '@/hooks/use-passphrase-generator';
+import { useBreachCheck } from '@/hooks/use-breach-check';
+import { useTheme } from '@/hooks/use-theme';
+import type { CredentialType } from '@/types/generator';
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState<CredentialType>('password');
+  const { mode, toggle } = useTheme();
+  const { performBreachCheck } = useBreachCheck();
+
+  // Password generator
+  const passwordGenerator = usePasswordGenerator();
+  const handlePasswordBreachCheck = async () => {
+    performBreachCheck(passwordGenerator.state.value);
+  };
+
+  // PIN generator
+  const pinGenerator = usePinGenerator();
+  const handlePinBreachCheck = async () => {
+    performBreachCheck(pinGenerator.state.value);
+  };
+
+  // Passphrase generator
+  const passphraseGenerator = usePassphraseGenerator();
+  const handlePassphraseBreachCheck = async () => {
+    performBreachCheck(passphraseGenerator.state.value);
+  };
+
+  const handleCopy = () => {
+    toast.success('Copied to clipboard!');
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="min-h-screen bg-zinc-50 dark:bg-black font-sans">
+      <ThemeToggle mode={mode} onToggle={toggle} />
+
+      <main className="flex min-h-screen flex-col items-center justify-center px-4 py-16">
+        <div className="w-full max-w-4xl">
+          <h1 className="text-4xl font-bold text-center mb-8 text-zinc-900 dark:text-zinc-50">
+            Password Generator
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+          <Tabs
+            value={activeTab}
+            onValueChange={(value) => setActiveTab(value as CredentialType)}
+            className="w-full"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <TabsList className="grid w-full grid-cols-1 md:grid-cols-3">
+              <TabsTrigger value="password">Password</TabsTrigger>
+              <TabsTrigger value="pin">PIN</TabsTrigger>
+              <TabsTrigger value="passphrase">Passphrase</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="password" className="mt-6">
+              <div className="flex flex-col items-center gap-8">
+                <PasswordDisplay
+                  value={passwordGenerator.state.value}
+                  type="password"
+                  strength={passwordGenerator.state.strength}
+                  breachCheck={passwordGenerator.state.breachCheck}
+                  breachCount={passwordGenerator.state.breachCount}
+                  onRefresh={passwordGenerator.generate}
+                  onCopy={handleCopy}
+                  onBreachCheck={handlePasswordBreachCheck}
+                />
+                <PasswordControls
+                  length={passwordGenerator.state.length}
+                  includeDigits={passwordGenerator.state.includeDigits}
+                  includeSymbols={passwordGenerator.state.includeSymbols}
+                  includeUppercase={passwordGenerator.state.includeUppercase}
+                  onLengthChange={passwordGenerator.setLength}
+                  onToggleDigits={passwordGenerator.toggleDigits}
+                  onToggleSymbols={passwordGenerator.toggleSymbols}
+                  onToggleUppercase={passwordGenerator.toggleUppercase}
+                />
+              </div>
+            </TabsContent>
+
+            <TabsContent value="pin" className="mt-6">
+              <div className="flex flex-col items-center gap-8">
+                <PasswordDisplay
+                  value={pinGenerator.state.value}
+                  type="pin"
+                  strength={pinGenerator.state.strength}
+                  breachCheck={pinGenerator.state.breachCheck}
+                  breachCount={pinGenerator.state.breachCount}
+                  onRefresh={pinGenerator.generate}
+                  onCopy={handleCopy}
+                  onBreachCheck={handlePinBreachCheck}
+                />
+                <PinControls
+                  length={pinGenerator.state.length}
+                  onLengthChange={pinGenerator.setLength}
+                />
+              </div>
+            </TabsContent>
+
+            <TabsContent value="passphrase" className="mt-6">
+              <div className="flex flex-col items-center gap-8">
+                <PasswordDisplay
+                  value={passphraseGenerator.state.value}
+                  type="passphrase"
+                  strength={passphraseGenerator.state.strength}
+                  breachCheck={passphraseGenerator.state.breachCheck}
+                  breachCount={passphraseGenerator.state.breachCount}
+                  onRefresh={passphraseGenerator.generate}
+                  onCopy={handleCopy}
+                  onBreachCheck={handlePassphraseBreachCheck}
+                />
+                <PassphraseControls
+                  wordCount={passphraseGenerator.state.wordCount}
+                  separator={passphraseGenerator.state.separator}
+                  onWordCountChange={passphraseGenerator.setWordCount}
+                  onSeparatorChange={passphraseGenerator.setSeparator}
+                />
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
     </div>
