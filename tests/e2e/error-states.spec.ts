@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Error States E2E Tests', () => {
-  test('should handle clipboard copy error gracefully', async ({ page }) => {
+  test('should handle clipboard copy error gracefully', async ({ page, browserName }) => {
+    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    
     await page.goto('http://localhost:3000');
     
     // Mock clipboard error
@@ -98,7 +100,9 @@ test.describe('Error States E2E Tests', () => {
     await expect(breachCheckButton).toBeEnabled({ timeout: 5000 });
   });
 
-  test('should show error message on clipboard error', async ({ page }) => {
+  test('should show error message on clipboard error', async ({ page, browserName }) => {
+    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    
     await page.goto('http://localhost:3000');
     
     // Mock clipboard error
@@ -139,7 +143,9 @@ test.describe('Error States E2E Tests', () => {
     await expect(breachCheckButton).toBeEnabled({ timeout: 5000 });
   });
 
-  test('should allow retry after clipboard error', async ({ page }) => {
+  test('should allow retry after clipboard error', async ({ page, browserName }) => {
+    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    
     await page.goto('http://localhost:3000');
     
     // Mock clipboard error

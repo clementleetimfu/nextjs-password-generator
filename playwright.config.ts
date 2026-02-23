@@ -31,28 +31,28 @@ export default defineConfig({
       name: 'webkit',
       use: { 
         ...devices['Desktop Safari'],
-        permissions: ['clipboard-read', 'clipboard-write'],
+        permissions: ['clipboard-read'],
       },
     },
     {
       name: 'Mobile Chrome',
       use: { 
         ...devices['Pixel 5'],
-        permissions: ['clipboard-read', 'clipboard-write'],
+        permissions: ['clipboard-read'],
       },
     },
     {
       name: 'Mobile Safari',
       use: { 
         ...devices['iPhone 12'],
-        permissions: ['clipboard-read', 'clipboard-write'],
+        permissions: ['clipboard-read'],
       },
     },
     {
       name: 'Tablet',
       use: { 
         ...devices['iPad Pro'],
-        permissions: ['clipboard-read', 'clipboard-write'],
+        permissions: ['clipboard-read'],
       },
     },
   ],

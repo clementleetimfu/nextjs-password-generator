@@ -49,7 +49,9 @@ test.describe('PIN Generation E2E Tests', () => {
     expect(newPin).toMatch(/^\d+$/);
   });
 
-  test('T038: should copy PIN to clipboard', async ({ page }) => {
+  test('T038: should copy PIN to clipboard', async ({ page, browserName }) => {
+    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    
     await page.goto('http://localhost:3000');
     
     // Click PIN tab
@@ -312,7 +314,9 @@ test.describe('PIN Generation E2E Tests', () => {
     expect(uniquePins.size).toBe(5);
   });
 
-  test('should handle multiple copy clicks for PIN', async ({ page }) => {
+  test('should handle multiple copy clicks for PIN', async ({ page, browserName }) => {
+    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    
     await page.goto('http://localhost:3000');
     
     // Click PIN tab
@@ -400,7 +404,9 @@ test.describe('PIN Generation E2E Tests', () => {
     expect(pin).toMatch(/^\d+$/);
   });
 
-  test('should show toast notification on PIN copy', async ({ page }) => {
+  test('should show toast notification on PIN copy', async ({ page, browserName }) => {
+    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    
     await page.goto('http://localhost:3000');
     
     // Click PIN tab

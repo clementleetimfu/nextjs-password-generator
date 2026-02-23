@@ -32,7 +32,9 @@ test.describe('Password Generation E2E Tests', () => {
     expect(newPassword).not.toBe(initialPassword);
   });
 
-  test('T021: should copy password to clipboard', async ({ page }) => {
+  test('T021: should copy password to clipboard', async ({ page, browserName }) => {
+    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    
     await page.goto('http://localhost:3000');
     
     // Get password text
@@ -45,7 +47,9 @@ test.describe('Password Generation E2E Tests', () => {
     await copyButton.click();
   });
 
-  test('T022: should show toast notification on copy', async ({ page }) => {
+  test('T022: should show toast notification on copy', async ({ page, browserName }) => {
+    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    
     await page.goto('http://localhost:3000');
     
     // Click copy button
@@ -362,7 +366,9 @@ test.describe('Password Generation E2E Tests', () => {
     expect(uniquePasswords.size).toBe(5);
   });
 
-  test('should handle multiple copy clicks', async ({ page }) => {
+  test('should handle multiple copy clicks', async ({ page, browserName }) => {
+    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    
     await page.goto('http://localhost:3000');
     
     const copyButton = page.locator('[data-testid="copy-button"]');

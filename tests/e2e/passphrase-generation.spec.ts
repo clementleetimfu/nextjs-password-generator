@@ -51,7 +51,9 @@ test.describe('Passphrase Generation E2E Tests', () => {
     expect(newPassphrase).not.toBe(initialPassphrase);
   });
 
-  test('T051: should copy passphrase to clipboard', async ({ page }) => {
+  test('T051: should copy passphrase to clipboard', async ({ page, browserName }) => {
+    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    
     await page.goto('http://localhost:3000');
     
     // Switch to passphrase tab
@@ -418,7 +420,9 @@ test.describe('Passphrase Generation E2E Tests', () => {
     expect(uniquePassphrases.size).toBe(5);
   });
 
-  test('should handle multiple copy clicks for passphrase', async ({ page }) => {
+  test('should handle multiple copy clicks for passphrase', async ({ page, browserName }) => {
+    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    
     await page.goto('http://localhost:3000');
     
     // Switch to passphrase tab
@@ -532,7 +536,9 @@ test.describe('Passphrase Generation E2E Tests', () => {
     expect(passphrase).toBeTruthy();
   });
 
-  test('should show toast notification on passphrase copy', async ({ page }) => {
+  test('should show toast notification on passphrase copy', async ({ page, browserName }) => {
+    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    
     await page.goto('http://localhost:3000');
     
     // Switch to passphrase tab
