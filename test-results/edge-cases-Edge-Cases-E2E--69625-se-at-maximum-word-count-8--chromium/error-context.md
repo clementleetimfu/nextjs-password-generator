@@ -1,0 +1,44 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - button "Toggle dark mode" [ref=e3]:
+      - img
+    - main [ref=e4]:
+      - generic [ref=e5]:
+        - heading "Password Generator" [level=1] [ref=e6]
+        - generic [ref=e7]:
+          - tablist [ref=e8]:
+            - tab "Password" [ref=e9]
+            - tab "PIN" [ref=e10]
+            - tab "Passphrase" [active] [selected] [ref=e11]
+          - tabpanel "Passphrase" [ref=e12]:
+            - generic [ref=e13]:
+              - generic [ref=e14]:
+                - paragraph [ref=e17]: uninstall-ashy-raffle-overbill
+                - generic [ref=e21]: MODERATE
+                - generic [ref=e22]:
+                  - button "Refresh" [ref=e23]
+                  - button "Copy" [ref=e24]
+                  - button "Check Breach" [ref=e25]
+              - generic [ref=e26]:
+                - generic [ref=e27]:
+                  - generic [ref=e29]: "Word Count: 4"
+                  - slider [ref=e33]
+                  - generic [ref=e34]:
+                    - generic [ref=e35]: "4"
+                    - generic [ref=e36]: "10"
+                - generic [ref=e37]:
+                  - heading "Separator" [level=3] [ref=e38]
+                  - tablist [ref=e40]:
+                    - tab "Space" [ref=e41]
+                    - tab "Hyphen" [selected] [ref=e42]
+                    - tab "Underscore" [ref=e43]
+                    - tab "Period" [ref=e44]
+                - paragraph [ref=e46]: Passphrases use the EFF Long Wordlist (7776 common words) for memorable security.
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e52] [cursor=pointer]:
+    - img [ref=e53]
+  - alert [ref=e56]
+```

@@ -1,0 +1,48 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - button "Toggle dark mode" [ref=e3]:
+      - img
+    - main [ref=e4]:
+      - generic [ref=e5]:
+        - heading "Password Generator" [level=1] [ref=e6]
+        - generic [ref=e7]:
+          - tablist [ref=e8]:
+            - tab "Password" [selected] [ref=e9]
+            - tab "PIN" [ref=e10]
+            - tab "Passphrase" [ref=e11]
+          - tabpanel "Password" [ref=e12]:
+            - generic [ref=e13]:
+              - generic [ref=e14]:
+                - paragraph [ref=e17]: ntnihjrx
+                - generic [ref=e21]: WEAK
+                - generic [ref=e22]:
+                  - button "Refresh" [ref=e23]
+                  - button "Copy" [ref=e24]
+                  - button "Check Breach" [ref=e25]
+              - generic [ref=e26]:
+                - generic [ref=e27]:
+                  - generic [ref=e29]: "Length: 8"
+                  - slider [ref=e33]
+                  - generic [ref=e34]:
+                    - generic [ref=e35]: "8"
+                    - generic [ref=e36]: "50"
+                - generic [ref=e37]:
+                  - heading "Character Types" [level=3] [ref=e38]
+                  - generic [ref=e39]:
+                    - generic [ref=e40]:
+                      - generic [ref=e41]: Include Digits (0-9)
+                      - switch [ref=e42] [cursor=pointer]
+                    - generic [ref=e43]:
+                      - generic [ref=e44]: Include Symbols (!@#$%^&*)
+                      - switch [ref=e45] [cursor=pointer]
+                    - generic [ref=e46]:
+                      - generic [ref=e47]: Include Uppercase (A-Z)
+                      - switch [ref=e48] [cursor=pointer]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=e54] [cursor=pointer]:
+    - img [ref=e55]
+  - alert [ref=e58]
+```
