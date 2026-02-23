@@ -50,7 +50,7 @@ export default function Home() {
       <ThemeToggle mode={mode} onToggle={toggle} /> 
 
       <main className="flex min-h-screen flex-col items-center justify-center px-4 py-16" data-testid="main-content">
-        <div className="w-full max-w-4xl bg-card rounded-2xl shadow-xl dark:shadow-zinc-900/30 p-6 md:p-8">
+        <div className="w-full max-w-4xl bg-card rounded-2xl shadow-xl dark:shadow-black/50 p-6 md:p-8">
           <h1 className="text-4xl font-bold text-center mb-8 text-zinc-900 dark:text-zinc-50">
             Password Generator
           </h1> 
