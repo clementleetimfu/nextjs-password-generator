@@ -32,7 +32,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       position="top-center"
       toastOptions={{
         classNames: {
-          toast: "justify-center items-center text-center",
+          toast: "justify-center items-center text-center max-w-[80vw] sm:max-w-md",
         },
         style: {
           background: 'var(--muted)',
