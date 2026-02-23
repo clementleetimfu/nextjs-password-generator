@@ -38,7 +38,7 @@ export default defineConfig({
       name: 'Mobile Chrome',
       use: { 
         ...devices['Pixel 5'],
-        permissions: ['clipboard-read'],
+        permissions: ['clipboard-read', 'clipboard-write'],
       },
     },
     {
@@ -52,7 +52,7 @@ export default defineConfig({
       name: 'Tablet',
       use: { 
         ...devices['iPad Pro'],
-        permissions: ['clipboard-read'],
+        permissions: ['clipboard-read', 'clipboard-write'],
       },
     },
   ],

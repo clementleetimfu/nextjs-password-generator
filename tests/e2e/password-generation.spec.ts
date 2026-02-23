@@ -33,7 +33,7 @@ test.describe('Password Generation E2E Tests', () => {
   });
 
   test('T021: should copy password to clipboard', async ({ page, browserName }) => {
-    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    test.skip(['firefox', 'webkit', 'Mobile Safari'].includes(browserName), 'clipboard-write requires Chromium');
     
     await page.goto('http://localhost:3000');
     
@@ -48,7 +48,7 @@ test.describe('Password Generation E2E Tests', () => {
   });
 
   test('T022: should show toast notification on copy', async ({ page, browserName }) => {
-    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    test.skip(['firefox', 'webkit', 'Mobile Safari'].includes(browserName), 'clipboard-write requires Chromium');
     
     await page.goto('http://localhost:3000');
     
@@ -367,7 +367,7 @@ test.describe('Password Generation E2E Tests', () => {
   });
 
   test('should handle multiple copy clicks', async ({ page, browserName }) => {
-    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    test.skip(['firefox', 'webkit', 'Mobile Safari'].includes(browserName), 'clipboard-write requires Chromium');
     
     await page.goto('http://localhost:3000');
     

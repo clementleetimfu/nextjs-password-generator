@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Error States E2E Tests', () => {
   test('should handle clipboard copy error gracefully', async ({ page, browserName }) => {
-    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    test.skip(['firefox', 'webkit', 'Mobile Safari'].includes(browserName), 'clipboard-write requires Chromium');
     
     await page.goto('http://localhost:3000');
     
@@ -101,7 +101,7 @@ test.describe('Error States E2E Tests', () => {
   });
 
   test('should show error message on clipboard error', async ({ page, browserName }) => {
-    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    test.skip(['firefox', 'webkit', 'Mobile Safari'].includes(browserName), 'clipboard-write requires Chromium');
     
     await page.goto('http://localhost:3000');
     
@@ -144,7 +144,7 @@ test.describe('Error States E2E Tests', () => {
   });
 
   test('should allow retry after clipboard error', async ({ page, browserName }) => {
-    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    test.skip(['firefox', 'webkit', 'Mobile Safari'].includes(browserName), 'clipboard-write requires Chromium');
     
     await page.goto('http://localhost:3000');
     

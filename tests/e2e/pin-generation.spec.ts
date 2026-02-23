@@ -50,7 +50,7 @@ test.describe('PIN Generation E2E Tests', () => {
   });
 
   test('T038: should copy PIN to clipboard', async ({ page, browserName }) => {
-    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    test.skip(['firefox', 'webkit', 'Mobile Safari'].includes(browserName), 'clipboard-write requires Chromium');
     
     await page.goto('http://localhost:3000');
     
@@ -315,7 +315,7 @@ test.describe('PIN Generation E2E Tests', () => {
   });
 
   test('should handle multiple copy clicks for PIN', async ({ page, browserName }) => {
-    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    test.skip(['firefox', 'webkit', 'Mobile Safari'].includes(browserName), 'clipboard-write requires Chromium');
     
     await page.goto('http://localhost:3000');
     
@@ -405,7 +405,7 @@ test.describe('PIN Generation E2E Tests', () => {
   });
 
   test('should show toast notification on PIN copy', async ({ page, browserName }) => {
-    test.skip(browserName !== 'chromium', 'clipboard-write is only supported in Chromium');
+    test.skip(['firefox', 'webkit', 'Mobile Safari'].includes(browserName), 'clipboard-write requires Chromium');
     
     await page.goto('http://localhost:3000');
     
