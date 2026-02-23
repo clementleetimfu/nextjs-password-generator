@@ -46,7 +46,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background dark:bg-black font-sans">
+    <div className="min-h-screen bg-background font-sans">
       <ThemeToggle mode={mode} onToggle={toggle} /> 
 
       <main className="flex min-h-screen flex-col items-center justify-center px-4 py-16" data-testid="main-content">
