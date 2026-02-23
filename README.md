@@ -32,8 +32,9 @@ A secure, modern password generator built with Next.js 16, featuring password, P
 - **User Experience**
   - Light/dark mode toggle with persisted preference
   - Responsive design (desktop, tablet, mobile)
-  - Toast notifications for user actions
+  - Toast notifications centered at top for better visibility
   - One-click copy to clipboard
+  - Consistent muted background theme across all components
 
 ## Screenshots
 
@@ -65,7 +66,7 @@ A secure, modern password generator built with Next.js 16, featuring password, P
 | Language | [TypeScript 5](https://www.typescriptlang.org/) (strict mode) |
 | Security | [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) |
 | Testing | [Vitest 4](https://vitest.dev/), [Playwright](https://playwright.dev/) |
-| Notifications | [Sonner](https://sonner.emilkowal.ski/) |
+| Notifications | [Sonner](https://sonner.emilkowal.ski/) via [Shadcn UI](https://ui.shadcn.com/) |
 
 ## Getting Started
 
@@ -122,23 +123,25 @@ A secure, modern password generator built with Next.js 16, featuring password, P
 
 ```
 ├── app/                          # Next.js App Router
-│   ├── api/                      # API routes (breach-check)
-│   ├── components/               # React components
-│   │   ├── password-generator/   # Domain components
-│   │   └── ui/                   # Shadcn UI components
-│   ├── hooks/                    # Custom React hooks
-│   ├── lib/                      # Utility functions and core logic
-│   ├── types/                    # TypeScript definitions
-│   ├── layout.tsx                # Root layout
-│   └── page.tsx                  # Home page
+│   ├── api/                     # API routes
+│   │   └── breach-check/        # Breach check API
+│   ├── components/              # React components
+│   │   ├── password-generator/  # Domain components
+│   │   └── ui/                 # Shadcn UI components
+│   ├── hooks/                   # Custom React hooks
+│   ├── lib/                    # Utility functions and core logic
+│   ├── types/                  # TypeScript definitions
+│   ├── layout.tsx               # Root layout
+│   └── page.tsx                 # Home page
 ├── components/                   # Shared UI components (Shadcn)
-├── lib/                          # Shared utilities (cn function)
+├── lib/                         # Shared utilities (cn function)
 ├── tests/
-│   ├── __mocks__/                # Test mocks
-│   ├── unit/                     # Vitest unit tests
-│   └── e2e/                      # Playwright E2E tests
-├── specs/                        # Feature specifications
-└── screenshots/                  # Application screenshots
+│   ├── setup.ts                # Test setup and mocks
+│   ├── test-helpers.ts         # Test utilities
+│   ├── unit/                   # Vitest unit tests
+│   └── e2e/                    # Playwright E2E tests
+├── specs/                       # Feature specifications
+└── screenshots/                 # Application screenshots
 ```
 
 ## Available Scripts
