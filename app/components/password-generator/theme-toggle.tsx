@@ -12,7 +12,7 @@ export function ThemeToggle({ mode, onToggle }: ThemeToggleProps) {
       onClick={onToggle}
       variant="outline"
       size="icon"
-      className="fixed top-4 right-4 z-50"
+      className="fixed top-4 right-4 z-50 bg-muted hover:bg-muted/80"
       aria-label={`Toggle ${mode === 'light' ? 'dark' : 'light'} mode`}
       data-testid="theme-toggle"
     >

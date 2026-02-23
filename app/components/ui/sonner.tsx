@@ -2,25 +2,21 @@
 
 import { useState, useEffect } from "react"
 import { Toaster as Sonner } from "sonner"
-import { cn } from "@/lib/utils"
 
 type ToasterProps = React.ComponentProps<typeof Sonner>
 
-const Toaster = ({ className, ...props }: ToasterProps) => {
+const Toaster = ({ ...props }: ToasterProps) => {
   const [theme, setTheme] = useState<"light" | "dark">("light")
 
-  // Detect theme from document classList (managed by custom useTheme hook)
   useEffect(() => {
-    const updateTheme = () => {
+    const isDark = document.documentElement.classList.contains("dark")
+    setTheme(isDark ? "dark" : "light")
+
+    const observer = new MutationObserver(() => {
       const isDark = document.documentElement.classList.contains("dark")
       setTheme(isDark ? "dark" : "light")
-    }
+    })
 
-    // Initial check
-    updateTheme()
-
-    // Listen for class changes
-    const observer = new MutationObserver(updateTheme)
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ["class"],
@@ -31,20 +27,17 @@ const Toaster = ({ className, ...props }: ToasterProps) => {
 
   return (
     <Sonner
+      theme={theme}
+      className="toaster group"
       position="top-center"
-      invert={false}
-      theme={theme as ToasterProps["theme"]}
-      className={cn("toaster group", className)}
       toastOptions={{
         classNames: {
-          toast:
-            "group toast group-[.toaster]:!bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg justify-center items-center text-center max-w-[80vw] sm:max-w-md",
-          title: "text-center w-full",
-          description: "group-[.toast]:text-muted-foreground text-center w-full",
-          actionButton:
-            "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
-          cancelButton:
-            "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+          toast: "justify-center items-center text-center",
+        },
+        style: {
+          background: 'var(--muted)',
+          color: 'var(--foreground)',
+          border: 'var(--border)',
         },
       }}
       {...props}
