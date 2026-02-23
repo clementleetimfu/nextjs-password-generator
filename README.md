@@ -1,9 +1,8 @@
 # Password Generator
-[![Next.js](https://img.shields.io/badge/Next.js-16.1.6-black?logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.2.3-61DAFB?logo=react)](https://reactjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.2-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
 
 A secure, modern password generator built with Next.js 16, featuring password, PIN, and passphrase generation with cryptographically secure random number generation and breach checking via Have I Been Pwned API.
 
@@ -65,7 +64,7 @@ A secure, modern password generator built with Next.js 16, featuring password, P
 | Components | [Shadcn UI](https://ui.shadcn.com/) (Radix UI primitives) |
 | Language | [TypeScript 5](https://www.typescriptlang.org/) (strict mode) |
 | Security | [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) |
-| Testing | [Vitest](https://vitest.dev/), [Playwright](https://playwright.dev/) |
+| Testing | [Vitest 4](https://vitest.dev/), [Playwright](https://playwright.dev/) |
 | Notifications | [Sonner](https://sonner.emilkowal.ski/) |
 
 ## Getting Started
@@ -123,19 +122,22 @@ A secure, modern password generator built with Next.js 16, featuring password, P
 
 ```
 ├── app/                          # Next.js App Router
+│   ├── api/                      # API routes (breach-check)
 │   ├── components/               # React components
 │   │   ├── password-generator/   # Domain components
 │   │   └── ui/                   # Shadcn UI components
 │   ├── hooks/                    # Custom React hooks
-│   ├── lib/                      # Utility functions
+│   ├── lib/                      # Utility functions and core logic
 │   ├── types/                    # TypeScript definitions
 │   ├── layout.tsx                # Root layout
 │   └── page.tsx                  # Home page
-├── components/                   # Shared UI components
-├── lib/                          # Shared utilities
+├── components/                   # Shared UI components (Shadcn)
+├── lib/                          # Shared utilities (cn function)
 ├── tests/
+│   ├── __mocks__/                # Test mocks
 │   ├── unit/                     # Vitest unit tests
 │   └── e2e/                      # Playwright E2E tests
+├── specs/                        # Feature specifications
 └── screenshots/                  # Application screenshots
 ```
 
@@ -180,4 +182,4 @@ The breach check feature uses the [Have I Been Pwned API](https://haveibeenpwned
 
 ## License
 
-This project is licensed under the MIT License
+This project is unlicensed.
