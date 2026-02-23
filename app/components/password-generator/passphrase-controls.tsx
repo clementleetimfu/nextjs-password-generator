@@ -51,11 +51,11 @@ export function PassphraseControls({
           className="w-full"
           data-testid="separator-selector"
         >
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
-            <TabsTrigger value="space">Space</TabsTrigger>
-            <TabsTrigger value="hyphen">Hyphen</TabsTrigger>
-            <TabsTrigger value="underscore">Underscore</TabsTrigger>
-            <TabsTrigger value="period">Period</TabsTrigger>
+          <TabsList className="flex w-full gap-1">
+            <TabsTrigger value="space" className="flex-1 h-7 text-xs">Space</TabsTrigger>
+            <TabsTrigger value="hyphen" className="flex-1 h-7 text-xs">Hyphen</TabsTrigger>
+            <TabsTrigger value="underscore" className="flex-1 h-7 text-xs">Underscore</TabsTrigger>
+            <TabsTrigger value="period" className="flex-1 h-7 text-xs">Period</TabsTrigger>
           </TabsList>
         </Tabs>
       </div>
