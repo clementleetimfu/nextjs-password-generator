@@ -10,13 +10,6 @@ interface PassphraseControlsProps {
   onSeparatorChange: (separator: Separator) => void;
 }
 
-const separatorLabels: Record<Separator, string> = {
-  space: 'Space',
-  hyphen: 'Hyphen (-)',
-  underscore: 'Underscore (_)',
-  period: 'Period (.)',
-};
-
 export function PassphraseControls({
   wordCount,
   separator,
@@ -39,7 +32,6 @@ export function PassphraseControls({
           max={PASSPHRASE_CONSTRAINTS.MAX_WORDS}
           step={1}
           className="w-full"
-          data-testid="separator-selector"
           data-testid="word-count-slider"
         />
         <div className="flex justify-between text-xs text-zinc-500 dark:text-zinc-400">
@@ -57,6 +49,7 @@ export function PassphraseControls({
           value={separator}
           onValueChange={(value) => onSeparatorChange(value as Separator)}
           className="w-full"
+          data-testid="separator-selector"
         >
           <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
             <TabsTrigger value="space">Space</TabsTrigger>

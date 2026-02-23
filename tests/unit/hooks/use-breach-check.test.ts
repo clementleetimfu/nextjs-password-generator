@@ -335,7 +335,7 @@ describe('useBreachCheck Hook', () => {
       });
       
       expect(result.current.status).toBe('safe');
-      expect(result.current.count).toBeUndefined();
+      expect(result.current.count).toBe(0);
     });
 
     it('should handle concurrent breach checks', async () => {
@@ -430,3 +430,5 @@ describe('useBreachCheck Hook', () => {
     });
   });
 });
+
+

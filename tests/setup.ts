@@ -1,31 +1,16 @@
 import { vi, beforeEach, afterAll } from 'vitest';
 import '@testing-library/jest-dom';
+import { webcrypto } from 'node:crypto';
+import { createElement } from 'react';
 
-// Mock Web Crypto API for deterministic tests
-Object.defineProperty(global, 'crypto', {
-  value: {
-    getRandomValues: vi.fn((array: Uint8Array | Uint32Array) => {
-      // Use a predictable seed for testing
-      const values = array instanceof Uint8Array ? array : new Uint8Array(array.byteLength);
-      for (let i = 0; i < values.length; i++) {
-        values[i] = (i * 17) % 256;
-      }
-      return values;
-    }),
-    subtle: {
-      digest: vi.fn(async (algorithm: string, data: Uint8Array) => {
-        // Mock SHA-1 hash for testing
-        const hash = new Uint8Array(20);
-        for (let i = 0; i < hash.length; i++) {
-          hash[i] = (data[i % data.length] + i) % 256;
-        }
-        return hash;
-      }),
-    },
-  },
-  writable: true,
-  configurable: true,
-});
+// Ensure Web Crypto API exists in test runtime.
+if (!globalThis.crypto) {
+  Object.defineProperty(globalThis, 'crypto', {
+    value: webcrypto,
+    writable: true,
+    configurable: true,
+  });
+}
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -74,6 +59,10 @@ global.fetch = vi.fn();
 
 // Mock toast notification
 vi.mock('sonner', () => ({
+  Toaster: (props: Record<string, unknown>) => {
+    const { className, children, toastOptions, theme, ...rest } = props;
+    return createElement('div', { className, ...rest }, children);
+  },
   toast: {
     success: vi.fn(),
     error: vi.fn(),
@@ -93,10 +82,24 @@ vi.mock('@/lib/eff-wordlist', () => ({
     'banana',
     'cherry',
     'date',
-    'elderberry',
+    'diamond',
     'fig',
   ],
 }));
+
+// Radix UI uses ResizeObserver internally.
+if (!globalThis.ResizeObserver) {
+  class ResizeObserverMock {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  }
+  Object.defineProperty(globalThis, 'ResizeObserver', {
+    value: ResizeObserverMock,
+    writable: true,
+    configurable: true,
+  });
+}
 
 // Reset all mocks before each test
 beforeEach(() => {

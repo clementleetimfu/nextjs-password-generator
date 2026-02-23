@@ -1,3 +1,5 @@
+import { EFF_LONG_WORDLIST } from '@/lib/eff-wordlist';
+
 // Character sets
 export const LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';
 export const UPPERCASE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -65,22 +67,40 @@ export function generatePassword(
   includeSymbols: boolean,
   includeUppercase: boolean
 ): string {
-  // Build character set based on options
-  let charset = CHARACTER_SETS.lowercase
-  if (includeUppercase) charset += CHARACTER_SETS.uppercase
-  if (includeDigits) charset += CHARACTER_SETS.digits
-  if (includeSymbols) charset += CHARACTER_SETS.symbols
+  const requiredSets = [CHARACTER_SETS.lowercase]
+  if (includeUppercase) requiredSets.push(CHARACTER_SETS.uppercase)
+  if (includeDigits) requiredSets.push(CHARACTER_SETS.digits)
+  if (includeSymbols) requiredSets.push(CHARACTER_SETS.symbols)
 
-  // Generate random password using Web Crypto API
-  const array = new Uint32Array(length)
-  crypto.getRandomValues(array)
-  
-  let password = ''
-  for (let i = 0; i < length; i++) {
-    password += charset[array[i] % charset.length]
+  const charset = requiredSets.join('')
+  const chars: string[] = []
+
+  // Ensure at least one character from each enabled set.
+  for (const set of requiredSets) {
+    const pick = new Uint32Array(1)
+    crypto.getRandomValues(pick)
+    chars.push(set[pick[0] % set.length])
   }
 
-  return password
+  // Fill remaining characters from the full charset.
+  const remaining = Math.max(0, length - chars.length)
+  if (remaining > 0) {
+    const pool = new Uint32Array(remaining)
+    crypto.getRandomValues(pool)
+    for (let i = 0; i < remaining; i++) {
+      chars.push(charset[pool[i] % charset.length])
+    }
+  }
+
+  // Shuffle to avoid predictable required-set positions.
+  const shuffle = new Uint32Array(chars.length)
+  crypto.getRandomValues(shuffle)
+  for (let i = chars.length - 1; i > 0; i--) {
+    const j = shuffle[i] % (i + 1)
+    ;[chars[i], chars[j]] = [chars[j], chars[i]]
+  }
+
+  return chars.join('').slice(0, length)
 }
 
 // Generate a cryptographically secure random PIN
@@ -98,7 +118,6 @@ export function generatePin(length: number): string {
 
 // Generate a cryptographically secure random passphrase
 export function generatePassphrase(wordCount: number, separator: string): string {
-  const { EFF_LONG_WORDLIST } = require('./eff-wordlist')
   const array = new Uint32Array(wordCount)
   crypto.getRandomValues(array)
   

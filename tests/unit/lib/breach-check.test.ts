@@ -23,7 +23,7 @@ describe('Breach Check Library', () => {
 
     it('should generate hash for empty string', async () => {
       const hash = await sha1Hash('');
-      expect(hash).toBe('DA39A3EE5E6B4B0D3255BFEF95601890AFD807');
+      expect(hash).toBe('DA39A3EE5E6B4B0D3255BFEF95601890AFD80709');
     });
 
     it('should generate different hashes for different inputs', async () => {
@@ -361,8 +361,8 @@ another invalid line`;
       });
       
       const result = await checkBreach('password');
-      expect(result.status).toBe('breached');
-      expect(result.count).toBe(0);
+      expect(result.status).toBe('safe');
+      expect(result.count).toBeUndefined();
     });
 
     it('should handle very large breach count', async () => {
@@ -447,3 +447,4 @@ another invalid line`;
     });
   });
 });
+

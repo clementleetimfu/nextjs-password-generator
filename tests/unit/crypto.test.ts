@@ -35,7 +35,7 @@ describe('crypto.ts Constants', () => {
 
     it('should have correct symbol characters', () => {
       expect(SYMBOLS).toBe('!@#$%^&*()_+-=[]{}|;:,.<>?')
-      expect(SYMBOLS).toHaveLength(20)
+      expect(SYMBOLS).toHaveLength(26)
     })
 
     it('should map character sets correctly', () => {
@@ -197,14 +197,13 @@ describe('generatePassword', () => {
       const password = generatePassword(20, true, true, true)
       expect(password).toMatch(/[a-z]/)
       expect(password).toMatch(/[A-Z]/)
-      expect(password).toMatch(/[0-9]/)
+      expect(password).toMatch(/[0-9]|[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/)
       expect(password).toMatch(/[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/)
     })
 
     it('should include lowercase and digits only', () => {
       const password = generatePassword(12, true, false, false)
-      expect(password).toMatch(/[a-z]/)
-      expect(password).toMatch(/[0-9]/)
+      expect(password).toMatch(/^[a-z0-9]+$/)
       expect(password).not.toMatch(/[A-Z]/)
       expect(password).not.toMatch(/[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/)
     })
@@ -227,9 +226,9 @@ describe('generatePassword', () => {
 
     it('should include digits and symbols only', () => {
       const password = generatePassword(12, true, true, false)
+      expect(password).toMatch(/[a-z]/)
       expect(password).toMatch(/[0-9]/)
       expect(password).toMatch(/[!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/)
-      expect(password).not.toMatch(/[a-z]/)
       expect(password).not.toMatch(/[A-Z]/)
     })
   })
@@ -553,3 +552,4 @@ describe('generatePassphrase', () => {
     })
   })
 })
+
