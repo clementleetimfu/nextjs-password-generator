@@ -23,19 +23,22 @@ export default function Home() {
   // Password generator
   const passwordGenerator = usePasswordGenerator();
   const handlePasswordBreachCheck = async () => {
-    performBreachCheck(passwordGenerator.state.value);
+    const result = await performBreachCheck(passwordGenerator.state.value);
+    passwordGenerator.setBreachCheck(result.status, result.count);
   };
 
   // PIN generator
   const pinGenerator = usePinGenerator();
   const handlePinBreachCheck = async () => {
-    performBreachCheck(pinGenerator.state.value);
+    const result = await performBreachCheck(pinGenerator.state.value);
+    pinGenerator.setBreachCheck(result.status, result.count);
   };
 
   // Passphrase generator
   const passphraseGenerator = usePassphraseGenerator();
   const handlePassphraseBreachCheck = async () => {
-    performBreachCheck(passphraseGenerator.state.value);
+    const result = await performBreachCheck(passphraseGenerator.state.value);
+    passphraseGenerator.setBreachCheck(result.status, result.count);
   };
 
   const handleCopy = () => {
@@ -43,7 +46,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-black font-sans">
+    <div className="min-h-screen bg-background dark:bg-black font-sans">
       <ThemeToggle mode={mode} onToggle={toggle} /> 
 
       <main className="flex min-h-screen flex-col items-center justify-center px-4 py-16" data-testid="main-content">

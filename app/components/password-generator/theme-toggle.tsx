@@ -17,7 +17,7 @@ export function ThemeToggle({ mode, onToggle }: ThemeToggleProps) {
       data-testid="theme-toggle"
     >
       {mode === 'light' ? (
-        // Moon icon for dark mode
+        // Moon icon for dark mode (standard crescent)
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -29,8 +29,7 @@ export function ThemeToggle({ mode, onToggle }: ThemeToggleProps) {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <path d="M21 12.79A9 9 0 1 1 1 11.21 9 9 0 0 1-18 0 9 9 0 0 1 11.21z" />
-          <path d="M12 3a9 9 0 0 0 9 9 9 9 0 0 0-9 9 0 0 0-9 9 0 0 0 9z" />
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
         </svg>
       ) : (
         // Sun icon for light mode

@@ -56,6 +56,7 @@ export async function checkBreach(
         method: 'GET',
         headers: {
           'User-Agent': 'Password-Generator',
+          'Add-Padding': 'true',
         },
       }
     );
