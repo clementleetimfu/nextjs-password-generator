@@ -61,7 +61,7 @@ global.fetch = vi.fn();
 vi.mock('sonner', () => ({
   Toaster: (props: Record<string, unknown>) => {
     const { className, children, toastOptions, theme, ...rest } = props;
-    return createElement('div', { className, ...rest }, children);
+    return createElement('div', { className, ...rest }, children as React.ReactNode);
   },
   toast: {
     success: vi.fn(),
