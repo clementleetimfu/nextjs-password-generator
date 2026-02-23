@@ -38,7 +38,7 @@ const Toaster = ({ className, ...props }: ToasterProps) => {
       toastOptions={{
         classNames: {
           toast:
-            "group toast group-[.toaster]:!bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg justify-center items-center text-center",
+            "group toast group-[.toaster]:!bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg justify-center items-center text-center max-w-[85vw] sm:max-w-md",
           title: "text-center w-full",
           description: "group-[.toast]:text-muted-foreground text-center w-full",
           actionButton:
