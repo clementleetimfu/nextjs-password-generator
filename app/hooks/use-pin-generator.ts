@@ -43,6 +43,11 @@ export function usePinGenerator() {
     generate();
   }, []);
 
+  // Auto-regenerate when length changes
+  useEffect(() => {
+    generate();
+  }, [state.length]);
+
   return {
     state,
     generate,

@@ -68,6 +68,11 @@ export function usePasswordGenerator() {
     generate();
   }, []);
 
+  // Auto-regenerate when settings change
+  useEffect(() => {
+    generate();
+  }, [state.length, state.includeDigits, state.includeSymbols, state.includeUppercase]);
+
   return {
     state,
     generate,

@@ -49,6 +49,11 @@ export function usePassphraseGenerator() {
     generate();
   }, []);
 
+  // Auto-regenerate when wordCount or separator changes
+  useEffect(() => {
+    generate();
+  }, [state.wordCount, state.separator]);
+
   return {
     state,
     generate,
