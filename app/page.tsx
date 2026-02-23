@@ -50,7 +50,7 @@ export default function Home() {
       <ThemeToggle mode={mode} onToggle={toggle} /> 
 
       <main className="flex min-h-screen flex-col items-center justify-center px-4 py-16" data-testid="main-content">
-        <div className="w-full max-w-4xl">
+        <div className="w-full max-w-4xl bg-card rounded-2xl shadow-xl dark:shadow-zinc-900/30 p-6 md:p-8">
           <h1 className="text-4xl font-bold text-center mb-8 text-zinc-900 dark:text-zinc-50">
             Password Generator
           </h1> 
@@ -61,7 +61,7 @@ export default function Home() {
             className="w-full"
             data-testid="tabs"
           >
-            <TabsList className="grid w-full grid-cols-1 gap-2 md:grid-cols-3 md:gap-1">
+            <TabsList className="grid w-full grid-cols-1 gap-2 md:grid-cols-3 md:gap-1 shadow-sm">
               <TabsTrigger value="password" data-testid="tab-password" className="h-12 text-base md:h-9 md:text-sm">Password</TabsTrigger>
               <TabsTrigger value="pin" data-testid="tab-pin" className="h-12 text-base md:h-9 md:text-sm">PIN</TabsTrigger>
               <TabsTrigger value="passphrase" data-testid="tab-passphrase" className="h-12 text-base md:h-9 md:text-sm">Passphrase</TabsTrigger>
