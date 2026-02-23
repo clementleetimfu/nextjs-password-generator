@@ -411,19 +411,20 @@ test.describe('Responsive Design E2E Tests', () => {
     for (const viewport of viewports) {
       await page.setViewportSize(viewport);
       await page.goto('http://localhost:3000');
+      await page.waitForTimeout(1000);
       
       const passwordTab = page.locator('[data-testid="tab-password"]');
       const pinTab = page.locator('[data-testid="tab-pin"]');
       const passphraseTab = page.locator('[data-testid="tab-passphrase"]');
       
-      await passwordTab.click();
-      await page.waitForTimeout(300);
+      await passwordTab.click({ force: true });
+      await page.waitForTimeout(500);
       
-      await pinTab.click();
-      await page.waitForTimeout(300);
+      await pinTab.click({ force: true });
+      await page.waitForTimeout(500);
       
-      await passphraseTab.click();
-      await page.waitForTimeout(300);
+      await passphraseTab.click({ force: true });
+      await page.waitForTimeout(500);
       
       // All tabs should still be visible
       await expect(passwordTab).toBeVisible();

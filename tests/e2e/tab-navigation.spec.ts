@@ -214,14 +214,16 @@ test.describe('Tab Navigation E2E Tests', () => {
   test('should preserve password state when switching tabs', async ({ page }) => {
     await page.goto('http://localhost:3000');
     
-    // Set password length
+    // Set password length using keyboard
     const lengthSlider = page.locator('[data-testid="length-slider"]');
-    await lengthSlider.evaluate((slider: any) => {
-      slider.value = '20';
-      slider.dispatchEvent(new Event('input', { bubbles: true }));
-      slider.dispatchEvent(new Event('change', { bubbles: true }));
-    });
+    await lengthSlider.click();
+    await page.keyboard.press('End');
     await page.waitForTimeout(500);
+    
+    // Get the actual max value
+    const lengthValue = page.locator('[data-testid="length-value"]');
+    const maxText = await lengthValue.textContent();
+    const expectedMax = parseInt(maxText || '0', 10);
     
     // Enable character types
     const digitToggle = page.locator('[data-testid="toggle-digits"]');
@@ -244,9 +246,8 @@ test.describe('Tab Navigation E2E Tests', () => {
     await page.waitForTimeout(300);
     
     // State should be preserved
-    const lengthValue = page.locator('[data-testid="length-value"]');
     const lengthText = await lengthValue.textContent();
-    expect(lengthText).toBe('20');
+    expect(parseInt(lengthText || '0', 10)).toBe(expectedMax);
     
     await expect(digitToggle).toHaveAttribute('aria-checked', 'true');
     await expect(uppercaseToggle).toHaveAttribute('aria-checked', 'true');
@@ -261,14 +262,16 @@ test.describe('Tab Navigation E2E Tests', () => {
     await pinTab.click();
     await page.waitForTimeout(300);
     
-    // Set PIN length
+    // Set PIN length using keyboard
     const lengthSlider = page.locator('[data-testid="length-slider"]');
-    await lengthSlider.evaluate((slider: any) => {
-      slider.value = '8';
-      slider.dispatchEvent(new Event('input', { bubbles: true }));
-      slider.dispatchEvent(new Event('change', { bubbles: true }));
-    });
+    await lengthSlider.click();
+    await page.keyboard.press('End');
     await page.waitForTimeout(500);
+    
+    // Get the actual max value
+    const lengthValue = page.locator('[data-testid="length-value"]');
+    const maxText = await lengthValue.textContent();
+    const expectedMax = parseInt(maxText || '0', 10);
     
     // Switch to password tab
     const passwordTab = page.locator('[data-testid="tab-password"]');
@@ -280,9 +283,8 @@ test.describe('Tab Navigation E2E Tests', () => {
     await page.waitForTimeout(300);
     
     // State should be preserved
-    const lengthValue = page.locator('[data-testid="length-value"]');
     const lengthText = await lengthValue.textContent();
-    expect(lengthText).toBe('8');
+    expect(parseInt(lengthText || '0', 10)).toBe(expectedMax);
   });
 
   test('should preserve passphrase state when switching tabs', async ({ page }) => {
@@ -293,14 +295,16 @@ test.describe('Tab Navigation E2E Tests', () => {
     await passphraseTab.click();
     await page.waitForTimeout(300);
     
-    // Set word count
+    // Set word count using keyboard
     const wordCountSlider = page.locator('[data-testid="word-count-slider"]');
-    await wordCountSlider.evaluate((slider: any) => {
-      slider.value = '6';
-      slider.dispatchEvent(new Event('input', { bubbles: true }));
-      slider.dispatchEvent(new Event('change', { bubbles: true }));
-    });
+    await wordCountSlider.click();
+    await page.keyboard.press('End');
     await page.waitForTimeout(500);
+    
+    // Get the actual max value
+    const wordCountValue = page.locator('[data-testid="word-count-value"]');
+    const maxText = await wordCountValue.textContent();
+    const expectedMax = parseInt(maxText || '0', 10);
     
     // Change separator
     const underscoreTab = page.getByRole('tab', { name: 'Underscore' });
@@ -317,9 +321,8 @@ test.describe('Tab Navigation E2E Tests', () => {
     await page.waitForTimeout(300);
     
     // State should be preserved
-    const wordCountValue = page.locator('[data-testid="word-count-value"]');
     const wordCountText = await wordCountValue.textContent();
-    expect(wordCountText).toBe('6');
+    expect(parseInt(wordCountText || '0', 10)).toBe(expectedMax);
     
     await expect(underscoreTab).toHaveAttribute('data-state', 'active');
   });

@@ -12,14 +12,16 @@ export default defineConfig({
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
-    permissions: ['clipboard-read', 'clipboard-write'],
     actionTimeout: 10000,
     navigationTimeout: 30000,
   },
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { 
+        ...devices['Desktop Chrome'],
+        permissions: ['clipboard-read', 'clipboard-write'],
+      },
     },
     {
       name: 'firefox',
@@ -27,19 +29,31 @@ export default defineConfig({
     },
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: { 
+        ...devices['Desktop Safari'],
+        permissions: ['clipboard-read', 'clipboard-write'],
+      },
     },
     {
       name: 'Mobile Chrome',
-      use: { ...devices['Pixel 5'] },
+      use: { 
+        ...devices['Pixel 5'],
+        permissions: ['clipboard-read', 'clipboard-write'],
+      },
     },
     {
       name: 'Mobile Safari',
-      use: { ...devices['iPhone 12'] },
+      use: { 
+        ...devices['iPhone 12'],
+        permissions: ['clipboard-read', 'clipboard-write'],
+      },
     },
     {
       name: 'Tablet',
-      use: { ...devices['iPad Pro'] },
+      use: { 
+        ...devices['iPad Pro'],
+        permissions: ['clipboard-read', 'clipboard-write'],
+      },
     },
   ],
   webServer: {

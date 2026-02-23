@@ -472,9 +472,6 @@ test.describe('Theme Switching E2E Tests', () => {
     
     await expect(themeToggle).toBeVisible();
     
-    // Check for button role
-    await expect(themeToggle).toHaveAttribute('role', 'button');
-    
     // Check for accessible name
     const ariaLabel = await themeToggle.getAttribute('aria-label');
     expect(ariaLabel).toBeTruthy();

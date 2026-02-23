@@ -39,3 +39,61 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# test results
+test-results/
+playwright-report/
+test-results.json
+coverage/
+*.lcov
+.nyc_output/
+
+# playwright
+.playwright/
+
+# next.js build artifacts
+.next/static/
+.next/cache/
+.next/standalone/
+.next/server.js
+.next/trace
+.next/turbo
+next-env.mjs
+tsconfig.tsbuildinfo
+
+# ide & editor
+.vscode/
+.idea/
+.history/
+*.swp
+*~
+
+# environment files
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+
+# os-specific
+Thumbs.db
+.DS_Store?
+ehthumbs.db
+
+# logs
+*.log
+
+# cache
+.turbo/
+.eslintcache/
+.vite/
+
+# package managers
+.pnpm-store/
+yarn-error.log
+
+# security
+*.key
+*.p12
+*.pfx
+secrets/

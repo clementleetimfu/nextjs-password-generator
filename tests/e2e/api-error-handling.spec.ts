@@ -330,9 +330,9 @@ test.describe('API Error Handling E2E Tests', () => {
   test('should handle DNS resolution error gracefully', async ({ page }) => {
     await page.goto('http://localhost:3000');
     
-    // Mock DNS error
+    // Mock network error (DNS errors are simulated as connection failures)
     await page.route('**/api.pwnedpasswords.com/**', async (route) => {
-      await route.abort('dns');
+      await route.abort('connectionfailed');
     });
     
     const breachCheckButton = page.locator('[data-testid="breach-check-button"]');
