@@ -138,12 +138,11 @@ describe('Breach Check Library', () => {
       await checkBreach('password');
       
       expect(global.fetch).toHaveBeenCalledWith(
-        `${API_CONFIG.HIBP_BASE_URL}${hashPrefix}`,
+        `${API_CONFIG.PROXY_URL}?hash=${hashPrefix}`,
         expect.objectContaining({
           method: 'GET',
           headers: expect.objectContaining({
-            'User-Agent': 'Password-Generator',
-            'Add-Padding': 'true',
+            'Content-Type': 'text/plain',
           }),
         })
       );

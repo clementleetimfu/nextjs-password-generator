@@ -3,6 +3,7 @@ export const API_CONFIG = {
   HIBP_BASE_URL: 'https://api.pwnedpasswords.com/range/',
   HIBP_RATE_LIMIT: 1500,
   HIBP_REQUEST_TIMEOUT_MS: 5000,
+  PROXY_URL: '/api/breach-check',
 } as const;
 
 // Breach check result
@@ -49,14 +50,13 @@ export async function checkBreach(
     const hashPrefix = hash.substring(0, 5);
     const hashSuffix = hash.substring(5);
 
-    // Call Have I Been Pwned API
+    // Call Have I Been Pwned API via proxy
     const response = await fetch(
-      `${API_CONFIG.HIBP_BASE_URL}${hashPrefix}`,
+      `${API_CONFIG.PROXY_URL}?hash=${encodeURIComponent(hashPrefix)}`,
       {
         method: 'GET',
         headers: {
-          'User-Agent': 'Password-Generator',
-          'Add-Padding': 'true',
+          'Content-Type': 'text/plain',
         },
       }
     );
