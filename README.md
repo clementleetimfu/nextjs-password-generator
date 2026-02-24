@@ -34,6 +34,7 @@ A secure, modern password generator built with Next.js 16, featuring password, P
   - Responsive design (desktop, tablet, mobile)
   - Toast notifications centered at top for better visibility
   - One-click copy to clipboard
+  - Credential history with slider navigation (last 10 generated)
   - Consistent muted background theme across all components
 
 ## Screenshots
@@ -124,22 +125,49 @@ A secure, modern password generator built with Next.js 16, featuring password, P
 ```
 ├── app/                          # Next.js App Router
 │   ├── api/                     # API routes
-│   │   └── breach-check/        # Breach check API
+│   │   └── breach-check/        # Breach check API endpoint
 │   ├── components/              # React components
 │   │   ├── password-generator/  # Domain components
-│   │   └── ui/                 # Shadcn UI components
+│   │   │   ├── password-display.tsx
+│   │   │   ├── password-controls.tsx
+│   │   │   ├── pin-controls.tsx
+│   │   │   ├── passphrase-controls.tsx
+│   │   │   ├── password-history.tsx
+│   │   │   ├── history-slider.tsx
+│   │   │   └── theme-toggle.tsx
+│   │   └── ui/                  # Shadcn UI components
 │   ├── hooks/                   # Custom React hooks
-│   ├── lib/                    # Utility functions and core logic
-│   ├── types/                  # TypeScript definitions
+│   │   ├── use-password-generator.ts
+│   │   ├── use-pin-generator.ts
+│   │   ├── use-passphrase-generator.ts
+│   │   ├── use-credential-history.ts
+│   │   ├── use-breach-check.ts
+│   │   ├── use-breach-check-handler.ts
+│   │   ├── use-theme.ts
+│   │   └── use-desktop.ts
+│   ├── lib/                     # Utility functions and core logic
+│   │   ├── crypto.ts            # Secure random generation
+│   │   ├── strength.ts          # Strength calculation
+│   │   ├── breach-check.ts      # Have I Been Pwned API client
+│   │   ├── theme.ts             # Theme utilities
+│   │   ├── eff-wordlist.ts      # EFF wordlist loader
+│   │   └── eff-wordlist-content.ts
+│   ├── types/                   # TypeScript definitions
+│   ├── constants.ts             # App constants (history storage)
+│   ├── globals.css              # Global styles
 │   ├── layout.tsx               # Root layout
 │   └── page.tsx                 # Home page
-├── components/                   # Shared UI components (Shadcn)
 ├── lib/                         # Shared utilities (cn function)
 ├── tests/
-│   ├── setup.ts                # Test setup and mocks
-│   ├── test-helpers.ts         # Test utilities
-│   ├── unit/                   # Vitest unit tests
-│   └── e2e/                    # Playwright E2E tests
+│   ├── setup.ts                 # Test setup and mocks
+│   ├── test-helpers.ts          # Test utilities
+│   ├── unit/                    # Vitest unit tests
+│   │   ├── components/          # Component tests
+│   │   │   └── ui/              # UI component tests
+│   │   ├── hooks/               # Hook tests
+│   │   ├── lib/                 # Lib unit tests
+│   │   └── api/                 # API route tests
+│   └── e2e/                     # Playwright E2E tests
 ├── specs/                       # Feature specifications
 └── screenshots/                 # Application screenshots
 ```
