@@ -3,10 +3,6 @@ import { render, screen, cleanup } from '@testing-library/react'
 import { Toaster } from '@/components/ui/sonner'
 import { toast } from 'sonner'
 
-vi.mock('next-themes', () => ({
-  useTheme: () => ({ theme: 'light', setTheme: vi.fn() }),
-}))
-
 describe('Toaster Component', () => {
   beforeEach(() => {
     document.documentElement.classList.remove('dark')
