@@ -126,7 +126,7 @@ export default function Home() {
       />
       <ThemeToggle mode={mode} onToggle={toggle} />
 
-      <main className="flex min-h-screen flex-col items-center justify-center px-4 py-16" data-testid="main-content">
+      <main className="flex min-h-screen flex-1 flex-col items-center justify-center px-4 py-16" data-testid="main-content">
         <div className="w-full max-w-3xl bg-card p-8 md:p-12 animate-slide-up">
           <div className="relative flex justify-center items-center mb-8">
             <button

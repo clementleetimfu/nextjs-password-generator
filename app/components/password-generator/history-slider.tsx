@@ -26,14 +26,14 @@ export function HistorySlider({
   return (
     <>
       <div
-        className="fixed inset-0 bg-black/50 z-50 animate-fade-in"
+        className="fixed inset-0 bg-black/50 z-50 animate-fade-in sm:hidden"
         onClick={onClose}
         data-testid="history-backdrop"
       />
-      <div className="fixed left-0 top-0 h-full w-full sm:w-[400px] max-w-full bg-card z-50 shadow-2xl animate-slide-in-left overflow-hidden flex flex-col relative">
+      <aside className="fixed left-0 top-0 h-full w-full sm:w-[400px] bg-card z-[51] shadow-2xl animate-slide-in-left overflow-hidden flex flex-col" data-testid="history-slider">
         <button
           onClick={onClose}
-          className="hidden sm:block absolute top-4 right-4 p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors z-10"
+          className="absolute top-4 right-4 p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors z-10"
           data-testid="close-history-button"
         >
           <Icons.Close />
@@ -43,13 +43,6 @@ export function HistorySlider({
           <h2 className="text-lg font-semibold text-foreground">
             {type === 'password' ? 'Password' : type === 'pin' ? 'PIN' : 'Passphrase'} History
           </h2>
-          <button
-            onClick={onClose}
-            className="sm:hidden p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors self-center ml-auto"
-            data-testid="mobile-close-history-button"
-          >
-            <Icons.Close />
-          </button>
         </div>
 
         <div className="flex-1 overflow-y-auto p-6">
@@ -60,7 +53,7 @@ export function HistorySlider({
             onClear={onClear}
           />
         </div>
-      </div>
+      </aside>
     </>
   );
 }

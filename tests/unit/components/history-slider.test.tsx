@@ -129,7 +129,7 @@ describe('HistorySlider Component', () => {
     it('has correct z-index for slider', () => {
       render(<HistorySlider {...defaultProps} />);
       const slider = screen.getByText('Password History').closest('.fixed');
-      expect(slider).toHaveClass('z-50');
+      expect(slider).toHaveClass('z-[51]');
     });
 
     it('has backdrop with fade-in animation', () => {
@@ -146,8 +146,8 @@ describe('HistorySlider Component', () => {
 
     it('has correct width classes for mobile', () => {
       render(<HistorySlider {...defaultProps} />);
-      const slider = screen.getByText('Password History').closest('.fixed');
-      expect(slider).toHaveClass('w-full', 'sm:w-[400px]', 'max-w-full');
+      const slider = screen.getByTestId('history-slider');
+      expect(slider).toHaveClass('w-full', 'sm:w-[400px]', 'z-[51]');
     });
   });
 
