@@ -127,7 +127,7 @@ export default function Home() {
           <div className="relative flex justify-center items-center mb-8">
             <button
               onClick={() => setIsHistoryOpen(true)}
-              className="absolute left-0 p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              className="absolute left-0 p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:scale-105 transition-all duration-200"
               data-testid="history-toggle-button"
               title="View History"
             >

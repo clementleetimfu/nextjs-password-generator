@@ -14,7 +14,7 @@ export function ThemeToggle({ mode, onToggle }: ThemeToggleProps) {
         onClick={onToggle}
         variant="outline"
         size="icon"
-        className="bg-muted hover:bg-muted/80 relative group"
+        className="bg-muted hover:bg-muted/80 hover:scale-105 transition-all duration-200 relative group"
         aria-label={`Toggle ${mode === 'light' ? 'dark' : 'light'} mode`}
         data-testid="theme-toggle"
       >
