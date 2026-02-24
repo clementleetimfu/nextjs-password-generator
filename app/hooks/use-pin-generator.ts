@@ -38,6 +38,15 @@ export function usePinGenerator() {
     }));
   }, []);
 
+  const setValue = useCallback((value: string) => {
+    setState((prev) => ({
+      ...prev,
+      value,
+      breachCheck: 'idle',
+      breachCount: undefined,
+    }));
+  }, []);
+
   // Generate initial PIN on mount (client-side only to avoid hydration mismatch)
   useEffect(() => {
     generate();
@@ -53,5 +62,6 @@ export function usePinGenerator() {
     generate,
     setLength,
     setBreachCheck,
+    setValue,
   };
 }

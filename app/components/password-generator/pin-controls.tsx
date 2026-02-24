@@ -8,13 +8,15 @@ interface PinControlsProps {
 
 export function PinControls({ length, onLengthChange }: PinControlsProps) {
   return (
-    <div className="flex flex-col gap-6 w-full max-w-2xl bg-card rounded-xl border border-zinc-200 dark:border-zinc-600 shadow-sm dark:shadow-black/30 p-6" data-testid="controls">
-      {/* Length Slider */}
-      <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-8 w-full max-w-2xl" data-testid="controls">
+      <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-            Length: <span data-testid="length-value">{length}</span>
+            Length
           </label>
+          <span className="text-sm font-mono text-zinc-900 dark:text-zinc-100" data-testid="length-value">
+            {length}
+          </span>
         </div>
         <Slider
           value={[length]}

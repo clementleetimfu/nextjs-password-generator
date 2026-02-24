@@ -63,6 +63,15 @@ export function usePasswordGenerator() {
     }));
   }, []);
 
+  const setValue = useCallback((value: string) => {
+    setState((prev) => ({
+      ...prev,
+      value,
+      breachCheck: 'idle',
+      breachCount: undefined,
+    }));
+  }, []);
+
   // Generate initial password on mount (client-side only to avoid hydration mismatch)
   useEffect(() => {
     generate();
@@ -81,5 +90,6 @@ export function usePasswordGenerator() {
     toggleSymbols,
     toggleUppercase,
     setBreachCheck,
+    setValue,
   };
 }

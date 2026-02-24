@@ -1,6 +1,6 @@
 import { Slider } from '@/components/ui/slider';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { PASSPHRASE_CONSTRAINTS, SEPARATORS } from '@/lib/crypto';
+import { PASSPHRASE_CONSTRAINTS } from '@/lib/crypto';
 import type { Separator } from '@/types/generator';
 
 interface PassphraseControlsProps {
@@ -17,13 +17,15 @@ export function PassphraseControls({
   onSeparatorChange,
 }: PassphraseControlsProps) {
   return (
-    <div className="flex flex-col gap-6 w-full max-w-2xl bg-card rounded-xl border border-zinc-200 dark:border-zinc-600 shadow-sm dark:shadow-black/30 p-6" data-testid="controls">
-      {/* Word Count Slider */}
-      <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-8 w-full max-w-2xl" data-testid="controls">
+      <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
-            Word Count: <span data-testid="word-count-value">{wordCount}</span>
+            Word Count
           </label>
+          <span className="text-sm font-mono text-zinc-900 dark:text-zinc-100" data-testid="word-count-value">
+            {wordCount}
+          </span>
         </div>
         <Slider
           value={[wordCount]}
@@ -40,22 +42,21 @@ export function PassphraseControls({
         </div>
       </div>
 
-      {/* Separator Selector */}
-      <div className="flex flex-col gap-3">
-        <h3 className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
+      <div className="flex flex-col gap-4">
+        <div className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
           Separator
-        </h3>
+        </div>
         <Tabs
           value={separator}
           onValueChange={(value) => onSeparatorChange(value as Separator)}
           className="w-full"
           data-testid="separator-selector"
         >
-          <TabsList className="flex w-full gap-1">
-            <TabsTrigger value="space" className="flex-1 h-7 text-xs">Space</TabsTrigger>
-            <TabsTrigger value="hyphen" className="flex-1 h-7 text-xs">Hyphen</TabsTrigger>
-            <TabsTrigger value="underscore" className="flex-1 h-7 text-xs">Underscore</TabsTrigger>
-            <TabsTrigger value="period" className="flex-1 h-7 text-xs">Period</TabsTrigger>
+          <TabsList className="flex w-full">
+            <TabsTrigger value="space" className="flex-1 text-xs">Space</TabsTrigger>
+            <TabsTrigger value="hyphen" className="flex-1 text-xs">Hyphen</TabsTrigger>
+            <TabsTrigger value="underscore" className="flex-1 text-xs">Underscore</TabsTrigger>
+            <TabsTrigger value="period" className="flex-1 text-xs">Period</TabsTrigger>
           </TabsList>
         </Tabs>
       </div>

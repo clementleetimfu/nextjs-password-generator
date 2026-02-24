@@ -3,7 +3,7 @@ import { generatePassphrase } from '@/lib/crypto';
 import { calculatePassphraseStrength } from '@/lib/strength';
 import type { PassphraseState, Separator } from '@/types/generator';
 import { PASSPHRASE_CONSTRAINTS, SEPARATORS } from '@/lib/crypto';
-
+ 
 export function usePassphraseGenerator() {
   const [state, setState] = useState<PassphraseState>({
     type: 'passphrase',
@@ -13,12 +13,12 @@ export function usePassphraseGenerator() {
     strength: 'VERY_WEAK',
     breachCheck: 'idle',
   });
-
-  const generate = useCallback(() => {
+ 
+  const generate = useCallback(async () => {
     const separatorChar = SEPARATORS[state.separator];
-    const passphrase = generatePassphrase(state.wordCount, separatorChar);
+    const passphrase = await generatePassphrase(state.wordCount, separatorChar);
     const strengthResult = calculatePassphraseStrength(state.wordCount);
-
+ 
     setState((prev) => ({
       ...prev,
       value: passphrase,
@@ -27,20 +27,29 @@ export function usePassphraseGenerator() {
       breachCount: undefined,
     }));
   }, [state.wordCount, state.separator]);
-
+ 
   const setWordCount = useCallback((wordCount: number) => {
     setState((prev) => ({ ...prev, wordCount }));
   }, []);
-
+ 
   const setSeparator = useCallback((separator: Separator) => {
     setState((prev) => ({ ...prev, separator }));
   }, []);
-
+ 
   const setBreachCheck = useCallback((status: PassphraseState['breachCheck'], count?: number) => {
     setState((prev) => ({
       ...prev,
       breachCheck: status,
       breachCount: count,
+    }));
+  }, []);
+
+  const setValue = useCallback((value: string) => {
+    setState((prev) => ({
+      ...prev,
+      value,
+      breachCheck: 'idle',
+      breachCount: undefined,
     }));
   }, []);
 
@@ -60,5 +69,6 @@ export function usePassphraseGenerator() {
     setWordCount,
     setSeparator,
     setBreachCheck,
+    setValue,
   };
 }

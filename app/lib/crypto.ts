@@ -1,4 +1,4 @@
-import { EFF_LONG_WORDLIST } from '@/lib/eff-wordlist';
+
 
 // Character sets
 export const LOWERCASE = 'abcdefghijklmnopqrstuvwxyz';
@@ -60,6 +60,19 @@ export const API_CONFIG = {
   HIBP_REQUEST_TIMEOUT_MS: 5000,
 } as const;
 
+// Get wordlist lazily for passphrase generation
+let wordlistCache: string[] | null = null;
+
+export async function getWordlist(): Promise<string[]> {
+  if (wordlistCache) {
+    return wordlistCache;
+  }
+
+  const { EFF_LONG_WORDLIST: wordlist } = await import('@/lib/eff-wordlist');
+  wordlistCache = wordlist;
+  return wordlist;
+}
+
 // Generate a cryptographically secure random password
 export function generatePassword(
   length: number,
@@ -117,14 +130,15 @@ export function generatePin(length: number): string {
 }
 
 // Generate a cryptographically secure random passphrase
-export function generatePassphrase(wordCount: number, separator: string): string {
+export async function generatePassphrase(wordCount: number, separator: string): Promise<string> {
+  const wordlist = await getWordlist();
   const array = new Uint32Array(wordCount)
   crypto.getRandomValues(array)
   
   const words: string[] = []
   for (let i = 0; i < wordCount; i++) {
-    const index = array[i] % EFF_LONG_WORDLIST.length
-    words.push(EFF_LONG_WORDLIST[index])
+    const index = array[i] % wordlist.length
+    words.push(wordlist[index])
   }
 
   return words.join(separator)

@@ -1,9 +1,8 @@
 import { Button } from '@/components/ui/button';
-import type { CredentialType, StrengthLevel, BreachCheckStatus } from '@/types/generator';
+import type { StrengthLevel, BreachCheckStatus } from '@/types/generator';
 
 interface PasswordDisplayProps {
   value: string;
-  type: CredentialType;
   strength: StrengthLevel;
   breachCheck: BreachCheckStatus;
   breachCount?: number;
@@ -12,17 +11,16 @@ interface PasswordDisplayProps {
   onBreachCheck: () => void;
 }
 
-const strengthColors: Record<StrengthLevel, string> = {
-  VERY_WEAK: 'bg-red-500',
-  WEAK: 'bg-orange-500',
-  MODERATE: 'bg-yellow-500',
-  STRONG: 'bg-blue-500',
-  VERY_STRONG: 'bg-green-500',
+const strengthGradient = {
+  VERY_WEAK: 'from-red-500 to-red-400',
+  WEAK: 'from-orange-500 to-orange-400',
+  MODERATE: 'from-yellow-500 to-yellow-400',
+  STRONG: 'from-blue-500 to-blue-400',
+  VERY_STRONG: 'from-green-500 to-green-400',
 };
 
 export function PasswordDisplay({
   value,
-  type,
   strength,
   breachCheck,
   breachCount,
@@ -48,36 +46,36 @@ export function PasswordDisplay({
     return '';
   };
 
+  const getStrengthPercentage = () => {
+    switch (strength) {
+      case 'VERY_WEAK': return '20%';
+      case 'WEAK': return '40%';
+      case 'MODERATE': return '60%';
+      case 'STRONG': return '80%';
+      case 'VERY_STRONG': return '100%';
+      default: return '0%';
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center gap-4 w-full max-w-2xl" data-testid="password-display">
-      <div className="relative w-full">
-        <div className="bg-muted border border-zinc-200 dark:border-zinc-600 rounded-xl p-6 text-center shadow-md dark:shadow-black/40 hover:shadow-lg dark:hover:shadow-black/50 transition-shadow duration-200">
-          <p className="text-[25px] md:text-4xl font-mono break-all leading-relaxed text-foreground">
+    <div className="flex flex-col items-center gap-6 w-full max-w-2xl" data-testid="password-display">
+      <div className="relative w-full group">
+        <div className="bg-card rounded-2xl p-8 text-center shadow-sm transition-all duration-300">
+          <p className="text-3xl md:text-5xl font-mono break-all leading-relaxed text-foreground font-medium tracking-tight">
             {value}
           </p>
         </div>
       </div>
 
-      <div className="flex items-center gap-3 w-full" data-testid="strength-indicator">
-        <div className="flex-1 h-2 bg-zinc-200 dark:bg-zinc-700 rounded-full overflow-hidden">
+      <div className="flex items-center gap-4 w-full" data-testid="strength-indicator">
+        <div className="flex-1 h-2.5 bg-zinc-200 dark:bg-zinc-700 rounded-full overflow-hidden">
           <div
-            className={`h-full transition-all duration-300 ${strengthColors[strength]}`}
-            style={{
-              width:
-                strength === 'VERY_WEAK'
-                  ? '20%'
-                  : strength === 'WEAK'
-                    ? '40%'
-                    : strength === 'MODERATE'
-                      ? '60%'
-                      : strength === 'STRONG'
-                        ? '80%'
-                        : '100%',
-            }}
+            className={`h-full bg-gradient-to-r ${strengthGradient[strength]} transition-all duration-500 ease-out rounded-full`}
+            style={{ width: getStrengthPercentage() }}
           />
         </div>
         <span
-          className="text-sm font-medium text-zinc-600 dark:text-zinc-400 min-w-[80px]"
+          className="text-sm font-medium text-zinc-600 dark:text-zinc-400 min-w-[90px] text-right"
           data-testid="strength-level"
         >
           {strength.replace('_', ' ')}
@@ -85,13 +83,14 @@ export function PasswordDisplay({
       </div>
 
       <div className="flex gap-3 w-full">
-        <Button onClick={onRefresh} className="flex-1" variant="outline" data-testid="refresh-button">
+        <Button onClick={onRefresh} className="flex-1" variant="outline" shortcut="GENERATE" data-testid="refresh-button">
           Refresh
         </Button>
         <Button
           onClick={handleCopy}
           className="flex-1"
           variant="outline"
+          shortcut="COPY"
           disabled={!value}
           data-testid="copy-button"
         >
@@ -101,6 +100,7 @@ export function PasswordDisplay({
           onClick={onBreachCheck}
           className="flex-1"
           variant="outline"
+          shortcut="BREACH_CHECK"
           disabled={!value || breachCheck === 'checking'}
           data-testid="breach-check-button"
         >
@@ -110,7 +110,7 @@ export function PasswordDisplay({
 
       {breachCheck !== 'idle' && (
         <div
-          className={`text-sm font-medium ${
+          className={`text-sm font-medium animate-fade-in ${
             breachCheck === 'safe'
               ? 'text-green-600 dark:text-green-400'
               : breachCheck === 'breached'
