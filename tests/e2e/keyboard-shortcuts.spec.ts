@@ -208,7 +208,7 @@ test.describe('Keyboard Shortcuts E2E Tests', () => {
     await page.waitForTimeout(500);
 
     // Open history
-    const historyButton = page.locator('[data-testid="history-button"]');
+    const historyButton = page.locator('[data-testid="history-toggle-button"]');
     await historyButton.click();
     await page.waitForTimeout(500);
 
