@@ -53,13 +53,6 @@ export const PERFORMANCE_TARGETS = {
   TOAST_DURATION_MS: 3000,
 } as const;
 
-// API configuration
-export const API_CONFIG = {
-  HIBP_BASE_URL: 'https://api.pwnedpasswords.com/range/',
-  HIBP_RATE_LIMIT: 1500,
-  HIBP_REQUEST_TIMEOUT_MS: 5000,
-} as const;
-
 // Get wordlist lazily for passphrase generation
 let wordlistCache: string[] | null = null;
 

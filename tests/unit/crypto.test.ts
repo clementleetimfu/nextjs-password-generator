@@ -13,8 +13,8 @@ import {
   PIN_CONSTRAINTS,
   PASSPHRASE_CONSTRAINTS,
   PERFORMANCE_TARGETS,
-  API_CONFIG,
 } from '../../app/lib/crypto'
+import { API_CONFIG } from '../../app/lib/breach-check'
 
 describe('crypto.ts Constants', () => {
   describe('CHARACTER_SETS', () => {
@@ -394,14 +394,170 @@ describe('generatePin', () => {
   })
 })
 
-describe('generatePassphrase', () => {
-  describe('Basic Functionality', () => {
-    it('should generate a passphrase with correct word count', () => {
-      const passphrase = generatePassphrase(4, '-')
+  describe('generatePassphrase', async () => {
+  describe('Basic Functionality', async () => {
+    it('should generate a passphrase with correct word count', async () => {
+      const passphrase = await generatePassphrase(4, '-')
       const words = passphrase.split('-')
       expect(words).toHaveLength(4)
     })
 
+    it('should generate a passphrase with default word count of 4', async () => {
+      const passphrase = await generatePassphrase(PASSPHRASE_CONSTRAINTS.DEFAULT_WORDS, '-')
+      const words = passphrase.split('-')
+      expect(words).toHaveLength(PASSPHRASE_CONSTRAINTS.DEFAULT_WORDS)
+    })
+
+    it('should generate a passphrase with maximum word count of 10', async () => {
+      const passphrase = await generatePassphrase(PASSPHRASE_CONSTRAINTS.MAX_WORDS, '-')
+      const words = passphrase.split('-')
+      expect(words).toHaveLength(PASSPHRASE_CONSTRAINTS.MAX_WORDS)
+    })
+
+    it('should use hyphen separator by default', async () => {
+      const passphrase = await generatePassphrase(4, SEPARATORS.hyphen)
+      expect(passphrase).toContain('-')
+      expect(passphrase).not.toContain(' ')
+      expect(passphrase).not.toContain('_')
+      expect(passphrase).not.toContain('.')
+    })
+  })
+
+  describe('Separator Options', async () => {
+    it('should use space separator', async () => {
+      const passphrase = await generatePassphrase(4, SEPARATORS.space)
+      expect(passphrase).toContain(' ')
+      expect(passphrase).not.toContain('-')
+      expect(passphrase).not.toContain('_')
+      expect(passphrase).not.toContain('.')
+    })
+
+    it('should use hyphen separator', async () => {
+      const passphrase = await generatePassphrase(4, SEPARATORS.hyphen)
+      expect(passphrase).toContain('-')
+      expect(passphrase).not.toContain(' ')
+      expect(passphrase).not.toContain('_')
+      expect(passphrase).not.toContain('.')
+    })
+
+    it('should use underscore separator', async () => {
+      const passphrase = await generatePassphrase(4, SEPARATORS.underscore)
+      expect(passphrase).toContain('_')
+      expect(passphrase).not.toContain('-')
+      expect(passphrase).not.toContain(' ')
+      expect(passphrase).not.toContain('.')
+    })
+
+    it('should use period separator', async () => {
+      const passphrase = await generatePassphrase(4, SEPARATORS.period)
+      expect(passphrase).toContain('.')
+      expect(passphrase).not.toContain('-')
+      expect(passphrase).not.toContain(' ')
+      expect(passphrase).not.toContain('_')
+    })
+  })
+
+  describe('Word Properties', async () => {
+    it('should generate passphrases with lowercase words', async () => {
+      const passphrase = await generatePassphrase(4, '-')
+      const words = passphrase.split('-')
+      words.forEach((word) => {
+        expect(word).toMatch(/^[a-z]+$/)
+        expect(word).not.toMatch(/[A-Z]/)
+      })
+    })
+
+    it('should generate passphrases with reasonable word lengths', async () => {
+      const passphrase = await generatePassphrase(10, '-')
+      const words = passphrase.split('-')
+      words.forEach((word) => {
+        expect(word.length).toBeGreaterThanOrEqual(3)
+        expect(word.length).toBeLessThanOrEqual(9)
+      })
+    })
+
+    it('should not include special characters in words', async () => {
+      const passphrase = await generatePassphrase(4, '-')
+      const words = passphrase.split('-')
+      words.forEach((word) => {
+        expect(word).toMatch(/^[a-z]+$/)
+        expect(word).not.toMatch(/[0-9!@#$%^&*()_+\-=\[\]{}|;:,.<>?]/)
+      })
+    })
+  })
+
+  describe('Edge Cases and Boundary Conditions', async () => {
+    it('should handle minimum word count (4)', async () => {
+      const passphrase = await generatePassphrase(PASSPHRASE_CONSTRAINTS.MIN_WORDS, '-')
+      const words = passphrase.split('-')
+      expect(words).toHaveLength(PASSPHRASE_CONSTRAINTS.MIN_WORDS)
+    })
+
+    it('should handle maximum word count (10)', async () => {
+      const passphrase = await generatePassphrase(PASSPHRASE_CONSTRAINTS.MAX_WORDS, '-')
+      const words = passphrase.split('-')
+      expect(words).toHaveLength(PASSPHRASE_CONSTRAINTS.MAX_WORDS)
+    })
+
+    it('should generate different passphrases on multiple calls', async () => {
+      const passphrase1 = await generatePassphrase(4, '-')
+      const passphrase2 = await generatePassphrase(4, '-')
+      expect(passphrase1).not.toBe(passphrase2)
+    })
+
+    it('should handle word count between min and max', async () => {
+      const passphrase = await generatePassphrase(7, '-')
+      const words = passphrase.split('-')
+      expect(words).toHaveLength(7)
+    })
+
+    it('should handle empty separator (no separator)', async () => {
+      const passphrase = await generatePassphrase(4, '')
+      expect(passphrase).not.toContain('-')
+      expect(passphrase).not.toContain(' ')
+      expect(passphrase).not.toContain('_')
+      expect(passphrase).not.toContain('.')
+    })
+  })
+
+  describe('Security and Randomness', async () => {
+    it('should use Web Crypto API for random generation', async () => {
+      const getRandomValuesSpy = vi.spyOn(crypto, 'getRandomValues')
+      await generatePassphrase(4, '-')
+      expect(getRandomValuesSpy).toHaveBeenCalled()
+      getRandomValuesSpy.mockRestore()
+    })
+
+    it('should generate cryptographically secure passphrases', async () => {
+      const passphrases = new Set()
+      for (let i = 0; i < 100; i++) {
+        passphrases.add(await generatePassphrase(4, '-'))
+      }
+      // With 100 passphrases of 4 words from 7776-word list,
+      // we expect very few if any duplicates
+      const duplicates = 100 - passphrases.size
+      expect(duplicates).toBeLessThan(5)
+    })
+  })
+
+  describe('Performance', async () => {
+    it('should generate passphrase within performance target', async () => {
+      const start = performance.now()
+      await generatePassphrase(4, '-')
+      const duration = performance.now() - start
+      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS)
+    })
+
+    it('should generate multiple passphrases efficiently', async () => {
+      const start = performance.now()
+      for (let i = 0; i < 100; i++) {
+        await generatePassphrase(4, '-')
+      }
+      const duration = performance.now() - start
+      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS * 100)
+    })
+  })
+})
     it('should generate a passphrase with default word count of 4', () => {
       const passphrase = generatePassphrase(PASSPHRASE_CONSTRAINTS.DEFAULT_WORDS, '-')
       const words = passphrase.split('-')

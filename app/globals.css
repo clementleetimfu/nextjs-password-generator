@@ -47,14 +47,10 @@
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
-* {
+button, input, select, textarea, [role="button"], [role="tab"] {
   transition-property: color, background-color, border-color, opacity, transform;
   transition-duration: 200ms;
   transition-timing-function: ease-in-out;
-}
-
-* :not(button):not(input):not(select):not(textarea) {
-  transition-property: color, background-color, border-color, opacity;
 }
 
 .animate-fade-in {

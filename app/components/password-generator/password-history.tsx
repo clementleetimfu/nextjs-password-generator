@@ -1,14 +1,9 @@
 import type { CredentialType } from '@/types/generator';
 import { Button } from '@/components/ui/button';
 
-interface HistoryItem {
-  value: string;
-  timestamp: number;
-}
-
 interface PasswordHistoryProps {
   type: CredentialType;
-  items: HistoryItem[];
+  items: Array<Pick<import('@/types/generator').HistoryItem, 'value' | 'timestamp'>>;
   onRestore: (value: string) => void;
   onClear: () => void;
 }

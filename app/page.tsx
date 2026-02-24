@@ -9,6 +9,7 @@ import { PinControls } from '@/components/password-generator/pin-controls';
 import { PassphraseControls } from '@/components/password-generator/passphrase-controls';
 import { HistorySlider } from '@/components/password-generator/history-slider';
 import { ThemeToggle } from '@/components/password-generator/theme-toggle';
+import { Icons } from '@/components/ui/icons';
 import { usePasswordGenerator } from '@/hooks/use-password-generator';
 import { usePinGenerator } from '@/hooks/use-pin-generator';
 import { usePassphraseGenerator } from '@/hooks/use-passphrase-generator';
@@ -135,22 +136,7 @@ export default function Home() {
               data-testid="history-toggle-button"
               title="View History"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-foreground"
-              >
-                <path d="M3 3v5h5" />
-                <path d="M3.05 13A9 9 0 1 0 6 5.3L3 8" />
-                <path d="M12 7v5l4 2" />
-              </svg>
+              <Icons.History />
             </button>
             <h1 className="text-4xl md:text-5xl font-bold text-center flex-1 text-zinc-900 dark:text-zinc-50 tracking-tight">
               Password Generator

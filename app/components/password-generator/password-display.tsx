@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { Button } from '@/components/ui/button';
 import type { StrengthLevel, BreachCheckStatus } from '@/types/generator';
 
@@ -19,6 +20,33 @@ const strengthGradient = {
   VERY_STRONG: 'from-green-500 to-green-400',
 };
 
+const getStrengthPercentage = (strength: StrengthLevel): string => {
+  switch (strength) {
+    case 'VERY_WEAK': return '20%';
+    case 'WEAK': return '40%';
+    case 'MODERATE': return '60%';
+    case 'STRONG': return '80%';
+    case 'VERY_STRONG': return '100%';
+    default: return '0%';
+  }
+};
+
+const getBreachStatusText = (breachCheck: BreachCheckStatus, breachCount?: number): string => {
+  if (breachCheck === 'idle') return '';
+  if (breachCheck === 'checking') return 'Checking...';
+  if (breachCheck === 'safe') return 'Safe';
+  if (breachCheck === 'breached') return `Found in ${breachCount} breaches`;
+  if (breachCheck === 'error') return 'Error checking';
+  return '';
+};
+
+const getBreachStatusColor = (breachCheck: BreachCheckStatus): string => {
+  if (breachCheck === 'safe') return 'text-green-600 dark:text-green-400';
+  if (breachCheck === 'breached') return 'text-red-600 dark:text-red-400';
+  if (breachCheck === 'error') return 'text-red-600 dark:text-red-400';
+  return 'text-zinc-600 dark:text-zinc-400';
+};
+
 export function PasswordDisplay({
   value,
   strength,
@@ -28,34 +56,18 @@ export function PasswordDisplay({
   onCopy,
   onBreachCheck,
 }: PasswordDisplayProps) {
-  const handleCopy = async () => {
+  const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(value);
       onCopy();
     } catch (error) {
       console.error('Failed to copy to clipboard:', error);
     }
-  };
+  }, [value, onCopy]);
 
-  const getBreachStatusText = () => {
-    if (breachCheck === 'idle') return '';
-    if (breachCheck === 'checking') return 'Checking...';
-    if (breachCheck === 'safe') return 'Safe';
-    if (breachCheck === 'breached') return `Found in ${breachCount} breaches`;
-    if (breachCheck === 'error') return 'Error checking';
-    return '';
-  };
-
-  const getStrengthPercentage = () => {
-    switch (strength) {
-      case 'VERY_WEAK': return '20%';
-      case 'WEAK': return '40%';
-      case 'MODERATE': return '60%';
-      case 'STRONG': return '80%';
-      case 'VERY_STRONG': return '100%';
-      default: return '0%';
-    }
-  };
+  const breachStatusText = getBreachStatusText(breachCheck, breachCount);
+  const strengthPercentage = getStrengthPercentage(strength);
+  const breachStatusColor = getBreachStatusColor(breachCheck);
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-2xl" data-testid="password-display">
@@ -71,7 +83,7 @@ export function PasswordDisplay({
         <div className="flex-1 h-2.5 bg-zinc-200 dark:bg-zinc-700 rounded-full overflow-hidden">
           <div
             className={`h-full bg-gradient-to-r ${strengthGradient[strength]} transition-all duration-500 ease-out rounded-full`}
-            style={{ width: getStrengthPercentage() }}
+            style={{ width: strengthPercentage }}
           />
         </div>
         <span
@@ -110,18 +122,10 @@ export function PasswordDisplay({
 
       {breachCheck !== 'idle' && (
         <div
-          className={`text-sm font-medium animate-fade-in ${
-            breachCheck === 'safe'
-              ? 'text-green-600 dark:text-green-400'
-              : breachCheck === 'breached'
-                ? 'text-red-600 dark:text-red-400'
-                : breachCheck === 'error'
-                  ? 'text-red-600 dark:text-red-400'
-                  : 'text-zinc-600 dark:text-zinc-400'
-          }`}
+          className={`text-sm font-medium animate-fade-in ${breachStatusColor}`}
           data-testid="breach-result"
         >
-          {getBreachStatusText()}
+          {breachStatusText}
         </div>
       )}
     </div>

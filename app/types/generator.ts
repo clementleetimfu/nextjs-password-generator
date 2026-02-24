@@ -79,3 +79,10 @@ export interface BreachCheckResult {
   count?: number
   error?: string
 }
+
+// History item
+export interface HistoryItem {
+  value: string;
+  type: CredentialType;
+  timestamp: number;
+}

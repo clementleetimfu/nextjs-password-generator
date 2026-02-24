@@ -1,3 +1,5 @@
+import type { BreachCheckResult } from '@/types/generator';
+
 // API configuration
 export const API_CONFIG = {
   HIBP_BASE_URL: 'https://api.pwnedpasswords.com/range/',
@@ -5,13 +7,6 @@ export const API_CONFIG = {
   HIBP_REQUEST_TIMEOUT_MS: 5000,
   PROXY_URL: '/api/breach-check',
 } as const;
-
-// Breach check result
-export interface BreachCheckResult {
-  status: 'idle' | 'checking' | 'safe' | 'breached' | 'error';
-  count?: number;
-  error?: string;
-}
 
 // Simple in-memory cache for breach check results
 const breachCache = new Map<string, BreachCheckResult>();
@@ -111,9 +106,4 @@ export function handleBreachCheckError(error: unknown): string {
     return error.message;
   }
   return 'An unknown error occurred';
-}
-
-// Clear the breach cache
-export function clearBreachCache(): void {
-  breachCache.clear();
 }

@@ -27,102 +27,52 @@ const STRENGTH_THRESHOLDS = {
   STRONG: 80,
 };
 
+function getStrengthLevel(score: number): StrengthLevel {
+  if (score < STRENGTH_THRESHOLDS.VERY_WEAK) {
+    return 'VERY_WEAK';
+  } else if (score < STRENGTH_THRESHOLDS.WEAK) {
+    return 'WEAK';
+  } else if (score < STRENGTH_THRESHOLDS.MODERATE) {
+    return 'MODERATE';
+  } else if (score < STRENGTH_THRESHOLDS.STRONG) {
+    return 'STRONG';
+  } else {
+    return 'VERY_STRONG';
+  }
+}
+
+function calculateStrengthResult(entropy: number): StrengthResult {
+  const maxEntropy = 120;
+  const score = Math.min(100, Math.max(0, (entropy / maxEntropy) * 100));
+  return {
+    level: getStrengthLevel(score),
+    score: Math.round(score),
+    entropy: Math.round(entropy * 100) / 100,
+  };
+}
+
 export function calculatePasswordStrength(
   length: number,
   options: CharacterSetOptions
 ): StrengthResult {
-  // Calculate character set size
   let characterSetSize = 0;
   if (options.lowercase) characterSetSize += CHARACTER_SET_SIZES.lowercase;
   if (options.uppercase) characterSetSize += CHARACTER_SET_SIZES.uppercase;
   if (options.digits) characterSetSize += CHARACTER_SET_SIZES.digits;
   if (options.symbols) characterSetSize += CHARACTER_SET_SIZES.symbols;
 
-  // Calculate entropy: log2(characterSetSize^length) = length * log2(characterSetSize)
   const entropy = length * Math.log2(characterSetSize);
-
-  // Calculate score based on entropy (normalized to 0-100)
-  // 40 bits of entropy is considered strong, 80 bits is very strong
-  const maxEntropy = 120; // Very strong password entropy
-  const score = Math.min(100, Math.max(0, (entropy / maxEntropy) * 100));
-
-  // Determine strength level
-  let level: StrengthLevel;
-  if (score < STRENGTH_THRESHOLDS.VERY_WEAK) {
-    level = 'VERY_WEAK';
-  } else if (score < STRENGTH_THRESHOLDS.WEAK) {
-    level = 'WEAK';
-  } else if (score < STRENGTH_THRESHOLDS.MODERATE) {
-    level = 'MODERATE';
-  } else if (score < STRENGTH_THRESHOLDS.STRONG) {
-    level = 'STRONG';
-  } else {
-    level = 'VERY_STRONG';
-  }
-
-  return {
-    level,
-    score: Math.round(score),
-    entropy: Math.round(entropy * 100) / 100, // Round to 2 decimal places
-  };
+  return calculateStrengthResult(entropy);
 }
 
-// Calculate PIN strength
 export function calculatePinStrength(length: number): StrengthResult {
-  const characterSetSize = 10; // digits only
+  const characterSetSize = 10;
   const entropy = length * Math.log2(characterSetSize);
-
-  // Calculate score based on entropy (normalized to 0-100)
-  const maxEntropy = 120;
-  const score = Math.min(100, Math.max(0, (entropy / maxEntropy) * 100));
-
-  // Determine strength level
-  let level: StrengthLevel;
-  if (score < STRENGTH_THRESHOLDS.VERY_WEAK) {
-    level = 'VERY_WEAK';
-  } else if (score < STRENGTH_THRESHOLDS.WEAK) {
-    level = 'WEAK';
-  } else if (score < STRENGTH_THRESHOLDS.MODERATE) {
-    level = 'MODERATE';
-  } else if (score < STRENGTH_THRESHOLDS.STRONG) {
-    level = 'STRONG';
-  } else {
-    level = 'VERY_STRONG';
-  }
-
-  return {
-    level,
-    score: Math.round(score),
-    entropy: Math.round(entropy * 100) / 100,
-  };
+  return calculateStrengthResult(entropy);
 }
 
-// Calculate passphrase strength
 export function calculatePassphraseStrength(wordCount: number): StrengthResult {
-  const wordSetSize = 7776; // EFF Long Wordlist
+  const wordSetSize = 7776;
   const entropy = wordCount * Math.log2(wordSetSize);
-
-  // Calculate score based on entropy (normalized to 0-100)
-  const maxEntropy = 120;
-  const score = Math.min(100, Math.max(0, (entropy / maxEntropy) * 100));
-
-  // Determine strength level
-  let level: StrengthLevel;
-  if (score < STRENGTH_THRESHOLDS.VERY_WEAK) {
-    level = 'VERY_WEAK';
-  } else if (score < STRENGTH_THRESHOLDS.WEAK) {
-    level = 'WEAK';
-  } else if (score < STRENGTH_THRESHOLDS.MODERATE) {
-    level = 'MODERATE';
-  } else if (score < STRENGTH_THRESHOLDS.STRONG) {
-    level = 'STRONG';
-  } else {
-    level = 'VERY_STRONG';
-  }
-
-  return {
-    level,
-    score: Math.round(score),
-    entropy: Math.round(entropy * 100) / 100,
-  };
+  return calculateStrengthResult(entropy);
 }

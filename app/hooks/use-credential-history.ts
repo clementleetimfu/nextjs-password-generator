@@ -1,12 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
-import type { CredentialType } from '@/types/generator';
+import type { CredentialType, HistoryItem } from '@/types/generator';
 import { HISTORY_STORAGE_KEY, HISTORY } from '@/constants';
-
-interface HistoryItem {
-  value: string;
-  type: CredentialType;
-  timestamp: number;
-}
 
 interface HistoryState {
   password: HistoryItem[];

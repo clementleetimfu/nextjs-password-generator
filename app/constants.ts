@@ -16,10 +16,10 @@ export const ANIMATION = {
 
 export const HISTORY = {
   MAX_ITEMS: 10,
-  STORAGE_KEY: 'password-history',
+  STORAGE_KEY: 'password-generator-history',
 } as const;
 
-export const HISTORY_STORAGE_KEY = 'password-generator-history';
+export const HISTORY_STORAGE_KEY = HISTORY.STORAGE_KEY;
 
 export const KEYBOARD_SHORTCUTS = {
   GENERATE: 'R',

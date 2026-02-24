@@ -1,16 +1,12 @@
 import { PasswordHistory } from './password-history';
 import type { CredentialType } from '@/types/generator';
-
-interface HistoryItem {
-  value: string;
-  timestamp: number;
-}
+import { Icons } from '@/components/ui/icons';
 
 interface HistorySliderProps {
   isOpen: boolean;
   onClose: () => void;
   type: CredentialType;
-  items: HistoryItem[];
+  items: Array<Pick<import('@/types/generator').HistoryItem, 'value' | 'timestamp'>>;
   onRestore: (value: string) => void;
   onClear: () => void;
 }
@@ -44,21 +40,7 @@ export function HistorySlider({
             className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
             data-testid="close-history-button"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-foreground"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
+            <Icons.Close />
           </button>
         </div>
 
