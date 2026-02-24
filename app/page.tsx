@@ -137,7 +137,7 @@ export default function Home() {
             >
               <Icons.History />
             </button>
-            <h1 className="text-3xl md:text-5xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">
+            <h1 className="text-xl sm:text-3xl md:text-5xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">
               Password Generator
             </h1>
           </div>

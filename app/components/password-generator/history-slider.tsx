@@ -27,17 +27,7 @@ export function HistorySlider({
     <>
       <div
         className="fixed inset-0 bg-black/50 z-50 animate-fade-in"
-        onClick={(e) => {
-          onClose();
-          setTimeout(() => {
-            if (typeof document !== 'undefined' && document.elementFromPoint) {
-              const element = document.elementFromPoint(e.clientX, e.clientY);
-              if (element && !element.closest('[data-testid="history-slider"]')) {
-                (element as HTMLElement).click();
-              }
-            }
-          }, 0);
-        }}
+        onClick={onClose}
         data-testid="history-backdrop"
       />
       <aside className="fixed left-0 top-0 h-full w-full sm:w-[400px] bg-card z-[51] shadow-2xl animate-slide-in-left overflow-hidden flex flex-col" data-testid="history-slider">
