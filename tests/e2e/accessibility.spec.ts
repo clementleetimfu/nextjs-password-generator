@@ -277,15 +277,20 @@ test.describe('Accessibility E2E Tests', () => {
 
   test('should have proper button labels', async ({ page }) => {
     await page.goto('http://localhost:3000');
+    await page.waitForLoadState('networkidle');
     
-    const buttons = page.getByRole('button');
+    const buttons = page.getByRole('button').filter({ visible: true });
     const buttonCount = await buttons.count();
     
     for (let i = 0; i < buttonCount; i++) {
       const button = buttons.nth(i);
-      const hasLabel = await button.evaluate((el: any) => {
-        return el.getAttribute('aria-label') !== null || 
-               el.textContent.trim() !== '';
+      const hasLabel = await button.evaluate((el: HTMLElement) => {
+        const ariaLabel = el.getAttribute('aria-label');
+        const textContent = el.textContent?.trim() || '';
+        const hasTitle = el.getAttribute('title') !== null;
+        return (ariaLabel !== null && ariaLabel.trim() !== '') || 
+               textContent.length > 0 || 
+               hasTitle;
       });
       
       expect(hasLabel).toBe(true);

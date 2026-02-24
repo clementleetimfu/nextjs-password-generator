@@ -456,8 +456,8 @@ test.describe('Passphrase Generation E2E Tests', () => {
     const wordCountText = await wordCountValue.textContent();
     const wordCount = parseInt(wordCountText || '0', 10);
     
-    expect(wordCount).toBeGreaterThanOrEqual(3);
-    expect(wordCount).toBeLessThanOrEqual(8);
+    expect(wordCount).toBeGreaterThanOrEqual(4);
+    expect(wordCount).toBeLessThanOrEqual(10);
   });
 
   test('should update word count value when slider moves', async ({ page }) => {

@@ -21,10 +21,10 @@ test.describe('Breach Check API E2E Tests', () => {
   test('should send correct API request format', async ({ page }) => {
     await page.goto('http://localhost:3000');
     
-    // Listen for API requests
+    // Listen for API requests to our proxy endpoint
     const apiRequests: any[] = [];
     page.on('request', (request) => {
-      if (request.url().includes('api.pwnedpasswords.com')) {
+      if (request.url().includes('/api/breach-check')) {
         apiRequests.push({
           url: request.url(),
           method: request.method(),
@@ -39,17 +39,17 @@ test.describe('Breach Check API E2E Tests', () => {
     // Wait for API call
     await page.waitForTimeout(2000);
     
-    // API request should have been made
+    // API request should have been made to our proxy
     expect(apiRequests.length).toBeGreaterThan(0);
   });
 
   test('should use k-anonymity approach (send only first 5 chars)', async ({ page }) => {
     await page.goto('http://localhost:3000');
     
-    // Listen for API requests
+    // Listen for API requests to our proxy endpoint
     const apiRequests: any[] = [];
     page.on('request', (request) => {
-      if (request.url().includes('api.pwnedpasswords.com')) {
+      if (request.url().includes('/api/breach-check')) {
         apiRequests.push({
           url: request.url(),
           method: request.method(),
@@ -63,11 +63,13 @@ test.describe('Breach Check API E2E Tests', () => {
     // Wait for API call
     await page.waitForTimeout(2000);
     
-    // API request should have been made
+    // API request should have been made with hash parameter (5+ characters)
     if (apiRequests.length > 0) {
       const url = apiRequests[0].url;
-      // URL should contain range endpoint with hash prefix
-      expect(url).toMatch(/range\/[A-F0-9]{5}/i);
+      // URL should contain hash parameter with at least 5 characters (hex)
+      const hashMatch = url.match(/[?&]hash=([A-F0-9]{5,})/i);
+      expect(hashMatch).not.toBeNull();
+      expect(hashMatch![1].length).toBe(5);
     }
   });
 
@@ -262,9 +264,9 @@ test.describe('Breach Check API E2E Tests', () => {
     
     let requestCount = 0;
     
-    // Track API requests
+    // Track API requests to our proxy endpoint
     page.on('request', (request) => {
-      if (request.url().includes('api.pwnedpasswords.com')) {
+      if (request.url().includes('/api/breach-check')) {
         requestCount++;
       }
     });
@@ -284,7 +286,7 @@ test.describe('Breach Check API E2E Tests', () => {
     const secondRequestCount = requestCount;
     
     // Request count may or may not increase depending on cache implementation
-    expect(requestCount).toBeGreaterThanOrEqual(0);
+    expect(requestCount).toBeGreaterThanOrEqual(1);
   });
 
   test('should handle multiple breach checks', async ({ page }) => {
@@ -438,10 +440,10 @@ test.describe('Breach Check API E2E Tests', () => {
     const passwordDisplay = page.locator('[data-testid="password-display"] p');
     const password = await passwordDisplay.textContent();
     
-    // Listen for API requests
+    // Listen for API requests to our proxy endpoint
     const apiRequests: any[] = [];
     page.on('request', (request) => {
-      if (request.url().includes('api.pwnedpasswords.com')) {
+      if (request.url().includes('/api/breach-check')) {
         apiRequests.push({
           url: request.url(),
         });
@@ -454,20 +456,22 @@ test.describe('Breach Check API E2E Tests', () => {
     // Wait for API call
     await page.waitForTimeout(2000);
     
-    // Verify full password is not in URL
+    // Verify full password is not in the proxy URL (only hash prefix)
     if (apiRequests.length > 0 && password) {
       const url = apiRequests[0].url;
       expect(url).not.toContain(password);
+      // Should contain hash parameter with only first 5 chars of SHA-1 hash
+      expect(url).toMatch(/[?&]hash=[A-F0-9]{5}/i);
     }
   });
 
   test('should use correct API endpoint', async ({ page }) => {
     await page.goto('http://localhost:3000');
     
-    // Listen for API requests
+    // Listen for API requests to our proxy endpoint
     const apiRequests: any[] = [];
     page.on('request', (request) => {
-      if (request.url().includes('api.pwnedpasswords.com')) {
+      if (request.url().includes('/api/breach-check')) {
         apiRequests.push({
           url: request.url(),
         });
@@ -480,10 +484,10 @@ test.describe('Breach Check API E2E Tests', () => {
     // Wait for API call
     await page.waitForTimeout(2000);
     
-    // Verify correct endpoint is used
+    // Verify correct proxy endpoint is used
     if (apiRequests.length > 0) {
       const url = apiRequests[0].url;
-      expect(url).toMatch(/api\.pwnedpasswords\.com\/range\//);
+      expect(url).toMatch(/\/api\/breach-check/);
     }
   });
 });
