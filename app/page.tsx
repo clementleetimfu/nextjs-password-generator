@@ -32,12 +32,24 @@ export default function Home() {
   const pinGenerator = usePinGenerator();
   const passphraseGenerator = usePassphraseGenerator();
 
-  const handleCopy = useCallback(() => {
-    toast.success('Copied to clipboard!', {
-      description: isDesktop ? 'Press C to copy again' : undefined,
-      duration: 2000,
-    });
-  }, [isDesktop]);
+  const handleCopy = useCallback(async () => {
+    try {
+      const currentGenerator = activeTab === 'password' ? passwordGenerator :
+                            activeTab === 'pin' ? pinGenerator :
+                            passphraseGenerator;
+
+      await navigator.clipboard.writeText(currentGenerator.state.value);
+      toast.success('Copied to clipboard!', {
+        description: isDesktop ? 'Press C to copy again' : undefined,
+        duration: 2000,
+      });
+    } catch (error) {
+      console.error('Failed to copy to clipboard:', error);
+      toast.error('Failed to copy to clipboard', {
+        duration: 2000,
+      });
+    }
+  }, [isDesktop, activeTab, passwordGenerator, pinGenerator, passphraseGenerator]);
 
   const handlePasswordBreachCheck = useCallback(async () => {
     await handleBreachCheck(passwordGenerator.state.value, passwordGenerator.setBreachCheck);
@@ -137,7 +149,7 @@ export default function Home() {
             >
               <Icons.History />
             </button>
-            <h1 className="text-4xl md:text-5xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">
+            <h1 className="text-3xl md:text-5xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">
               Password Generator
             </h1>
           </div>
