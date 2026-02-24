@@ -60,10 +60,6 @@ export function PassphraseControls({
           </TabsList>
         </Tabs>
       </div>
-
-      <div className="text-sm text-zinc-600 dark:text-zinc-400">
-        <p>Passphrases use the EFF Long Wordlist (7776 common words) for memorable security.</p>
-      </div>
     </div>
   );
 }

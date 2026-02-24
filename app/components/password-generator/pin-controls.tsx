@@ -32,10 +32,6 @@ export function PinControls({ length, onLengthChange }: PinControlsProps) {
           <span>{PIN_CONSTRAINTS.MAX_LENGTH}</span>
         </div>
       </div>
-
-      <div className="text-sm text-zinc-600 dark:text-zinc-400">
-        <p>PINs are numeric-only codes (0-9) commonly used for device access.</p>
-      </div>
     </div>
   );
 }

@@ -106,7 +106,6 @@ export default function Home() {
     onCopy: handleCopy,
     onBreachCheck: getCurrentBreachCheck(),
     onTabChange: setActiveTab,
-    onThemeToggle: toggle,
   });
 
   const currentHistory = useMemo(() => getCurrentHistory(), [getCurrentHistory]);
@@ -164,10 +163,10 @@ export default function Home() {
               <TabsTrigger value="password" shortcut="TAB_PASSWORD" data-testid="tab-password" className="flex-1">
                 Password
               </TabsTrigger>
-              <TabsTrigger value="pin" shortcut="TAB_PIN" data-testid="tab-pin" className="flex-1">
+              <TabsTrigger value="pin" shortcut="TAB_PIN" data-testid="tab-pin" className="flex-1" title="PINs are numeric-only codes (0-9) commonly used for device access.">
                 PIN
               </TabsTrigger>
-              <TabsTrigger value="passphrase" shortcut="TAB_PASSPHRASE" data-testid="tab-passphrase" className="flex-1">
+              <TabsTrigger value="passphrase" shortcut="TAB_PASSPHRASE" data-testid="tab-passphrase" className="flex-1" title="Passphrases use the EFF Long Wordlist (7776 common words) for memorable security.">
                 Passphrase
               </TabsTrigger>
             </TabsList>

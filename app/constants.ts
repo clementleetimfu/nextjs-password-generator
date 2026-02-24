@@ -28,5 +28,4 @@ export const KEYBOARD_SHORTCUTS = {
   TAB_PASSWORD: '1',
   TAB_PIN: '2',
   TAB_PASSPHRASE: '3',
-  THEME_TOGGLE: 'T',
 } as const;

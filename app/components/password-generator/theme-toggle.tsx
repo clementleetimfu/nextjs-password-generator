@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
 import type { ThemeMode } from '@/types/generator';
-import { KEYBOARD_SHORTCUTS } from '@/constants';
 
 interface ThemeToggleProps {
   mode: ThemeMode;
@@ -49,9 +48,6 @@ export function ThemeToggle({ mode, onToggle }: ThemeToggleProps) {
           </svg>
         )}
       </Button>
-      <kbd className="absolute -bottom-6 left-1/2 -translate-x-1/2 px-1.5 py-0.5 text-[10px] font-mono border border-zinc-300 dark:border-zinc-600 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 whitespace-nowrap">
-        {KEYBOARD_SHORTCUTS.THEME_TOGGLE}
-      </kbd>
     </div>
   );
 }

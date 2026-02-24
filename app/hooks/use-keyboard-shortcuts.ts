@@ -6,7 +6,6 @@ interface KeyboardShortcutsOptions {
   onCopy: () => void;
   onBreachCheck: () => void;
   onTabChange: (tab: CredentialType) => void;
-  onThemeToggle: () => void;
   isEnabled?: boolean;
 }
 
@@ -15,7 +14,6 @@ export function useKeyboardShortcuts({
   onCopy,
   onBreachCheck,
   onTabChange,
-  onThemeToggle,
   isEnabled = true,
 }: KeyboardShortcutsOptions) {
   const handleKeyDown = useCallback(
@@ -54,13 +52,9 @@ export function useKeyboardShortcuts({
           event.preventDefault();
           onTabChange('passphrase');
           break;
-        case 't':
-          event.preventDefault();
-          onThemeToggle();
-          break;
       }
     },
-    [isEnabled, onGenerate, onCopy, onBreachCheck, onTabChange, onThemeToggle]
+    [isEnabled, onGenerate, onCopy, onBreachCheck, onTabChange]
   );
 
   useEffect(() => {
