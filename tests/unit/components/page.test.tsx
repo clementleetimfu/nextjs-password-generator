@@ -120,38 +120,6 @@ describe('Home Page Component', () => {
     expect(mockPasswordGenerator.generate).toHaveBeenCalledTimes(1)
   })
 
-  it('shows copy success toast with keyboard shortcut hint on desktop', async () => {
-    vi.mocked(desktopHooks.useDesktop).mockReturnValue(true)
-    render(<Home />)
-    fireEvent.click(screen.getByRole('button', { name: /copy/i }))
-
-    await waitFor(() => {
-      expect(toast.success).toHaveBeenCalledWith(
-        'Copied to clipboard!',
-        expect.objectContaining({
-          description: 'Press C to copy again',
-          duration: 2000,
-        })
-      )
-    })
-  })
-
-  it('shows copy success toast without keyboard shortcut hint on mobile', async () => {
-    vi.mocked(desktopHooks.useDesktop).mockReturnValue(false)
-    render(<Home />)
-    fireEvent.click(screen.getByRole('button', { name: /copy/i }))
-
-    await waitFor(() => {
-      expect(toast.success).toHaveBeenCalledWith(
-        'Copied to clipboard!',
-        expect.objectContaining({
-          description: undefined,
-          duration: 2000,
-        })
-      )
-    })
-  })
-
   it('runs breach check and stores returned status', async () => {
     vi.mocked(mockBreachCheck.performBreachCheck).mockResolvedValue({ status: 'safe', count: 0 })
 

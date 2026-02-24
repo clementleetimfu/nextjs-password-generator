@@ -16,8 +16,6 @@ import { usePassphraseGenerator } from '@/hooks/use-passphrase-generator';
 import { useBreachCheckHandler } from '@/hooks/use-breach-check-handler';
 import { useCredentialHistory } from '@/hooks/use-credential-history';
 import { useTheme } from '@/hooks/use-theme';
-import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
-import { useDesktop } from '@/hooks/use-desktop';
 import type { CredentialType } from '@/types/generator';
 
 export default function Home() {
@@ -26,7 +24,6 @@ export default function Home() {
   const { mode, toggle } = useTheme();
   const { handleBreachCheck } = useBreachCheckHandler();
   const { history, addToHistory, clearHistory } = useCredentialHistory();
-  const isDesktop = useDesktop();
 
   const passwordGenerator = usePasswordGenerator();
   const pinGenerator = usePinGenerator();
@@ -40,7 +37,6 @@ export default function Home() {
 
       await navigator.clipboard.writeText(currentGenerator.state.value);
       toast.success('Copied to clipboard!', {
-        description: isDesktop ? 'Press C to copy again' : undefined,
         duration: 2000,
       });
     } catch (error) {
@@ -49,7 +45,7 @@ export default function Home() {
         duration: 2000,
       });
     }
-  }, [isDesktop, activeTab, passwordGenerator, pinGenerator, passphraseGenerator]);
+  }, [activeTab, passwordGenerator, pinGenerator, passphraseGenerator]);
 
   const handlePasswordBreachCheck = useCallback(async () => {
     await handleBreachCheck(passwordGenerator.state.value, passwordGenerator.setBreachCheck);
@@ -116,14 +112,6 @@ export default function Home() {
     clearHistory(activeTab);
   }, [activeTab, clearHistory]);
 
-  useKeyboardShortcuts({
-    onGenerate: handleRefreshWithHistory,
-    onCopy: handleCopy,
-    onBreachCheck: getCurrentBreachCheck(),
-    onTabChange: setActiveTab,
-    isEnabled: isDesktop,
-  });
-
   const currentHistory = useMemo(() => getCurrentHistory(), [getCurrentHistory]);
 
   return (
@@ -161,13 +149,13 @@ export default function Home() {
             data-testid="tabs"
           >
             <TabsList className="w-full">
-              <TabsTrigger value="password" shortcut="TAB_PASSWORD" data-testid="tab-password" className="flex-1">
+              <TabsTrigger value="password" data-testid="tab-password" className="flex-1">
                 Password
               </TabsTrigger>
-              <TabsTrigger value="pin" shortcut="TAB_PIN" data-testid="tab-pin" className="flex-1" title="PINs are numeric-only codes (0-9) commonly used for device access.">
+              <TabsTrigger value="pin" data-testid="tab-pin" className="flex-1" title="PINs are numeric-only codes (0-9) commonly used for device access.">
                 PIN
               </TabsTrigger>
-              <TabsTrigger value="passphrase" shortcut="TAB_PASSPHRASE" data-testid="tab-passphrase" className="flex-1" title="Passphrases use the EFF Long Wordlist (7776 common words) for memorable security.">
+              <TabsTrigger value="passphrase" data-testid="tab-passphrase" className="flex-1" title="Passphrases use the EFF Long Wordlist (7776 common words) for memorable security.">
                 Passphrase
               </TabsTrigger>
             </TabsList>

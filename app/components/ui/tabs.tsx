@@ -4,7 +4,6 @@ import * as React from "react"
 import * as TabsPrimitive from "@radix-ui/react-tabs"
 
 import { cn } from "@/lib/utils"
-import { KEYBOARD_SHORTCUTS } from "@/constants"
 
 const Tabs = TabsPrimitive.Root
 
@@ -25,8 +24,8 @@ TabsList.displayName = TabsPrimitive.List.displayName
 
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & { shortcut?: keyof typeof KEYBOARD_SHORTCUTS }
->(({ className, shortcut, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
+>(({ className, children, ...props }, ref) => (
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
@@ -36,11 +35,6 @@ const TabsTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    {shortcut && (
-      <kbd className="hidden lg:inline-block ml-1 px-1.5 py-0.5 text-[10px] font-mono border border-zinc-300 dark:border-zinc-600 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">
-        {KEYBOARD_SHORTCUTS[shortcut]}
-      </kbd>
-    )}
   </TabsPrimitive.Trigger>
 ))
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
