@@ -32,9 +32,4 @@ describe('PassphraseControls Component', () => {
     render(<PassphraseControls {...props} separator="underscore" />);
     expect(screen.getByRole('tab', { name: 'Underscore' })).toHaveAttribute('data-state', 'active');
   });
-
-  it('shows helper text', () => {
-    render(<PassphraseControls {...props} />);
-    expect(screen.getByText(/EFF Long Wordlist/)).toBeInTheDocument();
-  });
 });

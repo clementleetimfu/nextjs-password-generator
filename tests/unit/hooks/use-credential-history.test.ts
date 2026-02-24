@@ -115,7 +115,7 @@ describe('useCredentialHistory hook', () => {
 
     it('saves to localStorage when adding item', () => {
       const { result } = renderHook(() => useCredentialHistory());
-      const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
+      const setItemSpy = vi.spyOn(localStorage, 'setItem');
 
       act(() => {
         result.current.addToHistory('test', 'password');
@@ -125,7 +125,7 @@ describe('useCredentialHistory hook', () => {
     });
 
     it('handles localStorage save errors gracefully', () => {
-      vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      vi.spyOn(localStorage, 'setItem').mockImplementation(() => {
         throw new Error('Storage quota exceeded');
       });
       const { result } = renderHook(() => useCredentialHistory());
@@ -196,7 +196,7 @@ describe('useCredentialHistory hook', () => {
 
     it('saves to localStorage when clearing history', () => {
       const { result } = renderHook(() => useCredentialHistory());
-      const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
+      const setItemSpy = vi.spyOn(localStorage, 'setItem');
 
       act(() => {
         result.current.addToHistory('test', 'password');
@@ -211,7 +211,7 @@ describe('useCredentialHistory hook', () => {
     });
 
     it('handles localStorage save errors gracefully when clearing', () => {
-      vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      vi.spyOn(localStorage, 'setItem').mockImplementation(() => {
         throw new Error('Storage error');
       });
       const { result } = renderHook(() => useCredentialHistory());
@@ -249,7 +249,7 @@ describe('useCredentialHistory hook', () => {
 
     it('saves to localStorage when clearing all history', () => {
       const { result } = renderHook(() => useCredentialHistory());
-      const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
+      const setItemSpy = vi.spyOn(localStorage, 'setItem');
 
       act(() => {
         result.current.addToHistory('test', 'password');
@@ -264,7 +264,7 @@ describe('useCredentialHistory hook', () => {
     });
 
     it('handles localStorage save errors gracefully when clearing all', () => {
-      vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      vi.spyOn(localStorage, 'setItem').mockImplementation(() => {
         throw new Error('Storage error');
       });
       const { result } = renderHook(() => useCredentialHistory());

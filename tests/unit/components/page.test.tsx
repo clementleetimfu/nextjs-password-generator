@@ -119,7 +119,13 @@ describe('Home Page Component', () => {
     fireEvent.click(screen.getByRole('button', { name: /copy/i }))
 
     await waitFor(() => {
-      expect(toast.success).toHaveBeenCalledWith('Copied to clipboard!')
+      expect(toast.success).toHaveBeenCalledWith(
+        'Copied to clipboard!',
+        expect.objectContaining({
+          description: 'Press C to copy again',
+          duration: 2000,
+        })
+      )
     })
   })
 

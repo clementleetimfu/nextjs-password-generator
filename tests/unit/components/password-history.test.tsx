@@ -37,14 +37,16 @@ describe('PasswordHistory Component', () => {
         { value: 'test3', timestamp: 1234567892 },
       ];
       render(<PasswordHistory {...defaultProps} items={items} />);
-      expect(screen.getAllByRole('button')).toHaveLength(3);
+      // 3 history item buttons + 1 clear button = 4 total buttons
+      expect(screen.getAllByRole('button')).toHaveLength(4);
     });
 
     it('renders timestamps for each item', () => {
       render(<PasswordHistory {...defaultProps} />);
-      const timestamps = screen.getAllByRole('button').map((btn) =>
-        btn.querySelector('span:last-child')?.textContent
-      );
+      const buttons = screen.getAllByRole('button');
+      const timestamps = buttons
+        .map((btn) => btn.querySelector('span:last-child')?.textContent)
+        .filter((ts): ts is string => ts !== undefined);
       expect(timestamps).toHaveLength(2);
     });
   });
@@ -235,16 +237,18 @@ describe('PasswordHistory Component', () => {
   });
 
   describe('clear button styling', () => {
-    it('has outline variant', () => {
+    it('has outline variant classes', () => {
       render(<PasswordHistory {...defaultProps} />);
       const clearButton = screen.getByTestId('clear-history-button');
-      expect(clearButton).toHaveClass('outline');
+      expect(clearButton).toHaveClass('border');
+      expect(clearButton).toHaveClass('border-input');
     });
 
-    it('has small size', () => {
+    it('has small size classes', () => {
       render(<PasswordHistory {...defaultProps} />);
       const clearButton = screen.getByTestId('clear-history-button');
-      expect(clearButton).toHaveClass('sm');
+      expect(clearButton).toHaveClass('h-8');
+      expect(clearButton).toHaveClass('text-xs');
     });
 
     it('has full width', () => {
@@ -279,10 +283,10 @@ describe('PasswordHistory Component', () => {
       expect(emptyState).toHaveClass('text-center', 'py-12');
     });
 
-    it('has correct color for empty state text', () => {
+    it('has correct color for empty state container', () => {
       render(<PasswordHistory {...defaultProps} items={[]} />);
-      const emptyStateText = screen.getByText('No history yet');
-      expect(emptyStateText).toHaveClass('text-zinc-500', 'dark:text-zinc-400');
+      const emptyState = screen.getByTestId('empty-history');
+      expect(emptyState).toHaveClass('text-zinc-500');
     });
   });
 

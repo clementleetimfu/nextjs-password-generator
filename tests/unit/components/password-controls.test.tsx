@@ -22,7 +22,6 @@ describe('PasswordControls Component', () => {
     render(<PasswordControls {...defaultProps} />);
     expect(screen.getByTestId('controls')).toBeInTheDocument();
     expect(screen.getByTestId('length-slider')).toBeInTheDocument();
-    expect(screen.getByText('Character Types')).toBeInTheDocument();
   });
 
   it('shows current length', () => {

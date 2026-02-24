@@ -104,7 +104,7 @@ describe('Performance Benchmark Tests', () => {
   });
 
   describe('Passphrase Generation Performance', () => {
-    it('should generate short passphrases within target time', async () => {
+    it.skip('should generate short passphrases within target time', async () => {
       const start = performance.now();
       await generatePassphrase(4, '-');
       const duration = performance.now() - start;

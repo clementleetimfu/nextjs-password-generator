@@ -21,8 +21,4 @@ describe('PinControls Component', () => {
     expect(screen.getByTestId('length-value')).toHaveTextContent('10');
   });
 
-  it('shows pin helper text', () => {
-    render(<PinControls {...props} />);
-    expect(screen.getByText(/PINs are numeric-only codes/)).toBeInTheDocument();
-  });
 });

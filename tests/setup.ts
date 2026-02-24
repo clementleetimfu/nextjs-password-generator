@@ -101,6 +101,22 @@ if (!globalThis.ResizeObserver) {
   });
 }
 
+// Mock window.matchMedia for responsive design
+Object.defineProperty(window, 'matchMedia', {
+  value: vi.fn((query: string) => ({
+    matches: query === '(min-width: 1024px)',
+    media: query,
+    onchange: null,
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  })),
+  writable: true,
+  configurable: true,
+});
+
 // Reset all mocks before each test
 beforeEach(() => {
   vi.clearAllMocks();

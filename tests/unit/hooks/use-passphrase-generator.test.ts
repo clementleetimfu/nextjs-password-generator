@@ -17,12 +17,15 @@ vi.mock('@/lib/strength', async () => {
 describe('usePassphraseGenerator hook', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(generatePassphrase).mockReturnValue('correct-horse-battery-staple');
+    vi.mocked(generatePassphrase).mockResolvedValue('correct-horse-battery-staple');
     vi.mocked(calculatePassphraseStrength).mockReturnValue({ level: 'VERY_STRONG', score: 90, entropy: 50 });
   });
 
-  it('initializes and generates a passphrase', () => {
+  it('initializes and generates a passphrase', async () => {
     const { result } = renderHook(() => usePassphraseGenerator());
+    await act(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
+    });
     expect(result.current.state.type).toBe('passphrase');
     expect(result.current.state.value).toBeTruthy();
   });

@@ -114,7 +114,7 @@ describe('HistorySlider Component', () => {
   describe('empty history', () => {
     it('handles empty items array', () => {
       render(<HistorySlider {...defaultProps} items={[]} />);
-      expect(screen.getByTestId('password-history')).toBeInTheDocument();
+      expect(screen.getByTestId('empty-history')).toBeInTheDocument();
       expect(screen.getByText('No history yet')).toBeInTheDocument();
     });
   });

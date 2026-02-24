@@ -53,7 +53,7 @@ describe('useBreachCheckHandler hook', () => {
         await result.current.handleBreachCheck('testPassword', setBreachCheckMock);
       });
 
-      expect(setBreachCheckMock).toHaveBeenCalledWith('safe', undefined);
+      expect(setBreachCheckMock).toHaveBeenCalledWith('safe', 0);
     });
 
     it('calls setBreachCheck with breached status and count for breached password', async () => {
@@ -73,7 +73,7 @@ describe('useBreachCheckHandler hook', () => {
     });
 
     it('calls setBreachCheck with error status on API error', async () => {
-      const performBreachCheckMock = vi.fn().mockResolvedValue({ status: 'error' as const, count: undefined });
+      const performBreachCheckMock = vi.fn().mockResolvedValue({ status: 'error' as const, count: 0 });
       vi.mocked(useBreachCheck).mockReturnValue({
         performBreachCheck: performBreachCheckMock,
       });
@@ -85,7 +85,7 @@ describe('useBreachCheckHandler hook', () => {
         await result.current.handleBreachCheck('testPassword', setBreachCheckMock);
       });
 
-      expect(setBreachCheckMock).toHaveBeenCalledWith('error', undefined);
+      expect(setBreachCheckMock).toHaveBeenCalledWith('error', 0);
     });
 
     it('handles checking passwords', async () => {

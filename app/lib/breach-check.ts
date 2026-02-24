@@ -107,3 +107,8 @@ export function handleBreachCheckError(error: unknown): string {
   }
   return 'An unknown error occurred';
 }
+
+// Clear breach cache (useful for testing)
+export function clearBreachCache(): void {
+  breachCache.clear();
+}
