@@ -16,6 +16,7 @@ import { useBreachCheckHandler } from '@/hooks/use-breach-check-handler';
 import { useCredentialHistory } from '@/hooks/use-credential-history';
 import { useTheme } from '@/hooks/use-theme';
 import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
+import { useDesktop } from '@/hooks/use-desktop';
 import type { CredentialType } from '@/types/generator';
 
 export default function Home() {
@@ -101,11 +102,14 @@ export default function Home() {
     clearHistory(activeTab);
   }, [activeTab, clearHistory]);
 
+  const isDesktop = useDesktop();
+
   useKeyboardShortcuts({
     onGenerate: handleRefreshWithHistory,
     onCopy: handleCopy,
     onBreachCheck: getCurrentBreachCheck(),
     onTabChange: setActiveTab,
+    isEnabled: isDesktop,
   });
 
   const currentHistory = useMemo(() => getCurrentHistory(), [getCurrentHistory]);

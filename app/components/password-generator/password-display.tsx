@@ -82,13 +82,13 @@ export function PasswordDisplay({
         </span>
       </div>
 
-      <div className="flex gap-3 w-full">
-        <Button onClick={onRefresh} className="flex-1" variant="outline" shortcut="GENERATE" data-testid="refresh-button">
+      <div className="flex flex-wrap gap-3 w-full lg:flex-nowrap">
+        <Button onClick={onRefresh} className="flex-1 lg:flex-1" variant="outline" shortcut="GENERATE" data-testid="refresh-button">
           Refresh
         </Button>
         <Button
           onClick={handleCopy}
-          className="flex-1"
+          className="flex-1 lg:flex-1"
           variant="outline"
           shortcut="COPY"
           disabled={!value}
@@ -98,7 +98,7 @@ export function PasswordDisplay({
         </Button>
         <Button
           onClick={onBreachCheck}
-          className="flex-1"
+          className="flex-1 lg:flex-1"
           variant="outline"
           shortcut="BREACH_CHECK"
           disabled={!value || breachCheck === 'checking'}
