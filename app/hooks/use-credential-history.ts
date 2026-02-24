@@ -15,7 +15,7 @@ export function useCredentialHistory() {
     passphrase: [],
   });
 
-  const loadHistory = useCallback(() => {
+  const loadHistoryInternal = useCallback(() => {
     try {
       const stored = localStorage.getItem(HISTORY_STORAGE_KEY);
       if (stored) {
@@ -80,8 +80,8 @@ export function useCredentialHistory() {
   }, []);
 
   useEffect(() => {
-    loadHistory();
-  }, [loadHistory]);
+    loadHistoryInternal();
+  }, [loadHistoryInternal]);
 
   return {
     history,

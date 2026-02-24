@@ -12,7 +12,7 @@ export const API_CONFIG = {
 const breachCache = new Map<string, BreachCheckResult>();
 
 // Generate SHA-1 hash of a string using Web Crypto API
-export async function sha1Hash(input: string): Promise<string> {
+async function sha1Hash(input: string): Promise<string> {
   const encoder = new TextEncoder();
   const data = encoder.encode(input);
   const hashBuffer = await crypto.subtle.digest('SHA-1', data);
@@ -100,15 +100,15 @@ export async function checkBreach(
   }
 }
 
+// Clear breach cache (useful for testing)
+export function clearBreachCache(): void {
+  breachCache.clear();
+}
+
 // Handle breach check errors
-export function handleBreachCheckError(error: unknown): string {
+function handleBreachCheckError(error: unknown): string {
   if (error instanceof Error) {
     return error.message;
   }
   return 'An unknown error occurred';
-}
-
-// Clear breach cache (useful for testing)
-export function clearBreachCache(): void {
-  breachCache.clear();
 }

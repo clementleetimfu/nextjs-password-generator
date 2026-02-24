@@ -44,15 +44,6 @@ export const PASSPHRASE_CONSTRAINTS = {
   DEFAULT_SEPARATOR: 'hyphen',
 } as const;
 
-// Performance targets
-export const PERFORMANCE_TARGETS = {
-  GENERATION_TIME_MS: 100,
-  THEME_TOGGLE_TIME_MS: 100,
-  BREACH_CHECK_TIME_MS: 3000,
-  PAGE_LOAD_TIME_MS: 2000,
-  TOAST_DURATION_MS: 3000,
-} as const;
-
 // Get wordlist lazily for passphrase generation
 let wordlistCache: string[] | null = null;
 

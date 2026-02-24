@@ -12,7 +12,6 @@ import {
   PASSWORD_CONSTRAINTS,
   PIN_CONSTRAINTS,
   PASSPHRASE_CONSTRAINTS,
-  PERFORMANCE_TARGETS,
 } from '../../app/lib/crypto'
 import { API_CONFIG } from '../../app/lib/breach-check'
 
@@ -108,22 +107,6 @@ describe('crypto.ts Constants', () => {
 
     it('should have DEFAULT_SEPARATOR in SEPARATORS', () => {
       expect(SEPARATORS[PASSPHRASE_CONSTRAINTS.DEFAULT_SEPARATOR]).toBeDefined()
-    })
-  })
-
-  describe('PERFORMANCE_TARGETS', () => {
-    it('should have correct performance targets', () => {
-      expect(PERFORMANCE_TARGETS.GENERATION_TIME_MS).toBe(100)
-      expect(PERFORMANCE_TARGETS.THEME_TOGGLE_TIME_MS).toBe(100)
-      expect(PERFORMANCE_TARGETS.BREACH_CHECK_TIME_MS).toBe(3000)
-      expect(PERFORMANCE_TARGETS.PAGE_LOAD_TIME_MS).toBe(2000)
-      expect(PERFORMANCE_TARGETS.TOAST_DURATION_MS).toBe(3000)
-    })
-
-    it('should have all targets as positive numbers', () => {
-      Object.values(PERFORMANCE_TARGETS).forEach((target) => {
-        expect(target).toBeGreaterThan(0)
-      })
     })
   })
 
@@ -287,7 +270,7 @@ describe('generatePassword', () => {
       const start = performance.now()
       generatePassword(20, true, true, true)
       const duration = performance.now() - start
-      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS)
+      expect(duration).toBeLessThan(100)
     })
 
     it('should generate multiple passwords efficiently', () => {
@@ -296,7 +279,7 @@ describe('generatePassword', () => {
         generatePassword(12, true, true, true)
       }
       const duration = performance.now() - start
-      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS * 100)
+      expect(duration).toBeLessThan(100 * 100)
     })
   })
 })
@@ -380,7 +363,7 @@ describe('generatePin', () => {
       const start = performance.now()
       generatePin(6)
       const duration = performance.now() - start
-      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS)
+      expect(duration).toBeLessThan(100)
     })
 
     it('should generate multiple PINs efficiently', () => {
@@ -389,7 +372,7 @@ describe('generatePin', () => {
         generatePin(6)
       }
       const duration = performance.now() - start
-      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS * 100)
+      expect(duration).toBeLessThan(100 * 100)
     })
   })
 })
@@ -545,7 +528,7 @@ describe('generatePin', () => {
       const start = performance.now()
       await generatePassphrase(4, '-')
       const duration = performance.now() - start
-      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS)
+      expect(duration).toBeLessThan(100)
     })
 
     it('should generate multiple passphrases efficiently', async () => {
@@ -554,7 +537,7 @@ describe('generatePin', () => {
         await generatePassphrase(4, '-')
       }
       const duration = performance.now() - start
-      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS * 100)
+      expect(duration).toBeLessThan(100 * 100)
     })
   })
 })

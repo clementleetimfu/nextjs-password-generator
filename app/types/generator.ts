@@ -1,9 +1,6 @@
 // Credential generation modes
 export type CredentialType = 'password' | 'pin' | 'passphrase'
 
-// Character sets for password generation
-export type CharacterSet = 'lowercase' | 'uppercase' | 'digits' | 'symbols'
-
 // Separator options for passphrase
 export type Separator = 'space' | 'hyphen' | 'underscore' | 'period'
 
@@ -48,29 +45,6 @@ export interface PassphraseState {
   strength: StrengthLevel
   breachCheck: BreachCheckStatus
   breachCount?: number
-}
-
-// Combined credential state
-export type CredentialState = PasswordState | PinState | PassphraseState
-
-// Generator state
-export interface GeneratorState {
-  activeType: CredentialType
-  password: PasswordState
-  pin: PinState
-  passphrase: PassphraseState
-}
-
-// Theme state
-export interface ThemeState {
-  mode: ThemeMode
-}
-
-// Toast state
-export interface ToastState {
-  visible: boolean
-  message: string
-  type: 'success' | 'error'
 }
 
 // Breach check result

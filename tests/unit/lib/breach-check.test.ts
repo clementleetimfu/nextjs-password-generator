@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { sha1Hash, checkBreach, handleBreachCheckError, clearBreachCache } from '@/lib/breach-check';
+import { checkBreach, clearBreachCache } from '@/lib/breach-check';
 import { API_CONFIG } from '@/lib/breach-check';
 
 // Mock global fetch
@@ -13,47 +13,6 @@ describe('Breach Check Library', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
-  });
-
-  describe('sha1Hash Function', () => {
-    it('should generate correct SHA-1 hash', async () => {
-      const hash = await sha1Hash('password');
-      expect(hash).toBe('5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
-    });
-
-    it('should generate hash for empty string', async () => {
-      const hash = await sha1Hash('');
-      expect(hash).toBe('DA39A3EE5E6B4B0D3255BFEF95601890AFD80709');
-    });
-
-    it('should generate different hashes for different inputs', async () => {
-      const hash1 = await sha1Hash('password1');
-      const hash2 = await sha1Hash('password2');
-      expect(hash1).not.toBe(hash2);
-    });
-
-    it('should generate same hash for same input', async () => {
-      const hash1 = await sha1Hash('testpassword');
-      const hash2 = await sha1Hash('testpassword');
-      expect(hash1).toBe(hash2);
-    });
-
-    it('should handle special characters', async () => {
-      const hash = await sha1Hash('p@ssw0rd!#$');
-      expect(hash).toBeTruthy();
-      expect(hash.length).toBe(40);
-    });
-
-    it('should handle unicode characters', async () => {
-      const hash = await sha1Hash('pàsswörd123ñ');
-      expect(hash).toBeTruthy();
-      expect(hash.length).toBe(40);
-    });
-
-    it('should return uppercase hash', async () => {
-      const hash = await sha1Hash('password');
-      expect(hash).toBe(hash.toUpperCase());
-    });
   });
 
   describe('checkBreach Function', () => {
@@ -126,8 +85,7 @@ describe('Breach Check Library', () => {
     });
 
     it('should use correct API endpoint', async () => {
-      const hash = await sha1Hash('password');
-      const hashPrefix = hash.substring(0, 5);
+      const hashPrefix = '5BAA6';
       
       (global.fetch as any).mockResolvedValue({
         ok: true,
@@ -280,34 +238,6 @@ another invalid line`;
     });
   });
 
-  describe('handleBreachCheckError Function', () => {
-    it('should return message from Error object', () => {
-      const error = new Error('Test error message');
-      const result = handleBreachCheckError(error);
-      expect(result).toBe('Test error message');
-    });
-
-    it('should return default message for non-Error objects', () => {
-      const result = handleBreachCheckError('string error');
-      expect(result).toBe('An unknown error occurred');
-    });
-
-    it('should return default message for null', () => {
-      const result = handleBreachCheckError(null);
-      expect(result).toBe('An unknown error occurred');
-    });
-
-    it('should return default message for undefined', () => {
-      const result = handleBreachCheckError(undefined);
-      expect(result).toBe('An unknown error occurred');
-    });
-
-    it('should return default message for object without message property', () => {
-      const result = handleBreachCheckError({ custom: 'error' });
-      expect(result).toBe('An unknown error occurred');
-    });
-  });
-
   describe('Edge Cases', () => {
     it('should handle very long passwords', async () => {
       const longPassword = 'a'.repeat(1000);
@@ -383,8 +313,8 @@ another invalid line`;
 
   describe('Security', () => {
     it('should only send first 5 characters of hash (k-anonymity)', async () => {
-      const hash = await sha1Hash('password');
-      const hashPrefix = hash.substring(0, 5);
+      const hashPrefix = '5BAA6';
+      const hashSuffix = '1E4C9B93F3F0682250B6CF8331B7EE68FD8';
       
       (global.fetch as any).mockResolvedValue({
         ok: true,
@@ -396,7 +326,7 @@ another invalid line`;
       
       const fetchCall = (global.fetch as any).mock.calls[0];
       expect(fetchCall[0]).toContain(hashPrefix);
-      expect(fetchCall[0]).not.toContain(hash.substring(5));
+      expect(fetchCall[0]).not.toContain(hashSuffix);
     });
 
     it('should not send full password to API', async () => {

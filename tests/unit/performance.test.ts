@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { generatePassword, generatePin, generatePassphrase, PERFORMANCE_TARGETS } from '@/lib/crypto';
+import { generatePassword, generatePin, generatePassphrase } from '@/lib/crypto';
 import { calculatePasswordStrength, calculatePinStrength, calculatePassphraseStrength } from '@/lib/strength';
 
 describe('Performance Benchmark Tests', () => {
@@ -9,7 +9,7 @@ describe('Performance Benchmark Tests', () => {
       generatePassword(8, false, false, false);
       const duration = performance.now() - start;
 
-      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS);
+      expect(duration).toBeLessThan(100);
     });
 
     it('should generate medium passwords within target time', () => {
@@ -17,7 +17,7 @@ describe('Performance Benchmark Tests', () => {
       generatePassword(20, true, true, true);
       const duration = performance.now() - start;
 
-      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS);
+      expect(duration).toBeLessThan(100);
     });
 
     it('should generate long passwords within target time', () => {
@@ -25,7 +25,7 @@ describe('Performance Benchmark Tests', () => {
       generatePassword(50, true, true, true);
       const duration = performance.now() - start;
 
-      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS);
+      expect(duration).toBeLessThan(100);
     });
 
     it('should generate 100 passwords in less than 500ms', () => {
@@ -59,7 +59,7 @@ describe('Performance Benchmark Tests', () => {
       generatePin(3);
       const duration = performance.now() - start;
 
-      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS);
+      expect(duration).toBeLessThan(100);
     });
 
     it('should generate medium PINs within target time', () => {
@@ -67,7 +67,7 @@ describe('Performance Benchmark Tests', () => {
       generatePin(6);
       const duration = performance.now() - start;
 
-      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS);
+      expect(duration).toBeLessThan(100);
     });
 
     it('should generate long PINs within target time', () => {
@@ -75,7 +75,7 @@ describe('Performance Benchmark Tests', () => {
       generatePin(12);
       const duration = performance.now() - start;
 
-      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS);
+      expect(duration).toBeLessThan(100);
     });
 
     it('should generate 100 PINs in less than 500ms', () => {
@@ -109,7 +109,7 @@ describe('Performance Benchmark Tests', () => {
       await generatePassphrase(4, '-');
       const duration = performance.now() - start;
 
-      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS);
+      expect(duration).toBeLessThan(100);
     });
 
     it('should generate medium passphrases within target time', async () => {
@@ -117,7 +117,7 @@ describe('Performance Benchmark Tests', () => {
       await generatePassphrase(6, '-');
       const duration = performance.now() - start;
 
-      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS);
+      expect(duration).toBeLessThan(100);
     });
 
     it('should generate long passphrases within target time', async () => {
@@ -125,7 +125,7 @@ describe('Performance Benchmark Tests', () => {
       await generatePassphrase(10, '-');
       const duration = performance.now() - start;
 
-      expect(duration).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS);
+      expect(duration).toBeLessThan(100);
     });
 
     it('should generate 100 passphrases in less than 1000ms', async () => {
@@ -208,8 +208,8 @@ describe('Performance Benchmark Tests', () => {
       const avgTime = times.reduce((sum, time) => sum + time, 0) / times.length;
       const maxTime = Math.max(...times);
 
-      expect(avgTime).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS);
-      expect(maxTime).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS * 2);
+      expect(avgTime).toBeLessThan(100);
+      expect(maxTime).toBeLessThan(100 * 2);
     });
 
     it('should handle rapid consecutive PIN generation without performance degradation', () => {
@@ -224,8 +224,8 @@ describe('Performance Benchmark Tests', () => {
       const avgTime = times.reduce((sum, time) => sum + time, 0) / times.length;
       const maxTime = Math.max(...times);
 
-      expect(avgTime).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS);
-      expect(maxTime).toBeLessThan(PERFORMANCE_TARGETS.GENERATION_TIME_MS * 2);
+      expect(avgTime).toBeLessThan(100);
+      expect(maxTime).toBeLessThan(100 * 2);
     });
   });
 
