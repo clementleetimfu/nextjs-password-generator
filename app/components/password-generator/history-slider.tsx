@@ -35,7 +35,7 @@ export function HistorySlider({
         data-testid="history-backdrop"
       />
       <div className="fixed left-0 top-0 h-full w-full sm:w-[400px] max-w-full bg-card z-50 shadow-2xl animate-slide-in-left overflow-hidden flex flex-col">
-        <div className="flex items-center justify-between p-6 border-b border-zinc-200 dark:border-zinc-700">
+        <div className="flex items-center gap-2 p-6 border-b border-zinc-200 dark:border-zinc-700">
           <h2 className="text-lg font-semibold text-foreground">
             {type === 'password' ? 'Password' : type === 'pin' ? 'PIN' : 'Passphrase'} History
           </h2>
