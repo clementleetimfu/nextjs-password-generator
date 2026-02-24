@@ -1,30 +1,73 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeToggle } from '@/components/password-generator/theme-toggle';
+import type { ThemeMode } from '@/types/generator';
 
 describe('ThemeToggle Component', () => {
-  const onToggle = vi.fn();
+  const defaultProps = {
+    mode: 'light' as ThemeMode,
+    onToggle: vi.fn(),
+  };
 
   beforeEach(() => vi.clearAllMocks());
 
-  it('renders the button', () => {
-    render(<ThemeToggle mode="light" onToggle={onToggle} />);
-    expect(screen.getByTestId('theme-toggle')).toBeInTheDocument();
+  describe('Rendering', () => {
+    it('renders the button', () => {
+      render(<ThemeToggle {...defaultProps} />);
+      expect(screen.getByTestId('theme-toggle')).toBeInTheDocument();
+    });
+
+    it('renders as a button element', () => {
+      render(<ThemeToggle {...defaultProps} />);
+      expect(screen.getByRole('button')).toBeInTheDocument();
+    });
   });
 
-  it('uses expected aria-label in light mode', () => {
-    render(<ThemeToggle mode="light" onToggle={onToggle} />);
-    expect(screen.getByTestId('theme-toggle')).toHaveAttribute('aria-label', 'Toggle dark mode');
+  describe('Aria Labels', () => {
+    it('uses expected aria-label in light mode', () => {
+      render(<ThemeToggle {...defaultProps} mode="light" />);
+      expect(screen.getByTestId('theme-toggle')).toHaveAttribute('aria-label', 'Toggle dark mode');
+    });
+
+    it('uses expected aria-label in dark mode', () => {
+      render(<ThemeToggle {...defaultProps} mode="dark" />);
+      expect(screen.getByTestId('theme-toggle')).toHaveAttribute('aria-label', 'Toggle light mode');
+    });
   });
 
-  it('uses expected aria-label in dark mode', () => {
-    render(<ThemeToggle mode="dark" onToggle={onToggle} />);
-    expect(screen.getByTestId('theme-toggle')).toHaveAttribute('aria-label', 'Toggle light mode');
+  describe('User Interactions', () => {
+    it('calls onToggle when clicked', () => {
+      render(<ThemeToggle {...defaultProps} />);
+      fireEvent.click(screen.getByTestId('theme-toggle'));
+      expect(defaultProps.onToggle).toHaveBeenCalledTimes(1);
+    });
+
+    it('handles multiple toggle clicks', () => {
+      render(<ThemeToggle {...defaultProps} />);
+      fireEvent.click(screen.getByTestId('theme-toggle'));
+      fireEvent.click(screen.getByTestId('theme-toggle'));
+      expect(defaultProps.onToggle).toHaveBeenCalledTimes(2);
+    });
   });
 
-  it('calls onToggle when clicked', () => {
-    render(<ThemeToggle mode="light" onToggle={onToggle} />);
-    fireEvent.click(screen.getByTestId('theme-toggle'));
-    expect(onToggle).toHaveBeenCalledTimes(1);
+  describe('Icon Display', () => {
+    it('displays an icon in light mode', () => {
+      render(<ThemeToggle {...defaultProps} mode="light" />);
+      const button = screen.getByTestId('theme-toggle');
+      expect(button.querySelector('svg')).toBeInTheDocument();
+    });
+
+    it('displays an icon in dark mode', () => {
+      render(<ThemeToggle {...defaultProps} mode="dark" />);
+      const button = screen.getByTestId('theme-toggle');
+      expect(button.querySelector('svg')).toBeInTheDocument();
+    });
+  });
+
+  describe('Accessibility', () => {
+    it('has accessible name from aria-label', () => {
+      render(<ThemeToggle {...defaultProps} mode="light" />);
+      expect(screen.getByRole('button', { name: /toggle dark mode/i })).toBeInTheDocument();
+    });
   });
 });

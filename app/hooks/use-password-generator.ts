@@ -37,6 +37,8 @@ export function usePasswordGenerator() {
       breachCheck: 'idle',
       breachCount: undefined,
     }));
+
+    return password;
   }, [state.length, state.includeDigits, state.includeSymbols, state.includeUppercase]);
 
   const setLength = useCallback((length: number) => {

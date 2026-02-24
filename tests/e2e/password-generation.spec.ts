@@ -76,7 +76,7 @@ test.describe('Password Generation', () => {
   test('copy button copies to clipboard and shows toast', async ({ page, browserName }) => {
     const copyButton = page.getByTestId('copy-button');
     const display = page.getByTestId('password-display');
-    
+
     const expectedPassword = await display.getByRole('paragraph').textContent();
 
     await copyButton.click();
@@ -88,8 +88,34 @@ test.describe('Password Generation', () => {
       const clipboardContent = await page.evaluate(async () => {
         return navigator.clipboard.readText();
       });
-      
+
       expect(clipboardContent).toBe(expectedPassword);
     }
+  });
+
+  test('refresh button generates new password', async ({ page }) => {
+    const display = page.getByTestId('password-display');
+    const refreshButton = page.getByTestId('refresh-button');
+
+    const initialPassword = await display.getByRole('paragraph').textContent();
+
+    await refreshButton.click();
+    await page.waitForTimeout(100);
+
+    const newPassword = await display.getByRole('paragraph').textContent();
+
+    expect(newPassword).not.toBe(initialPassword);
+    expect(newPassword?.length).toBeGreaterThan(0);
+  });
+
+  test('displays strength indicator with correct level', async ({ page }) => {
+    const strengthIndicator = page.getByTestId('strength-indicator');
+    const strengthLevel = page.getByTestId('strength-level');
+
+    await expect(strengthIndicator).toBeVisible();
+    await expect(strengthLevel).toBeVisible();
+
+    const levelText = await strengthLevel.textContent();
+    expect(['VERY WEAK', 'WEAK', 'MODERATE', 'STRONG', 'VERY STRONG']).toContain(levelText);
   });
 });

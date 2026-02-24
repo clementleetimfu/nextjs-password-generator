@@ -26,6 +26,8 @@ export function usePassphraseGenerator() {
       breachCheck: 'idle',
       breachCount: undefined,
     }));
+
+    return passphrase;
   }, [state.wordCount, state.separator]);
  
   const setWordCount = useCallback((wordCount: number) => {

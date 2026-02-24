@@ -75,16 +75,12 @@ export default function Home() {
     }
   }, [activeTab, handlePasswordBreachCheck, handlePinBreachCheck, handlePassphraseBreachCheck]);
 
-  const handleRefreshWithHistory = useCallback(() => {
+  const handleRefreshWithHistory = useCallback(async () => {
     const generator = getCurrentGenerate();
-    generator();
+    const newValue = await generator();
 
-    const currentGenerator = activeTab === 'password' ? passwordGenerator :
-                          activeTab === 'pin' ? pinGenerator :
-                          passphraseGenerator;
-
-    addToHistory(currentGenerator.state.value, activeTab);
-  }, [activeTab, getCurrentGenerate, passwordGenerator, pinGenerator, passphraseGenerator, addToHistory]);
+    addToHistory(newValue, activeTab);
+  }, [activeTab, getCurrentGenerate, addToHistory]);
 
   const handleRestoreHistory = useCallback((value: string) => {
     switch (activeTab) {
@@ -167,7 +163,7 @@ export default function Home() {
                   strength={passwordGenerator.state.strength}
                   breachCheck={passwordGenerator.state.breachCheck}
                   breachCount={passwordGenerator.state.breachCount}
-                  onRefresh={passwordGenerator.generate}
+                  onRefresh={handleRefreshWithHistory}
                   onCopy={handleCopy}
                   onBreachCheck={handlePasswordBreachCheck}
                 />
@@ -191,7 +187,7 @@ export default function Home() {
                   strength={pinGenerator.state.strength}
                   breachCheck={pinGenerator.state.breachCheck}
                   breachCount={pinGenerator.state.breachCount}
-                  onRefresh={pinGenerator.generate}
+                  onRefresh={handleRefreshWithHistory}
                   onCopy={handleCopy}
                   onBreachCheck={handlePinBreachCheck}
                 />
@@ -209,7 +205,7 @@ export default function Home() {
                   strength={passphraseGenerator.state.strength}
                   breachCheck={passphraseGenerator.state.breachCheck}
                   breachCount={passphraseGenerator.state.breachCount}
-                  onRefresh={passphraseGenerator.generate}
+                  onRefresh={handleRefreshWithHistory}
                   onCopy={handleCopy}
                   onBreachCheck={handlePassphraseBreachCheck}
                 />

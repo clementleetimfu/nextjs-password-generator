@@ -24,6 +24,8 @@ export function usePinGenerator() {
       breachCheck: 'idle',
       breachCount: undefined,
     }));
+
+    return pin;
   }, [state.length]);
 
   const setLength = useCallback((length: number) => {
