@@ -6,6 +6,7 @@ import * as pinHooks from '@/hooks/use-pin-generator'
 import * as passphraseHooks from '@/hooks/use-passphrase-generator'
 import * as breachHooks from '@/hooks/use-breach-check'
 import * as themeHooks from '@/hooks/use-theme'
+import * as desktopHooks from '@/hooks/use-desktop'
 import { toast } from 'sonner'
 
 vi.mock('@/hooks/use-password-generator')
@@ -13,6 +14,7 @@ vi.mock('@/hooks/use-pin-generator')
 vi.mock('@/hooks/use-passphrase-generator')
 vi.mock('@/hooks/use-breach-check')
 vi.mock('@/hooks/use-theme')
+vi.mock('@/hooks/use-desktop')
 vi.mock('sonner')
 
 describe('Home Page Component', () => {
@@ -34,6 +36,7 @@ describe('Home Page Component', () => {
     toggleSymbols: vi.fn(),
     toggleUppercase: vi.fn(),
     setBreachCheck: vi.fn(),
+    setValue: vi.fn(),
   }
 
   const mockPinGenerator = {
@@ -48,6 +51,7 @@ describe('Home Page Component', () => {
     generate: vi.fn(),
     setLength: vi.fn(),
     setBreachCheck: vi.fn(),
+    setValue: vi.fn(),
   }
 
   const mockPassphraseGenerator = {
@@ -64,6 +68,7 @@ describe('Home Page Component', () => {
     setWordCount: vi.fn(),
     setSeparator: vi.fn(),
     setBreachCheck: vi.fn(),
+    setValue: vi.fn(),
   }
 
   const mockBreachCheck = {
@@ -87,6 +92,7 @@ describe('Home Page Component', () => {
     vi.mocked(passphraseHooks.usePassphraseGenerator).mockReturnValue(mockPassphraseGenerator)
     vi.mocked(breachHooks.useBreachCheck).mockReturnValue(mockBreachCheck)
     vi.mocked(themeHooks.useTheme).mockReturnValue(mockTheme)
+    vi.mocked(desktopHooks.useDesktop).mockReturnValue(true)
     vi.mocked(toast.success).mockImplementation(() => 'toast-id')
   })
 
@@ -114,7 +120,8 @@ describe('Home Page Component', () => {
     expect(mockPasswordGenerator.generate).toHaveBeenCalledTimes(1)
   })
 
-  it('shows copy success toast on copy click', async () => {
+  it('shows copy success toast with keyboard shortcut hint on desktop', async () => {
+    vi.mocked(desktopHooks.useDesktop).mockReturnValue(true)
     render(<Home />)
     fireEvent.click(screen.getByRole('button', { name: /copy/i }))
 
@@ -123,6 +130,22 @@ describe('Home Page Component', () => {
         'Copied to clipboard!',
         expect.objectContaining({
           description: 'Press C to copy again',
+          duration: 2000,
+        })
+      )
+    })
+  })
+
+  it('shows copy success toast without keyboard shortcut hint on mobile', async () => {
+    vi.mocked(desktopHooks.useDesktop).mockReturnValue(false)
+    render(<Home />)
+    fireEvent.click(screen.getByRole('button', { name: /copy/i }))
+
+    await waitFor(() => {
+      expect(toast.success).toHaveBeenCalledWith(
+        'Copied to clipboard!',
+        expect.objectContaining({
+          description: undefined,
           duration: 2000,
         })
       )

@@ -26,6 +26,7 @@ export default function Home() {
   const { mode, toggle } = useTheme();
   const { handleBreachCheck } = useBreachCheckHandler();
   const { history, addToHistory, clearHistory } = useCredentialHistory();
+  const isDesktop = useDesktop();
 
   const passwordGenerator = usePasswordGenerator();
   const pinGenerator = usePinGenerator();
@@ -33,10 +34,10 @@ export default function Home() {
 
   const handleCopy = useCallback(() => {
     toast.success('Copied to clipboard!', {
-      description: 'Press C to copy again',
+      description: isDesktop ? 'Press C to copy again' : undefined,
       duration: 2000,
     });
-  }, []);
+  }, [isDesktop]);
 
   const handlePasswordBreachCheck = useCallback(async () => {
     await handleBreachCheck(passwordGenerator.state.value, passwordGenerator.setBreachCheck);
@@ -102,8 +103,6 @@ export default function Home() {
   const handleClearHistory = useCallback(() => {
     clearHistory(activeTab);
   }, [activeTab, clearHistory]);
-
-  const isDesktop = useDesktop();
 
   useKeyboardShortcuts({
     onGenerate: handleRefreshWithHistory,
