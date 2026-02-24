@@ -129,16 +129,16 @@ export default function Home() {
 
       <main className="flex min-h-screen flex-col items-center justify-center px-4 py-16" data-testid="main-content">
         <div className="w-full max-w-3xl bg-card p-8 md:p-12 animate-slide-up">
-          <div className="flex items-center gap-4 mb-8">
+          <div className="relative flex justify-center items-center mb-8">
             <button
               onClick={() => setIsHistoryOpen(true)}
-              className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              className="absolute left-0 p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               data-testid="history-toggle-button"
               title="View History"
             >
               <Icons.History />
             </button>
-            <h1 className="text-4xl md:text-5xl font-bold text-center flex-1 text-zinc-900 dark:text-zinc-50 tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">
               Password Generator
             </h1>
           </div>

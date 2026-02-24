@@ -73,7 +73,7 @@ export function PasswordDisplay({
     <div className="flex flex-col items-center gap-6 w-full max-w-2xl" data-testid="password-display">
       <div className="relative w-full group">
         <div className="bg-card rounded-2xl p-8 text-center shadow-sm transition-all duration-300">
-          <p className="text-3xl md:text-5xl font-mono break-all leading-relaxed text-foreground font-medium tracking-tight">
+          <p className="text-xl md:text-3xl font-mono break-all leading-relaxed text-foreground font-medium tracking-tight">
             {value}
           </p>
         </div>
