@@ -15,7 +15,7 @@ export const ANIMATION = {
 } as const;
 
 export const HISTORY = {
-  MAX_ITEMS: 5,
+  MAX_ITEMS: 10,
   STORAGE_KEY: 'password-history',
 } as const;
 

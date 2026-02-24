@@ -7,7 +7,7 @@ import { PasswordDisplay } from '@/components/password-generator/password-displa
 import { PasswordControls } from '@/components/password-generator/password-controls';
 import { PinControls } from '@/components/password-generator/pin-controls';
 import { PassphraseControls } from '@/components/password-generator/passphrase-controls';
-import { PasswordHistory } from '@/components/password-generator/password-history';
+import { HistorySlider } from '@/components/password-generator/history-slider';
 import { ThemeToggle } from '@/components/password-generator/theme-toggle';
 import { usePasswordGenerator } from '@/hooks/use-password-generator';
 import { usePinGenerator } from '@/hooks/use-pin-generator';
@@ -20,6 +20,7 @@ import type { CredentialType } from '@/types/generator';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<CredentialType>('password');
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const { mode, toggle } = useTheme();
   const { handleBreachCheck } = useBreachCheckHandler();
   const { history, addToHistory, clearHistory } = useCredentialHistory();
@@ -112,13 +113,46 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background font-sans noise-overlay">
+      <HistorySlider
+        isOpen={isHistoryOpen}
+        onClose={() => setIsHistoryOpen(false)}
+        type={activeTab}
+        items={currentHistory}
+        onRestore={handleRestoreHistory}
+        onClear={handleClearHistory}
+      />
       <ThemeToggle mode={mode} onToggle={toggle} />
 
       <main className="flex min-h-screen flex-col items-center justify-center px-4 py-16" data-testid="main-content">
         <div className="w-full max-w-3xl bg-card p-8 md:p-12 animate-slide-up">
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 text-zinc-900 dark:text-zinc-50 tracking-tight">
-            Password Generator
-          </h1>
+          <div className="flex items-center gap-4 mb-8">
+            <button
+              onClick={() => setIsHistoryOpen(true)}
+              className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              data-testid="history-toggle-button"
+              title="View History"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-foreground"
+              >
+                <path d="M3 3v5h5" />
+                <path d="M3.05 13A9 9 0 1 0 6 5.3L3 8" />
+                <path d="M12 7v5l4 2" />
+              </svg>
+            </button>
+            <h1 className="text-4xl md:text-5xl font-bold text-center flex-1 text-zinc-900 dark:text-zinc-50 tracking-tight">
+              Password Generator
+            </h1>
+          </div>
 
           <Tabs
             value={activeTab}
@@ -159,12 +193,6 @@ export default function Home() {
                   onToggleSymbols={passwordGenerator.toggleSymbols}
                   onToggleUppercase={passwordGenerator.toggleUppercase}
                 />
-                <PasswordHistory
-                  type="password"
-                  items={currentHistory}
-                  onRestore={handleRestoreHistory}
-                  onClear={handleClearHistory}
-                />
               </div>
             </TabsContent>
 
@@ -182,12 +210,6 @@ export default function Home() {
                 <PinControls
                   length={pinGenerator.state.length}
                   onLengthChange={pinGenerator.setLength}
-                />
-                <PasswordHistory
-                  type="pin"
-                  items={currentHistory}
-                  onRestore={handleRestoreHistory}
-                  onClear={handleClearHistory}
                 />
               </div>
             </TabsContent>
@@ -208,12 +230,6 @@ export default function Home() {
                   separator={passphraseGenerator.state.separator}
                   onWordCountChange={passphraseGenerator.setWordCount}
                   onSeparatorChange={passphraseGenerator.setSeparator}
-                />
-                <PasswordHistory
-                  type="passphrase"
-                  items={currentHistory}
-                  onRestore={handleRestoreHistory}
-                  onClear={handleClearHistory}
                 />
               </div>
             </TabsContent>
