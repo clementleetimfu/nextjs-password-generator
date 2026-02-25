@@ -27,12 +27,12 @@ export function PasswordHistory({
   }
 
   return (
-    <div className="space-y-3" data-testid="password-history">
+    <div className="space-y-3 stagger-children" data-testid="password-history">
       {items.map((item, index) => (
         <button
           key={index}
           onClick={() => onRestore(item.value)}
-          className="w-full flex items-center justify-between gap-3 p-4 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors text-left border border-zinc-200 dark:border-zinc-700"
+          className="w-full flex items-center justify-between gap-3 p-4 bg-zinc-50 dark:bg-zinc-800/50 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-200 text-left border border-zinc-200 dark:border-zinc-700 hover:scale-[1.02] hover:shadow-md active:scale-[0.98]"
           data-testid={`history-item-${index}`}
         >
           <div className="flex-1 min-w-0">

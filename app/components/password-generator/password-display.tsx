@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import type { StrengthLevel, BreachCheckStatus } from '@/types/generator';
 
@@ -56,6 +56,18 @@ export function PasswordDisplay({
   onCopy,
   onBreachCheck,
 }: PasswordDisplayProps) {
+  const [prevValue, setPrevValue] = useState(value);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    if (value !== prevValue && prevValue !== '') {
+      setIsAnimating(true);
+      const timer = setTimeout(() => setIsAnimating(false), 300);
+      return () => clearTimeout(timer);
+    }
+    setPrevValue(value);
+  }, [value, prevValue]);
+
   const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(value);
@@ -72,7 +84,7 @@ export function PasswordDisplay({
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-2xl" data-testid="password-display">
       <div className="relative w-full group">
-        <div className="bg-card rounded-2xl p-8 text-center shadow-sm transition-all duration-300">
+        <div className={`bg-card rounded-2xl p-8 text-center shadow-sm transition-all duration-300 ${isAnimating ? 'animate-generate' : ''}`}>
           <p className="text-xl md:text-3xl font-mono break-all leading-relaxed text-foreground font-medium tracking-tight">
             {value}
           </p>
@@ -94,13 +106,13 @@ export function PasswordDisplay({
         </span>
       </div>
 
-      <div className="flex flex-wrap gap-3 w-full lg:flex-nowrap">
-        <Button onClick={onRefresh} className="flex-1 lg:flex-1" variant="outline" data-testid="refresh-button">
+      <div className="flex flex-wrap gap-3 w-full lg:flex-nowrap stagger-children">
+        <Button onClick={onRefresh} className="flex-1 lg:flex-1 animate-button-press" variant="outline" data-testid="refresh-button">
           Refresh
         </Button>
         <Button
           onClick={handleCopy}
-          className="flex-1 lg:flex-1"
+          className="flex-1 lg:flex-1 animate-button-press"
           variant="outline"
           disabled={!value}
           data-testid="copy-button"
@@ -109,7 +121,7 @@ export function PasswordDisplay({
         </Button>
         <Button
           onClick={onBreachCheck}
-          className="flex-1 lg:flex-1"
+          className="flex-1 lg:flex-1 animate-button-press"
           variant="outline"
           disabled={!value || breachCheck === 'checking'}
           data-testid="breach-check-button"
@@ -120,10 +132,16 @@ export function PasswordDisplay({
 
       {breachCheck !== 'idle' && (
         <div
-          className={`text-sm font-medium animate-fade-in ${breachStatusColor}`}
+          className={`text-sm font-medium animate-slide-down ${breachStatusColor}`}
           data-testid="breach-result"
         >
-          {breachStatusText}
+          {breachCheck === 'checking' ? (
+            <span className="flex items-center gap-2">
+              <span className="animate-pulse">Checking...</span>
+            </span>
+          ) : (
+            breachStatusText
+          )}
         </div>
       )}
     </div>

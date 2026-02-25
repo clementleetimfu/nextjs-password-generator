@@ -8,7 +8,7 @@ interface PinControlsProps {
 
 export function PinControls({ length, onLengthChange }: PinControlsProps) {
   return (
-    <div className="flex flex-col gap-8 w-full max-w-2xl" data-testid="controls">
+    <div className="flex flex-col gap-8 w-full max-w-2xl stagger-children" data-testid="controls">
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
           <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">

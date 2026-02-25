@@ -24,7 +24,7 @@ export function PasswordControls({
   onToggleUppercase,
 }: PasswordControlsProps) {
   return (
-    <div className="flex flex-col gap-8 w-full max-w-2xl" data-testid="controls">
+    <div className="flex flex-col gap-8 w-full max-w-2xl stagger-children" data-testid="controls">
       {/* Length Slider */}
       <div className="flex flex-col gap-4">
         <div className="flex items-center justify-between">
