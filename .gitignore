@@ -97,3 +97,6 @@ yarn-error.log
 *.p12
 *.pfx
 secrets/
+
+# ai tools
+mcp.json
