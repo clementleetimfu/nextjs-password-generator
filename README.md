@@ -210,7 +210,3 @@ All passwords, PINs, and passphrases are generated using the Web Crypto API (`cr
 ### Breach Checking
 
 The breach check feature uses the [Have I Been Pwned API](https://haveibeenpwned.com/API/v3) to check if a credential has appeared in known data breaches. The API uses k-anonymity, meaning only the first 5 characters of the SHA-1 hash are sent to the server - your actual password never leaves your device.
-
-## License
-
-This project is unlicensed.
