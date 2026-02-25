@@ -17,6 +17,10 @@ A secure, modern password generator built with Next.js 16, featuring password, P
 - [Available Scripts](#available-scripts)
 - [Testing](#testing)
 - [Security](#security)
+- [Environment Variables](#environment-variables)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [Learn More](#learn-more)
 - [License](#license)
 
 ## Features
@@ -67,7 +71,6 @@ A secure, modern password generator built with Next.js 16, featuring password, P
 | Language | [TypeScript 5](https://www.typescriptlang.org/) (strict mode) |
 | Security | [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) |
 | Testing | [Vitest 4](https://vitest.dev/), [Playwright](https://playwright.dev/) |
-| Notifications | [Sonner](https://sonner.emilkowal.ski/) via [Shadcn UI](https://ui.shadcn.com/) |
 
 ## Getting Started
 
@@ -124,10 +127,10 @@ A secure, modern password generator built with Next.js 16, featuring password, P
 
 ```
 ├── app/                          # Next.js App Router
-│   ├── api/                     # API routes
-│   │   └── breach-check/        # Breach check API endpoint
-│   ├── components/              # React components
-│   │   ├── password-generator/  # Domain components
+│   ├── api/                      # API routes
+│   │   └── breach-check/         # Breach check API endpoint
+│   ├── components/               # React components
+│   │   ├── password-generator/   # Domain components
 │   │   │   ├── password-display.tsx
 │   │   │   ├── password-controls.tsx
 │   │   │   ├── pin-controls.tsx
@@ -135,8 +138,8 @@ A secure, modern password generator built with Next.js 16, featuring password, P
 │   │   │   ├── password-history.tsx
 │   │   │   ├── history-slider.tsx
 │   │   │   └── theme-toggle.tsx
-│   │   └── ui/                  # Shadcn UI components
-│   ├── hooks/                   # Custom React hooks
+│   │   └── ui/                   # Shadcn UI components
+│   ├── hooks/                    # Custom React hooks
 │   │   ├── use-password-generator.ts
 │   │   ├── use-pin-generator.ts
 │   │   ├── use-passphrase-generator.ts
@@ -145,31 +148,32 @@ A secure, modern password generator built with Next.js 16, featuring password, P
 │   │   ├── use-breach-check-handler.ts
 │   │   ├── use-theme.ts
 │   │   └── use-desktop.ts
-│   ├── lib/                     # Utility functions and core logic
-│   │   ├── crypto.ts            # Secure random generation
-│   │   ├── strength.ts          # Strength calculation
-│   │   ├── breach-check.ts      # Have I Been Pwned API client
-│   │   ├── theme.ts             # Theme utilities
-│   │   ├── eff-wordlist.ts      # EFF wordlist loader
+│   ├── lib/                      # Utility functions and core logic
+│   │   ├── crypto.ts             # Secure random generation
+│   │   ├── strength.ts           # Strength calculation
+│   │   ├── breach-check.ts       # Have I Been Pwned API client
+│   │   ├── theme.ts              # Theme utilities
+│   │   ├── eff-wordlist.ts       # EFF wordlist loader
 │   │   └── eff-wordlist-content.ts
-│   ├── types/                   # TypeScript definitions
-│   ├── constants.ts             # App constants (history storage)
-│   ├── globals.css              # Global styles
-│   ├── layout.tsx               # Root layout
-│   └── page.tsx                 # Home page
-├── lib/                         # Shared utilities (cn function)
+│   ├── types/                    # TypeScript definitions
+│   ├── constants.ts              # App constants (history storage)
+│   ├── globals.css               # Global styles
+│   ├── layout.tsx                # Root layout
+│   └── page.tsx                  # Home page
+├── lib/                          # Shared utilities (cn function)
 ├── tests/
-│   ├── setup.ts                 # Test setup and mocks
-│   ├── test-helpers.ts          # Test utilities
-│   ├── unit/                    # Vitest unit tests
-│   │   ├── components/          # Component tests
-│   │   │   └── ui/              # UI component tests
-│   │   ├── hooks/               # Hook tests
-│   │   ├── lib/                 # Lib unit tests
-│   │   └── api/                 # API route tests
-│   └── e2e/                     # Playwright E2E tests
-├── specs/                       # Feature specifications
-└── screenshots/                 # Application screenshots
+│   ├── setup.ts                  # Test setup and mocks
+│   ├── test-helpers.ts           # Test utilities
+│   ├── unit/                     # Vitest unit tests
+│   │   ├── components/           # Component tests
+│   │   │   └── ui/               # UI component tests
+│   │   ├── hooks/                # Hook tests
+│   │   ├── lib/                  # Lib unit tests
+│   │   └── api/                  # API route tests
+│   └── e2e/                      # Playwright E2E tests
+├── specs/                        # Feature specifications
+├── screenshots/                  # Application screenshots
+└── components/                   # Shared UI components (Shadcn)
 ```
 
 ## Available Scripts
@@ -180,33 +184,86 @@ A secure, modern password generator built with Next.js 16, featuring password, P
 | `npm run build` | Build for production |
 | `npm run start` | Start production server |
 | `npm run lint` | Run ESLint |
+| `npm test` | Run all unit tests |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run test:ui` | Run tests with Vitest UI |
+| `npm run test:coverage` | Run tests with coverage report |
+| `npm run test:e2e` | Run all E2E tests |
+| `npm run test:e2e:ui` | Run E2E tests with Playwright UI |
+| `npm run test:e2e:debug` | Run E2E tests in debug mode |
+| `npm run test:e2e:headed` | Run E2E tests in headed (visible browser) mode |
 
 ## Testing
 
+This project uses a comprehensive testing strategy with both unit tests and E2E tests.
+
 ### Unit Tests (Vitest)
+
+Unit tests are located in `tests/unit/` and cover:
+- **Components**: UI component rendering and interactions
+- **Hooks**: Custom React hook logic
+- **Lib**: Utility functions (crypto, strength calculation, breach check)
+- **API**: API route handlers
 
 ```bash
 npm test                      # Run all unit tests
 npm run test:watch            # Run tests in watch mode
-npm run test:ui               # Run tests with UI
+npm run test:ui               # Run tests with Vitest UI
 npm run test:coverage         # Run tests with coverage report
+
+# Run a specific test file
+npx vitest run tests/unit/hooks/use-password-generator.test.ts
+
+# Run tests matching a pattern
+npx vitest run -t "initializes and generates"
 ```
 
 ### E2E Tests (Playwright)
 
+E2E tests are located in `tests/e2e/` and cover:
+- Password, PIN, and passphrase generation flows
+- UI interactions and accessibility
+- Cross-browser compatibility
+
 ```bash
 npm run test:e2e              # Run all E2E tests
-npm run test:e2e:ui           # Run E2E tests with UI
+npm run test:e2e:ui           # Run E2E tests with Playwright UI
 npm run test:e2e:debug        # Run E2E tests in debug mode
-npm run test:e2e:headed       # Run E2E tests in headed mode
+npm run test:e2e:headed       # Run E2E tests in headed (visible browser) mode
+
+# Run a specific test file
+npx playwright test tests/e2e/password-generation.spec.ts
+
+# Run a specific test by title
+npx playwright test -g "should generate password on page load"
 ```
 
 ## Security
 
 ### Cryptographically Secure Generation
 
-All passwords, PINs, and passphrases are generated using the Web Crypto API (`crypto.getRandomValues`), ensuring cryptographically secure random number generation that cannot be predicted or reproduced.
+All passwords, PINs, and passphrases are generated using the Web Crypto API (`crypto.getRandomValues`), ensuring cryptographically secure random number generation that cannot be predicted or reproduced. This is significantly more secure than `Math.random()` which is not suitable for security-sensitive applications.
 
 ### Breach Checking
 
-The breach check feature uses the [Have I Been Pwned API](https://haveibeenpwned.com/API/v3) to check if a credential has appeared in known data breaches. The API uses k-anonymity, meaning only the first 5 characters of the SHA-1 hash are sent to the server - your actual password never leaves your device.
+The breach check feature uses the [Have I Been Pwned API](https://haveibeenpwned.com/API/v3) to check if a credential has appeared in known data breaches. The API uses **k-anonymity**, meaning only the first 5 characters of the SHA-1 hash are sent to the server - your actual password never leaves your device.
+
+### Security Best Practices
+
+- **Use long passwords**: Aim for at least 16 characters for important accounts
+- **Include all character types**: Mix lowercase, uppercase, digits, and symbols
+- **Never reuse passwords**: Each account should have a unique password
+- **Use a password manager**: Store generated passwords securely
+- **Enable 2FA**: Two-factor authentication adds an extra layer of security
+- **Check for breaches**: Regularly verify your passwords haven't been compromised
+
+### Privacy
+
+- No generated passwords are stored on any server
+- All generation happens client-side in your browser
+- Theme preference is stored locally in localStorage
+- Credential history is stored locally and limited to the last 10 items
+
+## Environment Variables
+
+This project does not require any environment variables for local development or production use. The breach check feature communicates directly with the Have I Been Pwned API from the client side.
