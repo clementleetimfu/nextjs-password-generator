@@ -3,7 +3,7 @@
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
-[![Live Demo](https://img.shields.io/badge/Live_Demo-View-10b981)](https://nextjs-password-generator-gilt.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-View-10b981)](https://nextjs-password-generator-clement.vercel.app/)
 
 A secure, modern password generator built with Next.js 16, featuring password, PIN, and passphrase generation with cryptographically secure random number generation and breach checking via Have I Been Pwned API.
 
@@ -20,7 +20,7 @@ A secure, modern password generator built with Next.js 16, featuring password, P
 - [License](#license)
 
 ## Demo & Screenshots
-**Live Demo:** https://nextjs-password-generator-gilt.vercel.app/
+**Live Demo:** https://nextjs-password-generator-clement.vercel.app/
 
 **Video Demo**
 
