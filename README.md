@@ -22,8 +22,7 @@ A secure, modern password generator built with Next.js 16, featuring password, P
 ## Demo & Screenshots
 **Live Demo:** https://nextjs-password-generator-gilt.vercel.app/
 
-**Video Demo:** https://github.com/user-attachments/assets/ebd5a031-d680-4f38-9baa-faffd375b1a3
-
+https://github.com/user-attachments/assets/a65e6ba8-7700-4e33-b66f-6a55145bf327
 
 ### Screenshots
 
