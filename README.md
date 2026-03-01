@@ -111,22 +111,17 @@ Unit tests are located in `tests/unit/` and cover:
   - breach-check API route
 - **Integration Tests**: Security tests, performance tests, and simple unit tests
 
-Testing libraries used:
-- [@testing-library/react 16.3.2](https://testing-library.com/react) - React component testing utilities
-- [@testing-library/jest-dom 6.9.1](https://testing-library.com/jest-dom) - Custom Jest DOM matchers
-- [jsdom 28.1.0](https://github.com/jsdom/jsdom) - DOM environment for Node.js
-
 ```bash
-npm test                      # Run all unit tests
-npm run test:watch            # Run tests in watch mode
-npm run test:ui               # Run tests with Vitest UI
-npm run test:coverage         # Run tests with coverage report
+pnpm test                      # Run all unit tests
+pnpm test:watch                # Run tests in watch mode
+pnpm test:ui                   # Run tests with Vitest UI
+pnpm test:coverage             # Run tests with coverage report
 
 # Run a specific test file
-npx vitest run tests/unit/hooks/use-password-generator.test.ts
+pnpm exec vitest run tests/unit/hooks/use-password-generator.test.ts
 
 # Run tests matching a pattern
-npx vitest run -t "initializes and generates"
+pnpm exec vitest run -t "initializes and generates"
 ```
 
 ### E2E Tests (Playwright)
@@ -140,16 +135,16 @@ E2E tests are located in `tests/e2e/` and cover:
 - theme.spec.ts - Theme toggle, light/dark mode persistence
 
 ```bash
-npm run test:e2e              # Run all E2E tests
-npm run test:e2e:ui           # Run E2E tests with Playwright UI
-npm run test:e2e:debug        # Run E2E tests in debug mode
-npm run test:e2e:headed       # Run E2E tests in headed (visible browser) mode
+pnpm test:e2e                  # Run all E2E tests
+pnpm test:e2e:ui               # Run E2E tests with Playwright UI
+pnpm test:e2e:debug            # Run E2E tests in debug mode
+pnpm test:e2e:headed           # Run E2E tests in headed (visible browser) mode
 
 # Run a specific test file
-npx playwright test tests/e2e/password-generation.spec.ts
+pnpm exec playwright test tests/e2e/password-generation.spec.ts
 
 # Run a specific test by title
-npx playwright test -g "should generate password on page load"
+pnpm exec playwright test -g "should generate password on page load"
 ```
 
 ## Quick Start
@@ -160,35 +155,35 @@ git clone https://github.com/yourusername/nextjs-password-generator.git
 cd nextjs-password-generator
 
 # Install dependencies
-npm install
+pnpm install
 
 # Run development server
-npm run dev
+pnpm dev
 # Open http://localhost:3000
 
 # Build for production
-npm run build
+pnpm build
 
 # Start production server
-npm run start
+pnpm start
 ```
 
 ## Available Scripts
 
 | Command | Description |
 |---------|-------------|
-| `npm run dev` | Start development server (localhost:3000) |
-| `npm run build` | Build for production |
-| `npm run start` | Start production server |
-| `npm run lint` | Run ESLint |
-| `npm test` | Run all unit tests |
-| `npm run test:watch` | Run tests in watch mode |
-| `npm run test:ui` | Run tests with Vitest UI |
-| `npm run test:coverage` | Run tests with coverage report |
-| `npm run test:e2e` | Run all E2E tests |
-| `npm run test:e2e:ui` | Run E2E tests with Playwright UI |
-| `npm run test:e2e:debug` | Run E2E tests in debug mode |
-| `npm run test:e2e:headed` | Run E2E tests in headed (visible browser) mode |
+| `pnpm dev` | Start development server (localhost:3000) |
+| `pnpm build` | Build for production |
+| `pnpm start` | Start production server |
+| `pnpm lint` | Run ESLint |
+| `pnpm test` | Run all unit tests |
+| `pnpm test:watch` | Run tests in watch mode |
+| `pnpm test:ui` | Run tests with Vitest UI |
+| `pnpm test:coverage` | Run tests with coverage report |
+| `pnpm test:e2e` | Run all E2E tests |
+| `pnpm test:e2e:ui` | Run E2E tests with Playwright UI |
+| `pnpm test:e2e:debug` | Run E2E tests in debug mode |
+| `pnpm test:e2e:headed` | Run E2E tests in headed (visible browser) mode |
 
 ## Project Structure
 
@@ -239,7 +234,7 @@ npm run start
 │   │   ├── crypto.test.ts        # Secure generation tests
 │   │   ├── strength.test.ts      # Strength calculation tests
 │   │   ├── security.test.ts      # Security-focused tests
-│   │   ├── performance.test.ts    # Performance tests
+│   │   ├── performance.test.ts   # Performance tests
 │   │   └── simple.test.ts        # Simple unit tests
 │   └── e2e/                      # Playwright E2E tests (password-generation, pin-generation, passphrase-generation, tab-switching, history, theme)
 ├── specs/                        # Feature specifications
