@@ -223,7 +223,6 @@ npm run start
 │   └── e2e/                      # Playwright E2E tests
 ├── specs/                        # Feature specifications
 ├── screenshots/                  # Application screenshots
-└── components/                   # Shared UI components (Shadcn)
 ```
 
 ## License

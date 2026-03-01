@@ -38,6 +38,7 @@ npx playwright test -g "title"    # By title
 
 ```
 ├── app/
+│   ├── api/breach-check/         # API endpoint for breach checking
 │   ├── components/password-generator/  # Domain components
 │   ├── components/ui/                   # Shadcn UI
 │   ├── hooks/                           # Custom hooks
@@ -45,7 +46,6 @@ npx playwright test -g "title"    # By title
 │   ├── types/                           # TypeScript defs
 │   ├── layout.tsx
 │   └── page.tsx
-├── components/                          # Shared Shadcn UI
 ├── lib/cn.ts                           # Class merge utility
 ├── tests/unit/                          # Vitest
 ├── tests/e2e/                           # Playwright
@@ -118,7 +118,9 @@ const handleAsync = async () => {
 };
 ```
 
-### Testing
+## Testing Patterns
+
+### Unit Tests (Vitest)
 ```typescript
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
@@ -134,6 +136,23 @@ describe('hook name', () => {
     const { result } = renderHook(() => useHook());
     expect(result.current.value).toBe('expected');
   });
+});
+```
+
+### Test Mocking (tests/setup.ts)
+- Web Crypto API mocked via `node:crypto` for Node.js environment
+- localStorage fully mocked with in-memory store
+- Clipboard API mocked with vi.fn()
+- fetch globally mocked with vi.fn()
+- Toast notifications (sonner) mocked
+- EFF wordlist mocked with minimal data
+- ResizeObserver and matchMedia mocked for responsive tests
+
+### E2E Tests (Playwright)
+```typescript
+test('description', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+  await expect(page.locator('[data-testid="password-display"]')).toBeVisible();
 });
 ```
 
