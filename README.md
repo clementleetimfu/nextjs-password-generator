@@ -20,7 +20,7 @@ A secure, modern password generator built with Next.js 16, featuring password, P
 - [License](#license)
 
 ## Demo & Screenshots
-**Live Demo:** https://nextjs-password-generator-clement.vercel.app/
+**Live Demo:** [Website](https://nextjs-password-generator-clement.vercel.app/)
 
 **Video Demo**
 
