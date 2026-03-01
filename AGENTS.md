@@ -2,237 +2,155 @@
 
 ## Project Overview
 
-A secure password generator built with Next.js 16 (App Router), React 19, TypeScript (strict mode), Tailwind CSS, and Shadcn UI (Radix UI primitives). Uses Web Crypto API for cryptographically secure random generation.
+Secure password generator: Next.js 16 (App Router), React 19, TypeScript (strict), Tailwind CSS 4, Shadcn UI, Web Crypto API.
 
 ## Build/Lint/Test Commands
 
 ### Development
 ```bash
-npm run dev          # Start development server (localhost:3000)
-npm run build        # Production build
-npm run start        # Start production server
+npm run dev          # localhost:3000
+npm run build        # Production
+npm run start        # Production server
+npm run lint         # ESLint
 ```
 
-### Linting
+### Unit Tests (Vitest)
 ```bash
-npm run lint         # Run ESLint on entire codebase
+npm test                          # All tests
+npm run test:watch                # Watch mode
+npm run test:ui                   # UI mode
+npm run test:coverage             # Coverage
+npx vitest run tests/unit/hooks/use-password-generator.test.ts  # Single file
+npx vitest run -t "pattern"       # By pattern
 ```
 
-### Unit Testing (Vitest)
+### E2E Tests (Playwright)
 ```bash
-npm test                          # Run all unit tests
-npm run test:watch                # Run tests in watch mode
-npm run test:ui                   # Run tests with UI
-npm run test:coverage             # Run tests with coverage report
-
-# Run a single test file
-npx vitest run tests/unit/hooks/use-password-generator.test.ts
-
-# Run tests matching a pattern
-npx vitest run -t "initializes and generates"
-```
-
-### E2E Testing (Playwright)
-```bash
-npm run test:e2e                  # Run all E2E tests
-npm run test:e2e:ui               # Run E2E tests with UI
-npm run test:e2e:debug            # Run E2E tests in debug mode
-npm run test:e2e:headed           # Run E2E tests in headed mode
-
-# Run a single E2E test file
-npx playwright test tests/e2e/password-generation.spec.ts
-
-# Run a specific test by title
-npx playwright test -g "should generate password on page load"
+npm run test:e2e                  # All E2E
+npm run test:e2e:ui               # UI mode
+npm run test:e2e:debug            # Debug mode
+npm run test:e2e:headed           # Headed browser
+npx playwright test tests/e2e/password-generation.spec.ts  # Single file
+npx playwright test -g "title"    # By title
 ```
 
 ## Project Structure
 
 ```
-├── app/                           # Next.js App Router
-│   ├── components/                # React components
-│   │   ├── password-generator/    # Domain components
-│   │   └── ui/                    # Shadcn UI components
-│   ├── hooks/                     # Custom React hooks
-│   ├── lib/                       # Utility functions and core logic
-│   ├── types/                     # TypeScript type definitions
-│   ├── layout.tsx                 # Root layout
-│   └── page.tsx                   # Home page
-├── components/                    # Shared UI components (Shadcn)
-├── lib/                           # Shared utilities (cn function)
-├── tests/
-│   ├── unit/                      # Vitest unit tests
-│   ├── e2e/                       # Playwright E2E tests
-│   ├── setup.ts                   # Test setup and mocks
-│   └── test-helpers.ts            # Test utilities
-└── specs/                         # Feature specifications
+├── app/
+│   ├── components/password-generator/  # Domain components
+│   ├── components/ui/                   # Shadcn UI
+│   ├── hooks/                           # Custom hooks
+│   ├── lib/                             # Utils & core logic
+│   ├── types/                           # TypeScript defs
+│   ├── layout.tsx
+│   └── page.tsx
+├── components/                          # Shared Shadcn UI
+├── lib/cn.ts                           # Class merge utility
+├── tests/unit/                          # Vitest
+├── tests/e2e/                           # Playwright
+└── tests/setup.ts                       # Test mocks
 ```
 
-## Code Style Guidelines
+## Code Style
 
-### Imports
-
-Order imports as follows (separated by blank lines):
-1. React/Next.js imports
-2. Third-party libraries
-3. Internal aliases (`@/`)
-4. Types (with `type` keyword)
-5. Relative imports
+### Import Order
+1. React/Next.js
+2. Third-party
+3. Internal (`@/`)
+4. Types (`type` keyword)
+5. Relative
 
 ```typescript
-import { useState, useCallback, useEffect } from 'react';
-import { renderHook, act } from '@testing-library/react';
-
+import { useState } from 'react';
+import { renderHook } from '@testing-library/react';
 import { Button } from '@/components/ui/button';
 import { generatePassword } from '@/lib/crypto';
 import type { PasswordState } from '@/types/generator';
 ```
 
-Use path aliases consistently:
-- `@/components/` for UI components
-- `@/lib/` for utilities
-- `@/hooks/` for hooks
-- `@/types/` for types
-
-### TypeScript
-
-- Strict mode is enabled - all code must be type-safe
-- Use explicit return types for exported functions
-- Prefer interfaces for object types, types for unions/primitives
-- Use `as const` for literal constants and readonly arrays
+### TypeScript (Strict Mode)
+- Explicit return types for exports
+- Interfaces for objects, types for unions
+- `as const` for constants
 
 ```typescript
-// Preferred
-export interface PasswordState {
-  type: 'password';
-  value: string;
-  length: number;
-}
-
-export type StrengthLevel = 'VERY_WEAK' | 'WEAK' | 'MODERATE' | 'STRONG' | 'VERY_STRONG';
-
-export const PASSWORD_CONSTRAINTS = {
-  MIN_LENGTH: 8,
-  MAX_LENGTH: 50,
-  DEFAULT_LENGTH: 8,
-} as const;
+export interface PasswordState { type: 'password'; value: string; }
+export type StrengthLevel = 'WEAK' | 'MODERATE' | 'STRONG';
+export const LIMITS = { MIN: 8, MAX: 50 } as const;
 ```
 
-### Naming Conventions
-
-- **Components**: PascalCase (e.g., `PasswordDisplay`, `ThemeToggle`)
-- **Hooks**: camelCase with `use` prefix (e.g., `usePasswordGenerator`)
-- **Functions**: camelCase (e.g., `generatePassword`, `calculateStrength`)
-- **Constants**: SCREAMING_SNAKE_CASE (e.g., `PASSWORD_CONSTRAINTS`, `CHARACTER_SETS`)
-- **Types/Interfaces**: PascalCase (e.g., `PasswordState`, `StrengthLevel`)
-- **Test files**: Match source file with `.test.ts` or `.spec.ts` suffix
-- **Test IDs**: kebab-case with `data-testid` (e.g., `data-testid="password-display"`)
+### Naming
+- Components: PascalCase (`PasswordDisplay`)
+- Hooks: camelCase with `use` prefix (`usePasswordGenerator`)
+- Functions: camelCase (`generatePassword`)
+- Constants: SCREAMING_SNAKE_CASE (`PASSWORD_CONSTRAINTS`)
+- Test files: `*.test.ts`, `*.spec.ts`
+- Test IDs: kebab-case `data-testid="password-display"`
 
 ### React Components
-
-- Use function declarations with named exports
-- Define interfaces for props at the top of the file
-- Use `'use client'` directive for client components
-- Prefer destructured props
-
 ```typescript
 'use client';
-
 import { useState } from 'react';
-import type { CredentialType } from '@/types/generator';
+import type { PropsType } from '@/types';
 
-interface PasswordDisplayProps {
-  value: string;
-  type: CredentialType;
-  onRefresh: () => void;
-}
-
-export function PasswordDisplay({ value, type, onRefresh }: PasswordDisplayProps) {
-  // Component logic
-}
+interface ComponentProps { value: string; onChange: () => void; }
+export function Component({ value, onChange }: ComponentProps) { /* ... */ }
 ```
 
 ### Hooks
-
-- Return an object with state and actions
-- Use `useCallback` for functions returned from hooks
-- Handle side effects with `useEffect`
-
 ```typescript
 export function usePasswordGenerator() {
-  const [state, setState] = useState<PasswordState>({ /* ... */ });
-
-  const generate = useCallback(() => {
-    // ...
-  }, [dependencies]);
-
-  return { state, generate, setLength, toggleDigits };
+  const [state, setState] = useState<State>({});
+  const action = useCallback(() => { /* ... */ }, [deps]);
+  return { state, action };
 }
 ```
 
 ### Error Handling
-
-- Use try/catch for async operations
-- Log errors to console.error with descriptive messages
-- Provide user-friendly error states
-
 ```typescript
-const handleCopy = async () => {
+const handleAsync = async () => {
   try {
-    await navigator.clipboard.writeText(value);
-    onCopy();
+    await operation();
   } catch (error) {
-    console.error('Failed to copy to clipboard:', error);
+    console.error('Description:', error);
   }
 };
 ```
 
 ### Testing
-
-- Unit tests use Vitest with `describe`/`it`/`expect`
-- Mock external dependencies at the top of test files
-- Use `vi.mock` with `vi.importActual` for partial mocks
-- E2E tests use Playwright with `test`/`expect`
-- Use `data-testid` attributes for E2E selectors
-
 ```typescript
-// Unit test pattern
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 
 vi.mock('@/lib/crypto', async () => {
-  const actual = await vi.importActual<typeof import('@/lib/crypto')>('@/lib/crypto');
+  const actual = await vi.importActual('@/lib/crypto');
   return { ...actual, generatePassword: vi.fn() };
 });
 
-describe('usePasswordGenerator hook', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
-  it('initializes and generates a value', () => {
-    const { result } = renderHook(() => usePasswordGenerator());
-    expect(result.current.state.value).toBeTruthy();
+describe('hook name', () => {
+  beforeEach(() => { vi.clearAllMocks(); });
+  it('does something', () => {
+    const { result } = renderHook(() => useHook());
+    expect(result.current.value).toBe('expected');
   });
 });
 ```
 
 ### Styling
-
-- Use Tailwind CSS utility classes
-- Use `cn()` utility for conditional class merging
-- Support dark mode with `dark:` variants
-- Follow mobile-first responsive design
+- Tailwind utility classes
+- `cn()` for conditional merging
+- Dark mode: `dark:` variants
+- Mobile-first responsive
 
 ```typescript
 <div className="bg-card border-2 border-zinc-200 dark:border-zinc-700 rounded-lg p-6">
 ```
 
 ### Security
-
-- Use Web Crypto API (`crypto.getRandomValues`) for secure random generation
-- Never log or expose generated passwords in production
-- Validate all inputs before use
+- Use `crypto.getRandomValues` (Web Crypto API) — never `Math.random()`
+- Never log passwords in production
+- Validate all inputs
 
 ## Context7 MCP
 
