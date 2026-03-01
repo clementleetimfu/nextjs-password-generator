@@ -1,8 +1,8 @@
 # Password Generator
-[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://reactjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16.1.6-black?logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.2.3-61DAFB?logo=react)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.2.1-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
 [![Live Demo](https://img.shields.io/badge/Live_Demo-View-10b981)](https://nextjs-password-generator-clement.vercel.app/)
 
 A secure, modern password generator built with Next.js 16, featuring password, PIN, and passphrase generation with cryptographically secure random number generation and breach checking via Have I Been Pwned API.
@@ -68,13 +68,14 @@ https://github.com/user-attachments/assets/a65e6ba8-7700-4e33-b66f-6a55145bf327
 
 | Category | Technology |
 |----------|------------|
-| Framework | [Next.js 16](https://nextjs.org/) (App Router) |
-| UI | [React 19](https://reactjs.org/), [Tailwind CSS 4](https://tailwindcss.com/) |
-| Components | [Shadcn UI](https://ui.shadcn.com/) (Radix UI primitives) |
+| Framework | [Next.js 16.1.6](https://nextjs.org/) (App Router) |
+| UI | [React 19.2.3](https://reactjs.org/), [Tailwind CSS 4.2.1](https://tailwindcss.com/) |
+| Components | [Radix UI primitives](https://www.radix-ui.com/) styled with Tailwind CSS (@radix-ui/react-slider, @radix-ui/react-slot, @radix-ui/react-switch, @radix-ui/react-tabs) |
 | Language | [TypeScript 5](https://www.typescriptlang.org/) (strict mode) |
+| Utilities | [clsx 2.1.1](https://github.com/lukeed/clsx), [tailwind-merge 3.5.0](https://github.com/dcastilho/tailwind-merge), [class-variance-authority 0.7.1](https://cva.style/) |
+| Notifications | [sonner 2.0.7](https://sonner.emilkowal.ski/) |
 | Security | [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) |
-| Testing | [Vitest 4](https://vitest.dev/), [Playwright](https://playwright.dev/) |
-
+| Testing | [Vitest 4.0.18](https://vitest.dev/), [Playwright 1.58.2](https://playwright.dev/), [@testing-library/react 16.3.2](https://testing-library.com/react), [@testing-library/jest-dom 6.9.1](https://testing-library.com/jest-dom) |
 ## Security Implementation
 
 ### Cryptographically Secure Generation
@@ -94,15 +95,26 @@ The breach check feature uses the [Have I Been Pwned API](https://haveibeenpwned
 
 ## Testing
 
-This project uses a comprehensive testing strategy with both unit tests and E2E tests.
+This project uses a comprehensive testing strategy with both unit tests and E2E tests, leveraging Vitest for unit testing and Playwright for end-to-end testing.
 
 ### Unit Tests (Vitest)
 
 Unit tests are located in `tests/unit/` and cover:
-- **Components**: UI component rendering and interactions
-- **Hooks**: Custom React hook logic
-- **Lib**: Utility functions (crypto, strength calculation, breach check)
-- **API**: API route handlers
+- **Components**: UI component rendering and interactions (tests/unit/components/)
+  - UI components: button, slider, switch, tabs, sonner, icons (Radix UI primitives styled with Tailwind CSS)
+  - Domain components: password-controls, pin-controls, passphrase-controls, password-display, password-history, history-slider, theme-toggle, page
+- **Hooks**: Custom React hook logic (tests/unit/hooks/)
+  - use-password-generator, use-pin-generator, use-passphrase-generator, use-credential-history, use-breach-check, use-breach-check-handler, use-theme, use-desktop
+- **Lib**: Utility functions and API clients
+  - crypto.ts (secure random generation), strength.ts (strength calculation), breach-check.ts (Have I Been Pwned API client), theme.ts, eff-wordlist.ts
+- **API**: API route handlers (tests/unit/api/)
+  - breach-check API route
+- **Integration Tests**: Security tests, performance tests, and simple unit tests
+
+Testing libraries used:
+- [@testing-library/react 16.3.2](https://testing-library.com/react) - React component testing utilities
+- [@testing-library/jest-dom 6.9.1](https://testing-library.com/jest-dom) - Custom Jest DOM matchers
+- [jsdom 28.1.0](https://github.com/jsdom/jsdom) - DOM environment for Node.js
 
 ```bash
 npm test                      # Run all unit tests
@@ -120,9 +132,12 @@ npx vitest run -t "initializes and generates"
 ### E2E Tests (Playwright)
 
 E2E tests are located in `tests/e2e/` and cover:
-- Password, PIN, and passphrase generation flows
-- UI interactions and accessibility
-- Cross-browser compatibility
+- password-generation.spec.ts - Password generation flow, strength indicator, breach check, copy to clipboard
+- pin-generation.spec.ts - PIN generation flow, length adjustment, strength indicator
+- passphrase-generation.spec.ts - Passphrase generation flow, word count adjustment, separator selection
+- tab-switching.spec.ts - Tab navigation between Password, PIN, and Passphrase
+- history.spec.ts - Credential history, restore from history, clear history
+- theme.spec.ts - Theme toggle, light/dark mode persistence
 
 ```bash
 npm run test:e2e              # Run all E2E tests
@@ -190,7 +205,7 @@ npm run start
 │   │   │   ├── password-history.tsx
 │   │   │   ├── history-slider.tsx
 │   │   │   └── theme-toggle.tsx
-│   │   └── ui/                   # Shadcn UI components
+│   │   └── ui/                   # UI components (button, slider, switch, tabs, sonner, icons - Radix UI primitives styled with Tailwind CSS)
 │   ├── hooks/                    # Custom React hooks
 │   │   ├── use-password-generator.ts
 │   │   ├── use-pin-generator.ts
@@ -212,17 +227,23 @@ npm run start
 │   ├── globals.css               # Global styles
 │   ├── layout.tsx                # Root layout
 │   └── page.tsx                  # Home page
-├── lib/                          # Shared utilities (cn function)
+├── lib/                          # Shared utilities (cn function - clsx + tailwind-merge)
 ├── tests/
 │   ├── setup.ts                  # Test setup and mocks
 │   ├── test-helpers.ts           # Test utilities
 │   ├── unit/                     # Vitest unit tests
+│   │   ├── components/           # Component tests (UI components and domain components)
 │   │   ├── hooks/                # Hook tests
-│   │   ├── lib/                  # Lib unit tests
-│   │   └── api/                  # API route tests
-│   └── e2e/                      # Playwright E2E tests
+│   │   ├── lib/                  # Lib unit tests (crypto, strength, breach-check, theme, eff-wordlist)
+│   │   ├── api/                  # API route tests
+│   │   ├── crypto.test.ts        # Secure generation tests
+│   │   ├── strength.test.ts      # Strength calculation tests
+│   │   ├── security.test.ts      # Security-focused tests
+│   │   ├── performance.test.ts    # Performance tests
+│   │   └── simple.test.ts        # Simple unit tests
+│   └── e2e/                      # Playwright E2E tests (password-generation, pin-generation, passphrase-generation, tab-switching, history, theme)
 ├── specs/                        # Feature specifications
-├── screenshots/                  # Application screenshots
+└── screenshots/                  # Application screenshots
 ```
 
 ## License
