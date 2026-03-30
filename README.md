@@ -101,7 +101,7 @@ This project uses a comprehensive testing strategy with both unit tests and E2E 
 
 Unit tests are located in `tests/unit/` and cover:
 - **Components**: UI component rendering and interactions (tests/unit/components/)
-  - UI components: button, slider, switch, tabs, sonner, icons (Radix UI primitives styled with Tailwind CSS)
+  - UI components: button, slider, switch, tabs, sonner (Radix UI primitives styled with Tailwind CSS)
   - Domain components: password-controls, pin-controls, passphrase-controls, password-display, password-history, history-slider, theme-toggle, page
 - **Hooks**: Custom React hook logic (tests/unit/hooks/)
   - use-password-generator, use-pin-generator, use-passphrase-generator, use-credential-history, use-breach-check, use-breach-check-handler, use-theme, use-desktop
@@ -109,7 +109,7 @@ Unit tests are located in `tests/unit/` and cover:
   - crypto.ts (secure random generation), strength.ts (strength calculation), breach-check.ts (Have I Been Pwned API client), theme.ts, eff-wordlist.ts
 - **API**: API route handlers (tests/unit/api/)
   - breach-check API route
-- **Integration Tests**: Security tests, performance tests, and simple unit tests
+- **Root-level unit tests**: Security, performance, and basic sanity checks
 
 ```bash
 pnpm test                      # Run all unit tests
@@ -229,7 +229,7 @@ pnpm start
 │   ├── unit/                     # Vitest unit tests
 │   │   ├── components/           # Component tests (UI components and domain components)
 │   │   ├── hooks/                # Hook tests
-│   │   ├── lib/                  # Lib unit tests (crypto, strength, breach-check, theme, eff-wordlist)
+  │   │   ├── lib/                  # Lib unit tests (breach-check, theme, eff-wordlist)
 │   │   ├── api/                  # API route tests
 │   │   ├── crypto.test.ts        # Secure generation tests
 │   │   ├── strength.test.ts      # Strength calculation tests
